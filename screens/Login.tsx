@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, View, TouchableOpacity } from 'react-native';
+import { useUser } from '../context/UserContext';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
 const API_URL = 'https://tribu-app.vercel.app/';
 
 export default function Login({ navigation }: any) {
+  const { setUser } = useUser();
+
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -32,6 +35,13 @@ export default function Login({ navigation }: any) {
 
       if (response.ok) {
         const data = await response.json();
+
+        setUser({
+          id: data.user.id,
+          name: data.user.name,
+          email: data.user.email,
+          score: data.user.score
+        });
       }
     } catch (error: any) {
       console.error('Erreur login :', error.message);

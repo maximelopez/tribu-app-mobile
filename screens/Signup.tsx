@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, View, TouchableOpacity } from 'react-native';
+import { useUser } from '../context/UserContext';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
 const API_URL = 'https://tribu-app.vercel.app/';
 
 export default function Signup({ navigation }: any) {
+  const { setUser } = useUser();
+
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -33,6 +36,13 @@ export default function Signup({ navigation }: any) {
 
       if (response.ok) {
         const data = await response.json();
+
+        setUser({
+          id: data.user.id,
+          name: data.user.name,
+          email: data.user.email,
+          score: data.user.score
+        });
       }
     } catch (error: any) {
       console.error('Erreur signup :', error.message);
@@ -79,12 +89,12 @@ export default function Signup({ navigation }: any) {
         />
 
         <View className="flex-1 flex-row items-center justify-center">
-          <Text className="text-black text-center mr-[6px]">Pas encore de compte ?</Text>
+          <Text className="text-black text-center mr-[6px]">Déjà inscrit(e) ?</Text>
           <TouchableOpacity
             className='bg-[#6C0FF2] rounded-[15px]'
             onPress={() => navigation.navigate('Login')} 
             activeOpacity={0.8}>
-              <Text className='px-[10px] py-[5px] text-white'>Inscrivez-vous</Text> 
+              <Text className='px-[10px] py-[5px] text-white'>Connectez-vous</Text> 
           </TouchableOpacity>
         </View>
       </View>

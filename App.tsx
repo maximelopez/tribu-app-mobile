@@ -1,11 +1,14 @@
 import { NavigationContainer } from '@react-navigation/native';
 import MainNavigator from './navigation/MainNavigator';
+import { UserProvider } from './context/UserContext';
 import "./global.css"
 
 export default function App() {
   return (
-    <NavigationContainer>
+    <UserProvider>
+      <NavigationContainer>
         <MainNavigator />
-    </NavigationContainer>
+      </NavigationContainer>
+    </UserProvider>
   );
 }
