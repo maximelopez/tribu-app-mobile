@@ -13,11 +13,14 @@ export default function Button({
             disabled={isDisabled}
             onPress={onPress}
             activeOpacity={0.8}
+            className='bg-[#6C0FF2] w-full h-[56px] justify-center rounded-[15px]'
         >
             {loading ? (
                 <ActivityIndicator color="white" />
             ): (
-                <Text>{title}</Text>
+                <Text className="text-white text-center font-bold text-[20px]">
+                    {title}
+                </Text>
             )}
         </TouchableOpacity>
     )

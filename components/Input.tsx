@@ -1,4 +1,4 @@
-import { StyleSheet, View, TextInput } from 'react-native';
+import { View, TextInput } from 'react-native';
 
 export default function Input({ 
     value,
@@ -8,7 +8,7 @@ export default function Input({
     secureTextEntry = false,
 }: any) {
     return (
-        <View style={styles.container}>
+        <View className="w-full">
             <TextInput 
                 value={value}
                 onChangeText={onChangeText}
@@ -18,23 +18,8 @@ export default function Input({
                 secureTextEntry={secureTextEntry}
                 autoCapitalize="none"
                 selectionColor="#6C0FF2"
-                style={styles.input}
+                className="w-full border border-gray-200 rounded-[15px] h-[56px] px-[24px]"
             />
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    borderColor: '#C9C9C9',
-    borderRadius: 15,
-    height: 56,
-    paddingInline: 24,
-  }
-});
