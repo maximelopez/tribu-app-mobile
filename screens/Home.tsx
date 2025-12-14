@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function Home() {
   return (
     <View style={styles.container}>
-      <Text>Home</Text>
+      <Text className='text-blue-500 font-bold'>Home</Text>
     </View>
   );
 }

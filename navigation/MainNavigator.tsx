@@ -7,7 +7,7 @@ import AppTabs from './AppTabs';
 const Stack = createNativeStackNavigator();
 
 export default function MainNavigator() {
-    const isLoggedIn = false;
+    const isLoggedIn = true;
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
