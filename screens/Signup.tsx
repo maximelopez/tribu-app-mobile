@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { useUser } from '../context/UserContext';
+import { useUserStore } from '../store/userStore';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
 const API_URL = 'https://tribu-app.vercel.app/api/';
 
 export default function Signup({ navigation }: any) {
-  const { setUser } = useUser();
+  const setUser = useUserStore(state => state.setUser);
 
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');

@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useUser } from '../context/UserContext';
+import { useUserStore } from '../store/userStore';
 
 import Signup from '../screens/Signup';
 import Login from '../screens/Login';
@@ -8,7 +8,7 @@ import AppTabs from './AppTabs';
 const Stack = createNativeStackNavigator();
 
 export default function MainNavigator() {
-    const { user } = useUser();
+    const user = useUserStore(state => state.user);
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
