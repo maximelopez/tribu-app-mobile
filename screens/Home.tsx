@@ -11,8 +11,8 @@ export default function Home() {
   return (
     <SafeAreaView className='flex-1 bg-white'>
       <View className='flex-1 mt-10 mx-4'>
-        <Text className='text-gray-800 font-bold text-3xl'>Bonjour, {user?.name}</Text>
-        <Text className='text-gray-800 font-bold mb-10'>Ton score bien-être</Text>
+        <Text className='text-gray-800 font-peachy text-3xl'>Bonjour, {user?.name}</Text>
+        <Text className='text-gray-900 font-outfit mb-10 text-xl'>Ton score bien-être</Text>
         <DonutScore
           size={220}
           thickness={35}
@@ -24,6 +24,10 @@ export default function Home() {
             { label: 'Lecture', icon: '📘', points: 5, position: 'bottom' },
           ]}
         />
+
+        <View className='items-center mt-10'>
+          <Text className='text-gray-800 font-peachy text-3xl'>Mes défis</Text>
+        </View>
       </View>
     </SafeAreaView>
   );
