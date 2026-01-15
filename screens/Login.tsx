@@ -93,8 +93,9 @@ export default function Login({ navigation }: any) {
           <TouchableOpacity
             className='bg-[#6C0FF2] rounded-[15px]'
             onPress={() => navigation.navigate('Signup')} 
-            activeOpacity={0.8}>
-              <Text className='px-[10px] py-[5px] text-white'>Inscrivez-vous</Text> 
+            activeOpacity={0.8}
+          >
+            <Text className='px-[10px] py-[5px] text-white'>Inscrivez-vous</Text> 
           </TouchableOpacity>
         </View>
       </View>
