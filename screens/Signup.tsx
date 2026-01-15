@@ -5,7 +5,7 @@ import { useUser } from '../context/UserContext';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
-const API_URL = 'https://tribu-app.vercel.app/';
+const API_URL = 'https://tribu-app.vercel.app/api/';
 
 export default function Signup({ navigation }: any) {
   const { setUser } = useUser();
@@ -34,22 +34,30 @@ export default function Signup({ navigation }: any) {
         body: JSON.stringify({ name, email, password })
       });
 
-      if (response.ok) {
-        const data = await response.json();
+      const data = await response.json();
 
-        setUser({
-          id: data.user.id,
-          name: data.user.name,
-          email: data.user.email,
-          score: data.user.score
-        });
+      if (!response.ok) {
+        if (response.status === 409) {
+          setErrorMessage('Cet email est déjà utilisé.');
+        } else {
+          setErrorMessage('Une erreur est survenue.');
+        }
+        return;
       }
+
+      setUser({
+        id: data.user.id,
+        name: data.user.name,
+        email: data.user.email,
+        score: data.user.score
+      });
+
     } catch (error: any) {
       console.error('Erreur signup :', error.message);
-      setErrorMessage('Une erreur est survenue. Veuillez réessayer.');
+      setErrorMessage('Impossible de se connecter au serveur.');
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
@@ -61,8 +69,7 @@ export default function Signup({ navigation }: any) {
           <Input 
             value={name} 
             onChangeText={setName}
-            placeholder="Adresse mail"
-            keyboardType="email-address"
+            placeholder="Nom"
           />
 
           <Input 

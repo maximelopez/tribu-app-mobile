@@ -5,7 +5,7 @@ import { useUser } from '../context/UserContext';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
-const API_URL = 'https://tribu-app.vercel.app/';
+const API_URL = 'https://tribu-app.vercel.app/api/';
 
 export default function Login({ navigation }: any) {
   const { setUser } = useUser();
@@ -33,22 +33,30 @@ export default function Login({ navigation }: any) {
         body: JSON.stringify({ email, password })
       });
 
-      if (response.ok) {
-        const data = await response.json();
+      const data = await response.json();
 
-        setUser({
-          id: data.user.id,
-          name: data.user.name,
-          email: data.user.email,
-          score: data.user.score
-        });
+      if (!response.ok) {
+        if (response.status === 401) {
+          setErrorMessage('Email ou mot de passe incorrect.');
+        } else {
+          setErrorMessage('Une erreur est survenue.');
+        }
+        return;
       }
-    } catch (error: any) {
-      console.error('Erreur login :', error.message);
-      setErrorMessage('Une erreur est survenue. Veuillez réessayer.');
-    }
 
-    setLoading(false);
+      setUser({
+        id: data.user.id,
+        name: data.user.name,
+        email: data.user.email,
+        score: data.user.score
+      });
+
+    } catch (error: any) {
+      console.error('Erreur login :', error);
+      setErrorMessage('Impossible de se connecter au serveur.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
