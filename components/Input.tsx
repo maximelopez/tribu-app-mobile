@@ -18,7 +18,7 @@ export default function Input({
                 secureTextEntry={secureTextEntry}
                 autoCapitalize="none"
                 selectionColor="#6C0FF2"
-                className="w-full border border-gray-200 rounded-[15px] h-[56px] px-[24px]"
+                className="w-full border border-gray-200 rounded-[15px] h-[48px] px-[24px]"
             />
         </View>
     )

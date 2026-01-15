@@ -7,9 +7,9 @@ export default function Profile() {
   const logout = useUserStore(state => state.logout);
 
   return (
-    <SafeAreaView className="flex-1" edges={['top']}>
+    <SafeAreaView className="flex-1 bg-[#F7F5F8]" edges={['top']}>
       <ScrollView 
-          className="flex-1 bg-[#F7F6F3]"
+          className="flex-1"
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 20 }}
       >

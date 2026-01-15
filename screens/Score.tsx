@@ -1,18 +1,58 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import DonutScore from '../components/DonutScore';
+import { useUserStore } from '../store/userStore';
+//import { shadows } from "../utils/shadows";
 
 export default function Score() {
-  return (
-    <View style={styles.container}>
-      <Text>Score</Text>
-    </View>
-  );
-}
+    const user = useUserStore(state => state.user);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    if (!user) return null;
+
+    return (
+        <SafeAreaView className="flex-1" edges={['top']}>
+            <ScrollView 
+                className="flex-1 bg-[#F7F6F3]"
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: 20 }}
+            >
+
+                <View className='mx-4'>
+                    <Text className="text-center text-[32px] font-peachy mt-4 mb-4">
+                        Ton score bien-être
+                    </Text>
+                    <Text className='text-center font-outfit text-[12px] mb-10'>
+                        Les scores sont calculés à partir de tes activités et ressentis. Tu peux les ajuster dans ton profil.
+                    </Text>
+                    <View className='flex-row gap-4'>
+                        <DonutScore
+                          size={150}
+                          thickness={25}
+                          progress={user.score / 100}
+                          score={user.score}
+                        />
+                        <View className='mt-4'>
+                            <Text className='font-peachy mb-2'>Ce qui t’a fait du bien :</Text>
+                            <Text className='mb-2'>🍳 Cuisine → +8 pts</Text>
+                            <Text className='mb-2'>🚶‍ Balade en famille → +10 pts</Text>
+                            <Text className='mb-2'>📚 Lecture → +6 pts</Text>
+                            <Text className='mb-2'>🎮 Jeu en ligne → +4 pt</Text>
+                        </View>
+                    </View>
+                </View>
+
+                <View className="mx-6">
+                    <Text className="text-center text-[32px] font-peachy mb-4">
+                        Tableau de bord
+                    </Text>
+                    <Text className=" font-bold mb-4">
+                        Famille Bruneau
+                    </Text>
+                    <Text className=" font-bold text-gray-400 mb-4">
+                        Résultat de cette semaine
+                    </Text>
+                </View>
+            </ScrollView>
+        </SafeAreaView>
+    );
+}

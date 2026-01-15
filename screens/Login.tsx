@@ -60,10 +60,10 @@ export default function Login({ navigation }: any) {
   };
 
   return (
-    <SafeAreaView className='flex-1 bg-white' edges={['top']}>
+    <SafeAreaView className='flex-1 bg-[#F7F5F8]' edges={['top']}>
       <View className='flex-1 p-5 items-center mt-[40px]'>
-        <Text className="text-4xl font-bold mb-6 text-black">Bon retour</Text>
-        <Text className="text-gray-500 mb-9">Saisissez vos informations ci-dessous</Text>
+        <Text className="text-4xl mb-6 text-gray-800 font-peachy">Bon retour</Text>
+        <Text className="text-xl text-gray-900 mb-9 font-outfit">Saisissez vos informations ci-dessous</Text>
         <View className='w-full gap-[20px] mb-[20px]'>
           <Input 
             value={email} 
@@ -89,13 +89,13 @@ export default function Login({ navigation }: any) {
         />
 
         <View className="flex-1 flex-row items-center justify-center">
-          <Text className="text-black text-center mr-[6px]">Pas encore de compte ?</Text>
+          <Text className="text-gray-900 text-center mr-[6px] font-outfit">Pas encore de compte ?</Text>
           <TouchableOpacity
             className='bg-[#6C0FF2] rounded-[15px]'
             onPress={() => navigation.navigate('Signup')} 
             activeOpacity={0.8}
           >
-            <Text className='px-[10px] py-[5px] text-white'>Inscrivez-vous</Text> 
+            <Text className='px-[10px] py-[5px] text-white font-peachy'>Inscrivez-vous</Text> 
           </TouchableOpacity>
         </View>
       </View>
