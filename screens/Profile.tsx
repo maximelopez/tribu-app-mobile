@@ -25,61 +25,38 @@ export default function Profile() {
 
 
           <View className="w-full px-4 mt-4 mb-8 items-center">
+            <Text className="text-[32px] font-peachy mb-8 mt-4">Mes thématiques</Text>
 
-            {/* Titre */}
-            <Text 
-              className="text-[32px] font-peachy mb-8 mt-4">
-              Mes thématiques
-            </Text>
-
-            {/* Ligne 1 */}
             <View className="flex-row gap-4 mb-4">
-              <View 
-                className="flex-1 h-[30px] rounded-full px-3 justify-center items-center"
-                style={{ backgroundColor: "#E6582F" }}
-              >
-                <Text className="text-white text-[12px] font-medium">
+              <View className="flex-1 h-[30px] rounded-[15px] px-3 justify-center items-center bg-red-200">
+                <Text className="font-outfit text-red-800">
                   Cuisine & Nutrition
                 </Text>
               </View>
 
-              <View 
-                className="flex-1 h-[30px] rounded-full px-3 justify-center items-center"
-                style={{ backgroundColor: "#FFF45E" }}
-              >
-                <Text className="text-black text-[12px] font-medium">
+              <View className="flex-1 h-[30px] rounded-[15px] px-3 justify-center items-center bg-yellow-200">
+                <Text className="font-outfit text-yellow-800">
                   Sport & Activités
                 </Text>
               </View>
             </View>
 
-            {/* Ligne 2 */}
             <View className="flex-row gap-4 mb-4">
-              <View 
-                className="flex-1 h-[30px] rounded-full px-3 justify-center items-center"
-                style={{ backgroundColor: "#6F28D9" }}
-              >
-                <Text className="text-white text-[12px] font-medium">
+              <View className="flex-1 h-[30px] rounded-[15px] px-3 justify-center items-center bg-violet-200">
+                <Text className="font-outfit text-violet-800">
                   Lecture & Culture
                 </Text>
               </View>
 
-              <View 
-                className="flex-1 h-[30px] rounded-full px-3 justify-center items-center"
-                style={{ backgroundColor: "#5EA1F2" }}
-              >
-                <Text className="text-white text-[12px] font-medium">
+              <View className="flex-1 h-[30px] rounded-[15px] px-3 justify-center items-center bg-blue-200">
+                <Text className="font-outfit text-blue-800">
                   Vie sociale
                 </Text>
               </View>
             </View>
 
-            {/* Ligne 3 */}
-            <View 
-              className="h-[30px] rounded-full px-3 justify-center items-center"
-              style={{ backgroundColor: "#FFF45E" }}
-            >
-              <Text className="text-black text-[12px] font-medium">
+            <View className="flex-1 h-[30px] rounded-[15px] px-3 justify-center items-center bg-yellow-200">
+              <Text className="font-outfit text-yellow-800">
                 Développement personnel
               </Text>
             </View>

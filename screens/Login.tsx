@@ -5,7 +5,7 @@ import { useUserStore } from '../store/userStore';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
-const API_URL = 'https://tribu-app.vercel.app/api/';
+const API_URL = 'https://app-tribu.vercel.app/api/';
 
 export default function Login({ navigation }: any) {
   const setUser = useUserStore(state => state.setUser);
