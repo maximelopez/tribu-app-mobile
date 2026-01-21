@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import Home from '../screens/Home';
+import HomeNavigator from './HomeNavigator';
 import Score from '../screens/Score';
 import Dashboard from '../screens/Dashboard';
 import Challenges from '../screens/Challenges';
@@ -24,11 +24,18 @@ export default function AppTabs() {
         }}
         >
             <Tab.Screen
-                name="Home"
-                component={Home}
+                name="HomeTab"
+                component={HomeNavigator}
                 options={{
-                tabBarIcon: ({ color, size }) => <MaterialIcons name="home" size={size} color={color} />,
+                    tabBarLabel: 'Home',
+                    tabBarIcon: ({ color, size }) => <MaterialIcons name="home" size={size} color={color} />,
                 }}
+                listeners={({ navigation }) => ({
+                    tabPress: (e) => {
+                        e.preventDefault();
+                        navigation.navigate('HomeTab', { screen: 'Home' });
+                    },
+                })}
             />
             <Tab.Screen
                 name="Score"

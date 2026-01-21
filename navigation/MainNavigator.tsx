@@ -13,18 +13,16 @@ export default function MainNavigator() {
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            {user ? (
-                user.score == null ? (
-                    <Stack.Screen name="Questionnaire" component={Questionnaire} />
-                ) : (
-                    <Stack.Screen name="AppTabs" component={AppTabs} />
-                )
-            ): (
+            {!user ? (
                 <>
-                    <Stack.Screen name="Login" component={Login} />
-                    <Stack.Screen name="Signup" component={Signup} />
+                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Signup" component={Signup} />
                 </>
+            ) : user.score == null ? (
+                <Stack.Screen name="Questionnaire" component={Questionnaire} />
+            ) : (
+                <Stack.Screen name="AppTabs" component={AppTabs} />
             )}
         </Stack.Navigator>
-    )
+    );
 }

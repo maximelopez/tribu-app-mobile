@@ -6,7 +6,9 @@ interface User {
   id: string;
   name: string;
   email: string;
-  score: number;
+  score: number | null;
+  familyId: string | null;
+  avatarUrl: string | null;
 }
 
 interface UserStore {

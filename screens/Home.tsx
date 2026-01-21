@@ -1,12 +1,23 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, View } from 'react-native';
 import { useUserStore } from '../store/userStore';
+import { useNavigation } from '@react-navigation/native';
 import DonutScore from '../components/DonutScore';
+import Button from '../components/Button';
 
 export default function Home() {
   const user = useUserStore(state => state.user);
+  const navigation = useNavigation<any>();
 
-  if (!user) return null;
+  if (!user || !user.score) return null;
+
+  const handleJoinFamily = () => {
+    navigation.navigate('JoinFamily');
+  };
+
+  const handleCreateFamily = () => {
+    navigation.navigate('CreateFamily');
+  };
 
   return (
     <SafeAreaView className='flex-1 bg-white'>
@@ -26,7 +37,18 @@ export default function Home() {
         />
 
         <View className='items-center mt-10'>
-          <Text className='text-gray-800 font-peachy text-3xl'>Mes défis</Text>
+          <Text className='text-gray-800 font-peachy text-3xl'>Ma famille</Text>
+          {user.familyId ? (
+            <Text className='text-gray-900 font-outfit mt-2 text-lg'>Vous faites partie de la famille {user.familyId}</Text>
+          ) : (
+            <>
+              <Text className='text-gray-900 font-outfit mb-4 text-lg'>Vous ne faites pas encore partie d'une famille</Text>
+              <View className='w-full gap-4'>
+                <Button title="Rejoindre une famille" onPress={handleJoinFamily} />
+                <Button title="Créer une famille" onPress={handleCreateFamily} />
+              </View>
+            </>
+          )}
         </View>
       </View>
     </SafeAreaView>
