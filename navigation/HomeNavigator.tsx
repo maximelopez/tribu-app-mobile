@@ -14,7 +14,7 @@ export default function HomeNavigator() {
         component={CreateFamily}
         options={{
           headerShown: true,
-          headerTitle: '',
+          headerTitle: 'Créer une famille',
           headerShadowVisible: false,
         }}
       />
@@ -23,7 +23,7 @@ export default function HomeNavigator() {
         component={JoinFamily}
         options={{
           headerShown: true,
-          headerTitle: '',
+          headerTitle: 'Rejoindre une famille',
           headerShadowVisible: false,
         }}
       />
