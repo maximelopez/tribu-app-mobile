@@ -17,7 +17,7 @@ export default function Home() {
 
   if (!user || !user.score) return null;
 
-  const handleJoinFamily = () => navigation.navigate('JoinFamily');
+  const handleJoinFamily = () => navigation.navigate('SearchFamily');
   const handleCreateFamily = () => navigation.navigate('CreateFamily');
 
   useEffect(() => {

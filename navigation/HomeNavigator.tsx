@@ -1,7 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '../screens/Home';
 import CreateFamily from '../screens/CreateFamily';
-import JoinFamily from '../screens/JoinFamily';
+import SearchFamily from '../screens/SearchFamily';
+import FamilyDetails from '../screens/FamilyDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,8 +20,17 @@ export default function HomeNavigator() {
         }}
       />
       <Stack.Screen
-        name="JoinFamily"
-        component={JoinFamily}
+        name="SearchFamily"
+        component={SearchFamily}
+        options={{
+          headerShown: true,
+          headerTitle: 'Rejoindre une famille',
+          headerShadowVisible: false,
+        }}
+      />
+      <Stack.Screen 
+        name="FamilyDetails" 
+        component={FamilyDetails}
         options={{
           headerShown: true,
           headerTitle: 'Rejoindre une famille',
