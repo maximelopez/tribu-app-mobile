@@ -61,14 +61,10 @@ export default function CreateFamily() {
             }
 
             // 3 - Mettre à jour le store utilisateur
-            setUser({
-                ...user, // conserve toutes les données existantes
-                familyId: familyId // met à jour seulement la famille
-            });
+            setUser({ ...user, familyId: familyId});
 
             // 4 - Naviguer vers Home
             navigation.navigate('Home');
-
             
         } catch (error) {
             console.error('Erreur :', error);

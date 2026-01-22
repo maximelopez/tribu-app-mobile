@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, View } from 'react-native';
 import { useUserStore } from '../store/userStore';
@@ -5,9 +6,12 @@ import { useNavigation } from '@react-navigation/native';
 import DonutScore from '../components/DonutScore';
 import Button from '../components/Button';
 
+const API_URL = 'https://tribu-app.onrender.com/api/';
+
 export default function Home() {
   const user = useUserStore(state => state.user);
   const navigation = useNavigation<any>();
+  const [family, setFamily] = useState<any>(null);
 
   if (!user || !user.score) return null;
 
@@ -18,6 +22,26 @@ export default function Home() {
   const handleCreateFamily = () => {
     navigation.navigate('CreateFamily');
   };
+
+  useEffect(() => {
+    if (!user.familyId) return;
+
+    const fetchFamily = async () => {
+      try {
+        const response = await fetch(`${API_URL}families/${user.familyId}`);
+        const data = await response.json();
+
+        if (!response.ok) return;
+
+        setFamily(data.family);
+
+      } catch (error) {
+        console.error('Erreur fetch famille :', error);
+      }
+    };
+  
+    fetchFamily();
+  }, [user.familyId]);
 
   return (
     <SafeAreaView className='flex-1 bg-white'>
@@ -38,8 +62,9 @@ export default function Home() {
 
         <View className='items-center mt-10'>
           <Text className='text-gray-800 font-peachy text-3xl'>Ma famille</Text>
+
           {user.familyId ? (
-            <Text className='text-gray-900 font-outfit mt-2 text-lg'>Vous faites partie de la famille {user.familyId}</Text>
+            <Text className='text-gray-900 font-outfit mt-2 text-lg'>Famille {family.name}</Text>
           ) : (
             <>
               <Text className='text-gray-900 font-outfit mb-4 text-lg'>Vous ne faites pas encore partie d'une famille</Text>

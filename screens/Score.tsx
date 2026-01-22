@@ -7,7 +7,7 @@ import { useUserStore } from '../store/userStore';
 export default function Score() {
     const user = useUserStore(state => state.user);
 
-    if (!user) return null;
+    if (!user || !user.score) return null;
 
     return (
         <SafeAreaView className="flex-1" edges={['top']}>
@@ -44,12 +44,6 @@ export default function Score() {
                 <View className="mx-6">
                     <Text className="text-center text-[32px] font-peachy mb-4">
                         Tableau de bord
-                    </Text>
-                    <Text className=" font-bold mb-4">
-                        Famille Bruneau
-                    </Text>
-                    <Text className=" font-bold text-gray-400 mb-4">
-                        Résultat de cette semaine
                     </Text>
                 </View>
             </ScrollView>
