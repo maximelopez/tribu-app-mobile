@@ -1,10 +1,17 @@
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useUserStore } from '../store/userStore';
+import { useFamilyStore } from '../store/familyStore';
 
 export default function Profile() {
   const user = useUserStore(state => state.user);
   const logout = useUserStore(state => state.logout);
+  const clearFamily = useFamilyStore(state => state.clearFamily);
+
+  const logoutUser = () => {
+    logout();
+    clearFamily();
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-[#F7F5F8]" edges={['top']}>
@@ -73,7 +80,7 @@ export default function Profile() {
           </TouchableOpacity>
 
           <TouchableOpacity
-              onPress={logout}
+              onPress={logoutUser}
               className="w-full h-[56px] rounded-[12px] bg-white items-center justify-center mb-[16px] border border-[#6C0FF2]"
               activeOpacity={0.8}
               >

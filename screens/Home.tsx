@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, View } from 'react-native';
 import { useUserStore } from '../store/userStore';
+import { useFamilyStore } from '../store/familyStore';
 import { useNavigation } from '@react-navigation/native';
 import DonutScore from '../components/DonutScore';
 import Button from '../components/Button';
@@ -10,30 +11,24 @@ const API_URL = 'https://tribu-app.onrender.com/api/';
 
 export default function Home() {
   const user = useUserStore(state => state.user);
+  const family = useFamilyStore(state => state.family);
+  const setFamily = useFamilyStore(state => state.setFamily);
   const navigation = useNavigation<any>();
-  const [family, setFamily] = useState<any>(null);
 
   if (!user || !user.score) return null;
 
-  const handleJoinFamily = () => {
-    navigation.navigate('JoinFamily');
-  };
-
-  const handleCreateFamily = () => {
-    navigation.navigate('CreateFamily');
-  };
+  const handleJoinFamily = () => navigation.navigate('JoinFamily');
+  const handleCreateFamily = () => navigation.navigate('CreateFamily');
 
   useEffect(() => {
-    if (!user.familyId) return;
+    if (!user.familyId || family) return;
 
     const fetchFamily = async () => {
       try {
         const response = await fetch(`${API_URL}families/${user.familyId}`);
         const data = await response.json();
 
-        if (!response.ok) return;
-
-        setFamily(data.family);
+        if (response.ok) setFamily(data.family);
 
       } catch (error) {
         console.error('Erreur fetch famille :', error);
@@ -41,7 +36,7 @@ export default function Home() {
     };
   
     fetchFamily();
-  }, [user.familyId]);
+  }, [user.familyId, family]);
 
   return (
     <SafeAreaView className='flex-1 bg-white'>
@@ -63,7 +58,7 @@ export default function Home() {
         <View className='items-center mt-10'>
           <Text className='text-gray-800 font-peachy text-3xl'>Ma famille</Text>
 
-          {user.familyId ? (
+          {family ? (
             <Text className='text-gray-900 font-outfit mt-2 text-lg'>Famille {family.name}</Text>
           ) : (
             <>
