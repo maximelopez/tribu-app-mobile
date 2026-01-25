@@ -8,9 +8,11 @@ import { useFamilyStore } from '../store/familyStore';
 const API_URL = 'https://tribu-app.onrender.com/api/';
 
 interface Family {
-  id: string;
-  name: string;
-  city: string;
+    id: string;
+    name: string;
+    city: string;
+    slogan: string | null;
+    themes: string[];
 }
 
 export default function FamilyDetails() {

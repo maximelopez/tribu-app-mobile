@@ -4,7 +4,7 @@ import { FlatList, KeyboardAvoidingView, Platform, Text, TouchableOpacity, View,
 import RatingQuestion from '../components/RatingQuestion';
 import { useUserStore } from '../store/userStore';
 
-const API_URL = 'https://app-tribu.vercel.app/api/';
+const API_URL = 'https://tribu-app.onrender.com/api/';
 
 export default function Questionnaire() {
     const flatListRef = useRef<FlatList>(null);

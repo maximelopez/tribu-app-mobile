@@ -27,7 +27,7 @@ export default function AppTabs() {
                 name="HomeTab"
                 component={HomeNavigator}
                 options={{
-                    tabBarLabel: 'Home',
+                    tabBarLabel: 'Accueil',
                     tabBarIcon: ({ color, size }) => <MaterialIcons name="home" size={size} color={color} />,
                 }}
                 listeners={({ navigation }) => ({
@@ -59,7 +59,7 @@ export default function AppTabs() {
                 }}
             />
             <Tab.Screen
-                name="Profile"
+                name="Profil"
                 component={Profile}
                 options={{
                 tabBarIcon: ({ color, size }) => <MaterialIcons name="account-circle" size={size} color={color} />,
