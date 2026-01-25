@@ -34,7 +34,7 @@ export default function CreateFamily() {
             const response = await fetch(API_URL + 'families', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ name, city })
+                body: JSON.stringify({ name, city, creatorId: user.id })
             });
 
             const data = await response.json();

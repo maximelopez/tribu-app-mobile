@@ -1,21 +1,28 @@
 import { create } from 'zustand';
 
-interface Family {
+export interface Family {
     id: string;
     name: string;
     city: string;
     slogan: string | null;
     themes: string[];
+    creatorId: string;
+    joinRequests: string[];
 }
 
 interface FamilyStore {
     family: Family | null;
-    setFamily: (family: Family) => void;
+    setFamily: (family: Family | ((prev: Family | null) => Family | null)) => void;
     clearFamily: () => void;
 }
 
 export const useFamilyStore = create<FamilyStore>((set) => ({
   family: null,
-  setFamily: (family) => set({ family }),
+  setFamily: (familyOrUpdater) =>
+    set((state) => ({
+      family: typeof familyOrUpdater === 'function'
+        ? (familyOrUpdater as (prev: Family | null) => Family | null)(state.family)
+        : familyOrUpdater,
+    })),
   clearFamily: () => set({ family: null }),
 }));

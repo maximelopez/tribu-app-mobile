@@ -13,6 +13,8 @@ interface Family {
     city: string;
     slogan: string | null;
     themes: string[];
+    creatorId: string;
+    joinRequests: string[];
 }
 
 export default function FamilyDetails() {
@@ -49,20 +51,19 @@ export default function FamilyDetails() {
         if (!user || !familyDetails) return;
 
         try {
-            const response = await fetch(`${API_URL}users/${user.id}/family`,{
+            const response = await fetch(`${API_URL}families/join-request`,{
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ familyId: familyDetails.id }),
+                body: JSON.stringify({ 
+                    familyId: familyDetails.id,
+                    userId: user.id,
+                }),
             });
 
             if (!response.ok) {
                 setErrorMessage('Impossible de rejoindre cette famille.');
                 return;
             }
-
-            // ✅ Mise à jour stores
-            setUser({ ...user, familyId: familyDetails.id });
-            setFamily(familyDetails);
 
             navigation.navigate('Home');
         } catch (error) {
