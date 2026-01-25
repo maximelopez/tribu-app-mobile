@@ -4,6 +4,7 @@ import { Text, View } from 'react-native';
 import { useUserStore } from '../store/userStore';
 import { useFamilyStore } from '../store/familyStore';
 import { useNavigation } from '@react-navigation/native';
+import useFamilyRealtime from '../hooks/useFamilyRealtime';
 import DonutScore from '../components/DonutScore';
 import Button from '../components/Button';
 
@@ -14,6 +15,9 @@ export default function Home() {
   const family = useFamilyStore(state => state.family);
   const setFamily = useFamilyStore(state => state.setFamily);
   const navigation = useNavigation<any>();
+
+  // ✅ Active le WebSocket pour le temps réel
+  useFamilyRealtime();
 
   if (!user || !user.score) return null;
 
