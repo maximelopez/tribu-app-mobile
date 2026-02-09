@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-interface User {
+export interface User {
   id: string;
   name: string;
   email: string;
@@ -13,7 +13,7 @@ interface User {
 
 interface UserStore {
   user: User | null;
-  setUser: (user: User) => void;
+  setUser: (user: User | ((prev: User | null) => User | null)) => void;
   logout: () => void;
 }
 
@@ -21,7 +21,13 @@ export const useUserStore = create<UserStore>()(
   persist(
     (set) => ({
       user: null,
-      setUser: (user) => set({ user }),
+      setUser: (userOrUpdater) =>
+        set((state) => ({
+          user:
+            typeof userOrUpdater === 'function'
+              ? (userOrUpdater as (prev: User | null) => User | null)(state.user)
+              : userOrUpdater,
+        })),
       logout: () => set({ user: null }),
     }),
     {

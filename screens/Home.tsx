@@ -32,7 +32,16 @@ export default function Home() {
         const response = await fetch(`${API_URL}families/${user.familyId}`);
         const data = await response.json();
 
-        if (response.ok) setFamily(data.family);
+        if (response.ok) {
+        // ⚡ Adapter joinRequests pour qu'il soit toujours {id, name}
+        const familyWithNames = {
+          ...data.family,
+          joinRequests: data.family.joinRequests.map((user: any) =>
+            typeof user === 'string' ? { id: user, name: 'Utilisateur inconnu' } : user
+          ),
+        };
+        setFamily(familyWithNames);
+      }
       } catch (error) {
         console.error('Erreur fetch famille :', error);
       }
@@ -41,6 +50,7 @@ export default function Home() {
     fetchFamily();
   }, [user.familyId, setFamily]);
 
+  //console.log('Famille actuelle dans le store :', family);
   return (
     <SafeAreaView className='flex-1 bg-white'>
       <View className='flex-1 mt-10 mx-4'>
@@ -65,76 +75,76 @@ export default function Home() {
             <View className="mt-2 w-full">
               <Text className='text-gray-900 font-outfit text-lg'>Famille {family.name}</Text>
 
-              {/* Demandes en attente (si créateur) */}
+              {/* Demandes en attente */}
               {user.id === family.creatorId && family.joinRequests.length > 0 && (
-  <View className="mt-4">
-    <Text className="font-outfit text-gray-600">Demandes en attente :</Text>
+                <View className="mt-4">
+                  <Text className="font-outfit text-gray-600">Demandes en attente :</Text>
 
-    {family.joinRequests.map(requestUserId => (
-      <View key={requestUserId} className="flex-row items-center justify-between mt-2 bg-gray-100 p-2 rounded-lg">
-        <Text className="ml-2 text-gray-800">{requestUserId}</Text>
-        
-        <View className="flex-row gap-2">
-          <TouchableOpacity
-            onPress={async () => {
-              try {
-                const response = await fetch(`${API_URL}families/respond-request`, {
-                  method: 'PUT',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    familyId: family.id,
-                    userId: requestUserId,
-                    accept: true,
-                  }),
-                });
-                if (response.ok) {
-                  // Supprime la demande du store
-                  setFamily(prev => prev ? {
-                    ...prev,
-                    joinRequests: prev.joinRequests.filter(id => id !== requestUserId),
-                  } : prev);
-                }
-              } catch (err) {
-                console.error(err);
-              }
-            }}
-            className="px-3 py-1 rounded bg-green-500"
-          >
-            <Text className="text-white">✅</Text>
-          </TouchableOpacity>
+                  {family.joinRequests.map(requestUser => (
+                    <View key={requestUser.id} className="flex-row items-center justify-between mt-2 bg-gray-100 p-2 rounded-lg">
+                      <Text className="ml-2 text-gray-800">{requestUser.name}</Text>
+                      
+                      <View className="flex-row gap-2">
+                        <TouchableOpacity
+                          onPress={async () => {
+                            try {
+                              const response = await fetch(`${API_URL}families/respond-request`, {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                  familyId: family.id,
+                                  userId: requestUser.id,
+                                  accept: true,
+                                }),
+                              });
+                              if (response.ok) {
+                                // Supprime la demande du store
+                                setFamily(prev => prev ? {
+                                  ...prev,
+                                  joinRequests: prev.joinRequests.filter(user => user.id !== requestUser.id),
+                                } : prev);
+                              }
+                            } catch (err) {
+                              console.error(err);
+                            }
+                          }}
+                          className="px-3 py-1 rounded bg-green-500"
+                        >
+                          <Text className="text-white">✅</Text>
+                        </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={async () => {
-              try {
-                const response = await fetch(`${API_URL}families/respond-request`, {
-                  method: 'PUT',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    familyId: family.id,
-                    userId: requestUserId,
-                    accept: false,
-                  }),
-                });
-                if (response.ok) {
-                  // Supprime la demande du store
-                  setFamily(prev => prev ? {
-                    ...prev,
-                    joinRequests: prev.joinRequests.filter(id => id !== requestUserId),
-                  } : prev);
-                }
-              } catch (err) {
-                console.error(err);
-              }
-            }}
-            className="px-3 py-1 rounded bg-red-500"
-          >
-            <Text className="text-white">❌</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    ))}
-  </View>
-)}
+                        <TouchableOpacity
+                          onPress={async () => {
+                            try {
+                              const response = await fetch(`${API_URL}families/respond-request`, {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                  familyId: family.id,
+                                  userId: requestUser.id,
+                                  accept: false,
+                                }),
+                              });
+                              if (response.ok) {
+                                // Supprime la demande du store
+                                setFamily(prev => prev ? {
+                                  ...prev,
+                                  joinRequests: prev.joinRequests.filter(user => user.id !== requestUser.id),
+                                } : prev);
+                              }
+                            } catch (err) {
+                              console.error(err);
+                            }
+                          }}
+                          className="px-3 py-1 rounded bg-red-500"
+                        >
+                          <Text className="text-white">❌</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  ))}
+                </View>
+              )}
 
             </View>
           ) : (

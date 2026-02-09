@@ -7,7 +7,7 @@ export interface Family {
     slogan: string | null;
     themes: string[];
     creatorId: string;
-    joinRequests: string[];
+    joinRequests: { id: string; name: string }[];
 }
 
 interface FamilyStore {
