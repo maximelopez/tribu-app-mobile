@@ -28,20 +28,26 @@ export default function Home() {
     if (!user.familyId) return;
 
     const fetchFamily = async () => {
+      // Récupérer les infos de la famille
       try {
-        const response = await fetch(`${API_URL}families/${user.familyId}`);
-        const data = await response.json();
+        const responseFamily = await fetch(`${API_URL}families/${user.familyId}`);
+        const dataFamily = await responseFamily.json();
 
-        if (response.ok) {
-        // ⚡ Adapter joinRequests pour qu'il soit toujours {id, name}
-        const familyWithNames = {
-          ...data.family,
-          joinRequests: data.family.joinRequests.map((user: any) =>
+        if (!responseFamily.ok) return;
+
+        // Récupérer les membres
+        const responseMembers = await fetch(`${API_URL}users?familyId=${user.familyId}`);
+        const dataMembers = await responseMembers.json();
+ 
+        const familyWithMembers = {
+          ...dataFamily.family,
+          joinRequests: dataFamily.family.joinRequests.map((user: any) =>
             typeof user === 'string' ? { id: user, name: 'Utilisateur inconnu' } : user
           ),
+          members: dataMembers.users,
         };
-        setFamily(familyWithNames);
-      }
+
+        setFamily(familyWithMembers);   
       } catch (error) {
         console.error('Erreur fetch famille :', error);
       }
@@ -75,6 +81,24 @@ export default function Home() {
             <View className="mt-2 w-full">
               <Text className='text-gray-900 font-outfit text-lg'>Famille {family.name}</Text>
 
+              <View className="mt-2">
+                <Text className="font-outfit text-gray-600 mt-2">Membres :</Text>
+                
+                {family.members && family.members.length > 0 ? (
+                  family.members.map(member => (
+                    <View 
+                      key={member.id} 
+                      className="flex-row items-center justify-between mt-2 bg-gray-100 p-2 rounded-lg"
+                    >
+                      <Text className="ml-2 text-gray-800">{member.name}</Text>
+                      <Text className="ml-2 text-gray-500">Score: {member.score}</Text>
+                    </View>
+                  ))
+                ) : (
+                  <Text className="ml-2 text-gray-500 mt-2">Aucun membre pour le moment</Text>
+                )}
+              </View>
+
               {/* Demandes en attente */}
               {user.id === family.creatorId && family.joinRequests.length > 0 && (
                 <View className="mt-4">
@@ -88,14 +112,10 @@ export default function Home() {
                         <TouchableOpacity
                           onPress={async () => {
                             try {
-                              const response = await fetch(`${API_URL}families/respond-request`, {
-                                method: 'PUT',
+                              const response = await fetch(`${API_URL}families/${family.id}/join-requests/${requestUser.id}`, {
+                                method: 'PATCH',
                                 headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({
-                                  familyId: family.id,
-                                  userId: requestUser.id,
-                                  accept: true,
-                                }),
+                                body: JSON.stringify({ accept: true }),
                               });
                               if (response.ok) {
                                 // Supprime la demande du store
@@ -103,6 +123,13 @@ export default function Home() {
                                   ...prev,
                                   joinRequests: prev.joinRequests.filter(user => user.id !== requestUser.id),
                                 } : prev);
+
+                                // Re-fetch les membres
+                                const resMembers = await fetch(`${API_URL}users?familyId=${family.id}`);
+                                const dataMembers = await resMembers.json();
+
+                                // Mettre à jour le store avec la nouvelle liste
+                                setFamily(prev => prev ? { ...prev, members: dataMembers.users } : prev);
                               }
                             } catch (err) {
                               console.error(err);
@@ -116,12 +143,10 @@ export default function Home() {
                         <TouchableOpacity
                           onPress={async () => {
                             try {
-                              const response = await fetch(`${API_URL}families/respond-request`, {
-                                method: 'PUT',
+                              const response = await fetch(`${API_URL}families/${family.id}/join-requests/${requestUser.id}`, {
+                                method: 'PATCH',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
-                                  familyId: family.id,
-                                  userId: requestUser.id,
                                   accept: false,
                                 }),
                               });

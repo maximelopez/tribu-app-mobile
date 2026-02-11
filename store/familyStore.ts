@@ -8,6 +8,7 @@ export interface Family {
     themes: string[];
     creatorId: string;
     joinRequests: { id: string; name: string }[];
+    members?: { id: string; name: string; score: number; avatarUrl?: string }[];
 }
 
 interface FamilyStore {

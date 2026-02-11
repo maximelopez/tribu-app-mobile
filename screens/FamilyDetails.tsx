@@ -51,11 +51,10 @@ export default function FamilyDetails() {
         if (!user || !familyDetails) return;
 
         try {
-            const response = await fetch(`${API_URL}families/join-request`,{
-                method: 'PUT',
+            const response = await fetch(`${API_URL}families/${familyDetails.id}/join-requests`,{
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
-                    familyId: familyDetails.id,
                     userId: user.id,
                 }),
             });
