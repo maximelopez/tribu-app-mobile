@@ -52,7 +52,7 @@ export default function Questionnaire() {
         // Enregistrer le score en base + Zustand
         if (!userId) return;
         fetch(API_URL + 'users/' + userId +'/score', {
-            method: 'PUT',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
             },

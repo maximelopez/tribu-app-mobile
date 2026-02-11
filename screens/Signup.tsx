@@ -26,7 +26,7 @@ export default function Signup({ navigation }: any) {
     setErrorMessage('');
 
     try {
-      const response = await fetch(API_URL + 'users/signup', {
+      const response = await fetch(API_URL + 'auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

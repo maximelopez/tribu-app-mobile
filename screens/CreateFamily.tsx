@@ -48,7 +48,7 @@ export default function CreateFamily() {
 
             // 2 - Associer la famille à l'utilisateur
             const userResponse = await fetch(`${API_URL}users/${user.id}/family`, {
-                method: 'PUT',
+                method: 'PATCH',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ familyId })
             });
