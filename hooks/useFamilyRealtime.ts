@@ -28,10 +28,23 @@ export default function useFamilyRealtime() {
         const userName = userData.profile.name || 'Utilisateur inconnu';
 
         setFamily((prev) => {
-          if (!prev || prev.creatorId !== userId) return prev;
+          if (!prev) return prev;
+
+          // On vérifie qu'on est bien le créateur
+          if (prev.creatorId !== userId) return prev;
+
+          const alreadyExists = prev.joinRequests.some(
+            (req) => req.id === data.userId
+          );
+
+          if (alreadyExists) return prev;
+
           return {
             ...prev,
-            joinRequests: [...prev.joinRequests, { id: data.userId, name: userName }],
+            joinRequests: [
+              ...prev.joinRequests,
+              { id: data.userId, name: userName },
+            ],
           };
         });
       } catch (error) {

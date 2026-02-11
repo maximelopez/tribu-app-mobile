@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useUserStore } from '../store/userStore';
 import { useFamilyStore } from '../store/familyStore';
 import { useNavigation } from '@react-navigation/native';
@@ -15,6 +15,7 @@ export default function Home() {
   const family = useFamilyStore(state => state.family);
   const setFamily = useFamilyStore(state => state.setFamily);
   const navigation = useNavigation<any>();
+  const [isLoadingFamily, setIsLoadingFamily] = useState(false);
 
   // Active le WebSocket pour le temps réel
   useFamilyRealtime();
@@ -28,6 +29,8 @@ export default function Home() {
     if (!user.familyId) return;
 
     const fetchFamily = async () => {
+      setIsLoadingFamily(true);
+
       // Récupérer les infos de la famille
       try {
         const responseFamily = await fetch(`${API_URL}families/${user.familyId}`);
@@ -50,13 +53,14 @@ export default function Home() {
         setFamily(familyWithMembers);   
       } catch (error) {
         console.error('Erreur fetch famille :', error);
+      } finally {
+        setIsLoadingFamily(false);
       }
     };
 
     fetchFamily();
   }, [user.familyId, setFamily]);
 
-  //console.log('Famille actuelle dans le store :', family);
   return (
     <SafeAreaView className='flex-1 bg-white'>
       <View className='flex-1 mt-10 mx-4'>
@@ -77,7 +81,11 @@ export default function Home() {
         <View className='items-center mt-10'>
           <Text className='text-gray-800 font-peachy text-3xl'>Ma famille</Text>
 
-          {family ? (
+          {isLoadingFamily ? (
+            <View className="mt-6 items-center">
+              <ActivityIndicator size="large" color="#6C0FF2" />
+            </View>
+          ) : family ? (
             <View className="mt-2 w-full">
               <Text className='text-gray-900 font-outfit text-lg'>Famille {family.name}</Text>
 
