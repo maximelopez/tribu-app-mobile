@@ -23,17 +23,18 @@ export default function Profile() {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 20 }}
       >
-        <View className="flex-2 items-center pt-20 px-6">
+        <Text className="text-[32px] font-peachy mt-10 text-center">Profil</Text>
+        <View className="flex-2 items-center px-4">
           {/* <Image
             source={require('')}
             className="w-32 h-32 rounded-full mb-5"
           /> */}
 
-          <ThemeSwitcher />
-
           <Text className="text-2xl font-bold text-gray-900 mb-2">{user?.name}</Text>
           <Text className="text-gray-600 text-lg mb-4">{user?.email}</Text>
-          <Text className="text-[32px] text-gray-900 font-peachy text-center mb-4"> Mes statistiques</Text>
+          <ThemeSwitcher />
+
+          <Text className="text-[32px] text-gray-900 font-peachy text-center mb-4 mt-10"> Mes statistiques</Text>
 
 
           <View className="w-full px-4 mt-4 mb-8 items-center">

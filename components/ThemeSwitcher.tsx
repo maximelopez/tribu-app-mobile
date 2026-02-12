@@ -13,7 +13,7 @@ export default function ThemeSwitcher() {
 
   return (
     <View style={{ marginTop: 16 }}>
-      <Text style={{ fontFamily: 'outfit', color: '#333', marginBottom: 8 }}>Couleur du thème :</Text>
+      <Text style={{ fontFamily: 'outfit', color: '#333', marginBottom: 8 }}>Thème de l'application :</Text>
 
       <View style={{ flexDirection: 'row', gap: 12 }}>
         {colors.map((color) => {

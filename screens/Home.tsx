@@ -6,6 +6,7 @@ import { useFamilyStore } from '../store/familyStore';
 import { useNavigation } from '@react-navigation/native';
 import useFamilyRealtime from '../hooks/useFamilyRealtime';
 import DonutScore from '../components/DonutScore';
+import JoinRequestItem from '../components/JoinRequestItem';
 import FamilyMember from '../components/FamilyMember';
 import Button from '../components/Button';
 
@@ -70,7 +71,7 @@ export default function Home() {
         showsVerticalScrollIndicator={false}
       >
 
-        <View className='flex-1 mt-10 mx-4'>
+        <View className='flex-1 mt-10'>
           <Text className='text-gray-800 font-peachy text-3xl'>Bonjour, {user?.name}</Text>
           <Text className='text-gray-900 font-outfit mb-10 text-xl'>Ton score bien-être</Text>
           <DonutScore
@@ -98,10 +99,9 @@ export default function Home() {
 
                 {/* Demandes en attente */}
                 {user.id === family.creatorId && family.joinRequests.length > 0 && (
-                  <View className="mt-4">
-                    <Text className="font-outfit text-gray-600">Demandes en attente :</Text>
+                  <View>
 
-                    {family.joinRequests.map(requestUser => (
+                    {/* {family.joinRequests.map(requestUser => (
                       <View key={requestUser.id} className="flex-row items-center justify-between mt-2 bg-gray-100 p-2 rounded-lg">
                         <Text className="ml-2 text-gray-800">{requestUser.name}</Text>
                         
@@ -164,7 +164,16 @@ export default function Home() {
                           </TouchableOpacity>
                         </View>
                       </View>
+                    ))} */}
+
+                    {family.joinRequests.map(requestUser => (
+                      <JoinRequestItem
+                        key={requestUser.id}
+                        requestUser={requestUser}
+                        familyId={family.id}
+                      />
                     ))}
+
                   </View>
                 )}
                 
