@@ -28,7 +28,7 @@ export default function RatingQuestion({
                         key={num}
                         onPress={() => onChange(num)}
                         className={`w-10 h-10 rounded-full flex items-center justify-center 
-                            ${value === num ? 'bg-[#6C0FF2]' : 'bg-gray-200'}`}
+                            ${value === num ? 'bg-[#20c1b1]' : 'bg-gray-200'}`}
                     >
                         <Text className={`text-sm ${value === num ? 'text-white' : 'text-black'}`}>
                             {num}

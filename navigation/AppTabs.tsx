@@ -66,7 +66,7 @@ export default function AppTabs() {
                 name="Chat"
                 component={Chat}
                 options={{
-                tabBarIcon: ({ color, size }) => <MaterialIcons name="chat" size={size} color={color} />,
+                tabBarIcon: ({ color, size }) => <MaterialIcons name="forum" size={size} color={color} />,
                 }}
             />
             <Tab.Screen

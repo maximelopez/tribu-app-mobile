@@ -11,8 +11,10 @@ import {
 } from 'react-native';
 import { useUserStore } from '../store/userStore';
 import useFamilyChat from '../hooks/useFamilyChat';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Chat() {
+  const { primaryColor } = useTheme();
   const { messages, sendMessage } = useFamilyChat();
   const user = useUserStore(state => state.user);
 
@@ -39,7 +41,7 @@ export default function Chat() {
       <View
         style={{
           alignSelf: isMe ? 'flex-end' : 'flex-start',
-          backgroundColor: isMe ? '#6C0FF2' : '#E5E5EA',
+          backgroundColor: isMe ? primaryColor : '#E5E5EA',
           padding: 10,
           borderRadius: 18,
           marginVertical: 4,
@@ -70,6 +72,16 @@ export default function Chat() {
       </View>
     );
   };
+
+  if (!user?.familyId) {
+    return (
+      <SafeAreaView className='flex-1 justify-center items-center'>
+        <Text className='mx-4 font-outfit'>
+          Vous devez rejoindre une famille pour accéder au chat.
+        </Text>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -111,7 +123,7 @@ export default function Chat() {
           <TouchableOpacity
             onPress={handleSend}
             style={{
-              backgroundColor: '#6C0FF2',
+              backgroundColor: primaryColor,
               paddingHorizontal: 18,
               paddingVertical: 10,
               borderRadius: 25,

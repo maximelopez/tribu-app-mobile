@@ -1,12 +1,12 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
-export type ThemeColor = 'violet' | 'jaune' | 'rouge' | 'bleu';
+export type ThemeColor = 'bleu' | 'jaune' | 'orange' | 'vert';
 
 const colorMap: Record<ThemeColor, string> = {
-  violet: '#6C0FF2',
-  jaune: '#FFCF06',
-  rouge: '#E64A19',
-  bleu: '#448AFF',
+  bleu: '#20c1b1',
+  jaune: '#ff9d00',
+  orange: '#ea4a1f',
+  vert: '#00a16d',
 };
 
 interface ThemeContextProps {
@@ -17,15 +17,15 @@ interface ThemeContextProps {
 }
 
 const ThemeContext = createContext<ThemeContextProps>({
-  themeColor: 'violet',
-  primaryColor: colorMap['violet'],
+  themeColor: 'bleu',
+  primaryColor: colorMap['bleu'],
   setThemeColor: () => {},
   nextColor: () => {},
 });
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const colors: ThemeColor[] = ['violet', 'jaune', 'rouge', 'bleu'];
-  const [themeColor, setThemeColor] = useState<ThemeColor>('violet');
+  const colors: ThemeColor[] = ['bleu', 'jaune', 'orange', 'vert'];
+  const [themeColor, setThemeColor] = useState<ThemeColor>('bleu');
 
   const nextColor = () => {
     const currentIndex = colors.indexOf(themeColor);

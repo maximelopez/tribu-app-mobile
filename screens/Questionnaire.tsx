@@ -33,7 +33,7 @@ export default function Questionnaire() {
         <TouchableOpacity
             onPress={onPress}
             className={`px-6 py-3 rounded-xl mr-3 mb-3 
-                ${selected ? "bg-[#6C0FF2]" : "bg-gray-200"}`}
+                ${selected ? "bg-[#20c1b1]" : "bg-gray-200"}`}
         >
             <Text className={`text-lg ${selected ? "text-white" : "text-black"}`}>{label}</Text>
         </TouchableOpacity>
@@ -94,11 +94,11 @@ export default function Questionnaire() {
                 {/* Intro Slide */}
                 {item.type === 'intro' && (
                     <View className="items-center justify-center space-y-6">
-                        <Text className="text-4xl font-bold text-[#6C0FF2] text-center">{item.title}</Text>
+                        <Text className="text-4xl font-bold text-[#20c1b1] text-center">{item.title}</Text>
                         <Text className="text-xl text-gray-600 text-center px-4">{item.subtitle}</Text>
                         <TouchableOpacity
                             onPress={() => nextQuestion(index)}
-                            className="mt-10 bg-[#6C0FF2] px-8 py-4 rounded-[15px]"
+                            className="mt-10 bg-[#20c1b1] px-8 py-4 rounded-[15px]"
                             activeOpacity={0.8}
                             >
                             <Text className="text-white font-bold text-lg">Suivant </Text>
@@ -108,7 +108,7 @@ export default function Questionnaire() {
 
                 {/* Question Title */}
                 {item.type !== 'intro' && (
-                    <Text className="text-2xl font-bold text-[#6C0FF2] mb-10 text-center">
+                    <Text className="text-2xl font-bold text-[#20c1b1] mb-10 text-center">
                         {item.label}
                     </Text>
                 )}
@@ -152,7 +152,7 @@ export default function Questionnaire() {
                 {item.type === 'conclusion' && (     
                 <TouchableOpacity
                     onPress={handleSubmit}
-                    className="bg-[#6C0FF2] p-5 rounded-[15px]"
+                    className="bg-[#20c1b1] p-5 rounded-[15px]"
                     activeOpacity={0.8}
                 >
                     <Text className="text-white text-center font-bold text-xl">

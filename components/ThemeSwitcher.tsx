@@ -5,10 +5,10 @@ export default function ThemeSwitcher() {
   const { themeColor, setThemeColor } = useTheme();
 
   const colors: { name: string; value: ThemeColor }[] = [
-    { name: 'Violet', value: 'violet' },
-    { name: 'Jaune', value: 'jaune' },
-    { name: 'Rouge', value: 'rouge' },
     { name: 'Bleu', value: 'bleu' },
+    { name: 'Jaune', value: 'jaune' },
+    { name: 'Orange', value: 'orange' },
+    { name: 'Vert', value: 'vert' },
   ];
 
   return (
@@ -18,13 +18,13 @@ export default function ThemeSwitcher() {
       <View style={{ flexDirection: 'row', gap: 12 }}>
         {colors.map((color) => {
           const bgColor =
-            color.value === 'violet'
-              ? '#6C0FF2'
+            color.value === 'bleu'
+              ? '#20c1b1'
               : color.value === 'jaune'
-              ? '#FFCF06'
-              : color.value === 'rouge'
-              ? '#E64A19'
-              : '#448AFF';
+              ? '#ff9d00'
+              : color.value === 'orange'
+              ? '#ea4a1f'
+              : '#00a16d';
 
           return (
             <TouchableOpacity

@@ -93,7 +93,8 @@ export default function Login({ navigation }: any) {
         <View className="flex-1 flex-row items-center justify-center">
           <Text className="text-gray-900 text-center mr-[6px] font-outfit">Pas encore de compte ?</Text>
           <TouchableOpacity
-            className='bg-[#6C0FF2] rounded-[15px]'
+            className='rounded-[15px]'
+            style={{ backgroundColor: '#20c1b1' }}
             onPress={() => navigation.navigate('Signup')} 
             activeOpacity={0.8}
           >

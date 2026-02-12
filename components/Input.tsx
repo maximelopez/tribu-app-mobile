@@ -1,4 +1,13 @@
-import { View, TextInput } from 'react-native';
+import { View, TextInput, TextInputProps } from 'react-native';
+import { useTheme } from '../context/ThemeContext';
+
+interface InputProps {
+    value: string;
+    onChangeText: (text: string) => void;
+    placeholder: string;
+    keyboardType?: TextInputProps['keyboardType'];
+    secureTextEntry?: boolean;
+}
 
 export default function Input({ 
     value,
@@ -6,7 +15,9 @@ export default function Input({
     placeholder,
     keyboardType = 'default',
     secureTextEntry = false,
-}: any) {
+}: InputProps) {
+    const { primaryColor } = useTheme();
+    
     return (
         <View className="w-full">
             <TextInput 
@@ -16,9 +27,9 @@ export default function Input({
                 placeholderTextColor="#C9C9C9"
                 keyboardType={keyboardType}
                 secureTextEntry={secureTextEntry}
-                autoCapitalize="none"
-                selectionColor="#6C0FF2"
-                className="w-full border border-gray-200 rounded-[15px] h-[48px] px-[24px]"
+                autoCapitalize={keyboardType === 'email-address' ? 'none' : 'sentences'}
+                selectionColor={primaryColor}
+                className="w-full border border-gray-200 rounded-2xl h-[48px] px-[24px]"
             />
         </View>
     )
