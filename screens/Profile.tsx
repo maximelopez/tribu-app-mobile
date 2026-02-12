@@ -2,8 +2,11 @@ import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useUserStore } from '../store/userStore';
 import { useFamilyStore } from '../store/familyStore';
+import ThemeSwitcher from '../components/ThemeSwitcher';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Profile() {
+  const { primaryColor } = useTheme();
   const user = useUserStore(state => state.user);
   const logout = useUserStore(state => state.logout);
   const clearFamily = useFamilyStore(state => state.clearFamily);
@@ -25,6 +28,8 @@ export default function Profile() {
             source={require('')}
             className="w-32 h-32 rounded-full mb-5"
           /> */}
+
+          <ThemeSwitcher />
 
           <Text className="text-2xl font-bold text-gray-900 mb-2">{user?.name}</Text>
           <Text className="text-gray-600 text-lg mb-4">{user?.email}</Text>
@@ -71,7 +76,8 @@ export default function Profile() {
           </View>
 
           <TouchableOpacity
-              className="w-full h-[56px] rounded-[12px] bg-[#6C0FF2] items-center justify-center mb-[16px]"
+              className="w-full h-[56px] rounded-[12px] items-center justify-center mb-[16px]"
+              style={{ backgroundColor: primaryColor }}
               activeOpacity={0.8}
               >
               <Text className="font-peachy text-center text-[20px] text-white">
@@ -81,11 +87,12 @@ export default function Profile() {
 
           <TouchableOpacity
               onPress={logoutUser}
-              className="w-full h-[56px] rounded-[12px] bg-white items-center justify-center mb-[16px] border border-[#6C0FF2]"
+              className="w-full h-[56px] rounded-[12px] bg-white items-center justify-center mb-[16px] border"
+              style={{ borderColor: primaryColor }}
               activeOpacity={0.8}
               >
               <Text
-                className="font-peachy text-center text-[20px] text-[#6C0FF2]">
+                className="font-peachy text-center text-[20px]" style={{ color: primaryColor }}>
                 Se déconnecter
               </Text>
           </TouchableOpacity>

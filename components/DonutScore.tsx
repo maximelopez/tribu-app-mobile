@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
+import { useTheme } from '../context/ThemeContext';
 import Animated, { useSharedValue, withTiming, useAnimatedProps } from 'react-native-reanimated';
 
 type ActivityPosition = 'left' | 'right' | 'bottom';
@@ -29,6 +30,7 @@ export default function DonutScore({
   score,
   activities = [],
 }: DonutScoreProps) {
+  const { primaryColor } = useTheme();
 
   const radius = (size - thickness) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -69,7 +71,7 @@ export default function DonutScore({
             cx={size / 2}
             cy={size / 2}
             r={radius}
-            stroke="#6C0FF2"
+            stroke={primaryColor}
             strokeWidth={thickness}
             fill="none"
             strokeLinecap="round"
@@ -91,8 +93,8 @@ export default function DonutScore({
             borderRadius: innerSize / 2,
           }}
         >
-          <Text className="text-[38px] font-bold text-[#6C0FF2]">{score}</Text>
-          <Text className="text-[14px] font-bold text-[#6C0FF2]">points</Text>
+          <Text className="text-[38px] font-bold" style={{ color: primaryColor }}>{score}</Text>
+          <Text className="text-[14px] font-bold" style={{ color: primaryColor }}>points</Text>
         </View>
 
         {/* Activities */}
@@ -100,7 +102,7 @@ export default function DonutScore({
           <View
             key={index}
             className={`${activityPositionStyles[activity.position]}
-              bg-white border border-purple-300 rounded-2xl px-4 py-2 shadow-sm z-20`}
+              bg-white border border-gray-200 rounded-2xl px-4 py-2 shadow-sm z-20`}
           >
             <Text className="font-semibold">
               {activity.icon} {activity.label}

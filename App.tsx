@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import MainNavigator from './navigation/MainNavigator';
+import { ThemeProvider } from './context/ThemeContext';
 import { useFonts } from 'expo-font';
 import "./global.css";
 
@@ -9,9 +10,13 @@ export default function App() {
     'outfit': require('./assets/fonts/Outfit-VariableFont_wght.ttf'),
   });
 
+  if (!fontsLoaded) return null;
+
   return (
-    <NavigationContainer>
-      <MainNavigator />
-    </NavigationContainer>
+    <ThemeProvider>
+      <NavigationContainer>
+        <MainNavigator />
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }

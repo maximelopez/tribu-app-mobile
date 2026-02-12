@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useTheme } from '../context/ThemeContext';
 
 import HomeNavigator from './HomeNavigator';
 import Score from '../screens/Score';
@@ -10,11 +11,13 @@ import Profile from '../screens/Profile';
 const Tab = createBottomTabNavigator();
 
 export default function AppTabs() {
+    const { primaryColor } = useTheme();
+
     return (
         <Tab.Navigator
             screenOptions={{
             headerShown: false,
-            tabBarActiveTintColor: "#6C0FF2",
+            tabBarActiveTintColor: primaryColor,
             tabBarStyle: {
             borderTopWidth: 0,
             elevation: 0,

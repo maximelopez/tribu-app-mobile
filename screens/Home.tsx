@@ -6,6 +6,7 @@ import { useFamilyStore } from '../store/familyStore';
 import { useNavigation } from '@react-navigation/native';
 import useFamilyRealtime from '../hooks/useFamilyRealtime';
 import DonutScore from '../components/DonutScore';
+import FamilyMember from '../components/FamilyMember';
 import Button from '../components/Button';
 
 const API_URL = 'https://tribu-app.onrender.com/api/';
@@ -62,7 +63,7 @@ export default function Home() {
   }, [user.familyId, setFamily]);
 
   return (
-    <SafeAreaView className='flex-1 bg-white'>
+    <SafeAreaView className='flex-1 bg-[#F7F5F8] '>
       <View className='flex-1 mt-10 mx-4'>
         <Text className='text-gray-800 font-peachy text-3xl'>Bonjour, {user?.name}</Text>
         <Text className='text-gray-900 font-outfit mb-10 text-xl'>Ton score bien-être</Text>
@@ -94,13 +95,7 @@ export default function Home() {
                 
                 {family.members && family.members.length > 0 ? (
                   family.members.map(member => (
-                    <View 
-                      key={member.id} 
-                      className="flex-row items-center justify-between mt-2 bg-gray-100 p-2 rounded-lg"
-                    >
-                      <Text className="ml-2 text-gray-800">{member.name}</Text>
-                      <Text className="ml-2 text-gray-500">Score: {member.score}</Text>
-                    </View>
+                    <FamilyMember key={member.id} member={member} />
                   ))
                 ) : (
                   <Text className="ml-2 text-gray-500 mt-2">Aucun membre pour le moment</Text>
