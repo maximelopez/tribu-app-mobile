@@ -33,7 +33,7 @@ export default function Chat() {
   };
 
   const renderItem = ({ item }: any) => {
-    const isMe = item.sender._id === user?.id;
+    const isMe = item.sender?._id === user?.id;
 
     return (
       <View
@@ -46,6 +46,10 @@ export default function Chat() {
           maxWidth: '75%',
         }}
       >
+
+        <Text>
+          {item.sender?.name || 'Utilisateur inconnu'}:
+        </Text>
         <Text style={{ color: isMe ? '#fff' : '#000', fontWeight: '500' }}>
           {item.content}
         </Text>
