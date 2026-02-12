@@ -1,10 +1,11 @@
-import { io } from 'socket.io-client';
+//import { io } from 'socket.io-client';
 import { useEffect } from 'react';
+import { socket } from '../socket';
 import { useUserStore } from '../store/userStore';
 import { useFamilyStore, Family } from '../store/familyStore';
 
 const API_URL = 'https://tribu-app.onrender.com/api/';
-const socket = io('https://tribu-app.onrender.com');
+//const socket = io('https://tribu-app.onrender.com');
 
 export default function useFamilyRealtime() {
   const userId = useUserStore(state => state.user?.id);

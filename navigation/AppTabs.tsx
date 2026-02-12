@@ -6,6 +6,7 @@ import HomeNavigator from './HomeNavigator';
 import Score from '../screens/Score';
 import Dashboard from '../screens/Dashboard';
 import Challenges from '../screens/Challenges';
+import Chat from '../screens/Chat';
 import Profile from '../screens/Profile';
 
 const Tab = createBottomTabNavigator();
@@ -40,13 +41,13 @@ export default function AppTabs() {
                     },
                 })}
             />
-            <Tab.Screen
+            {/* <Tab.Screen
                 name="Score"
                 component={Score}
                 options={{
                 tabBarIcon: ({ color, size }) => <MaterialIcons name="insights" size={size} color={color} />,
                 }}
-            />
+            /> */}
             <Tab.Screen
                 name="Dashboard"
                 component={Dashboard}
@@ -59,6 +60,13 @@ export default function AppTabs() {
                 component={Challenges}
                 options={{
                 tabBarIcon: ({ color, size }) => <MaterialIcons name="emoji-events" size={size} color={color} />,
+                }}
+            />
+            <Tab.Screen
+                name="Chat"
+                component={Chat}
+                options={{
+                tabBarIcon: ({ color, size }) => <MaterialIcons name="chat" size={size} color={color} />,
                 }}
             />
             <Tab.Screen
