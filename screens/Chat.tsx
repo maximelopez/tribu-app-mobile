@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   View,
   Text,
@@ -67,55 +68,57 @@ export default function Chat() {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: '#fff', padding: 10 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    >
-      <FlatList
-        ref={flatListRef}
-        data={messages}
-        keyExtractor={(item) => item._id}
-        renderItem={renderItem}
-        showsVerticalScrollIndicator={false}
-      />
-
-      {/* Input */}
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginTop: 10,
-        }}
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <KeyboardAvoidingView
+        style={{ flex: 1, backgroundColor: '#fff', padding: 10 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
-        <TextInput
-          value={text}
-          onChangeText={setText}
-          placeholder="Écris un message..."
-          style={{
-            flex: 1,
-            borderWidth: 1,
-            borderColor: '#ddd',
-            borderRadius: 25,
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            marginRight: 8,
-          }}
+        <FlatList
+          ref={flatListRef}
+          data={messages}
+          keyExtractor={(item) => item._id}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
         />
 
-        <TouchableOpacity
-          onPress={handleSend}
+        {/* Input */}
+        <View
           style={{
-            backgroundColor: '#6C0FF2',
-            paddingHorizontal: 18,
-            paddingVertical: 10,
-            borderRadius: 25,
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 10,
           }}
         >
-          <Text style={{ color: '#fff', fontWeight: 'bold' }}>
-            Envoyer
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </KeyboardAvoidingView>
+          <TextInput
+            value={text}
+            onChangeText={setText}
+            placeholder="Écris un message..."
+            style={{
+              flex: 1,
+              borderWidth: 1,
+              borderColor: '#ddd',
+              borderRadius: 25,
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              marginRight: 8,
+            }}
+          />
+
+          <TouchableOpacity
+            onPress={handleSend}
+            style={{
+              backgroundColor: '#6C0FF2',
+              paddingHorizontal: 18,
+              paddingVertical: 10,
+              borderRadius: 25,
+            }}
+          >
+            <Text style={{ color: '#fff', fontWeight: 'bold' }}>
+              Envoyer
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
