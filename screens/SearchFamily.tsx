@@ -51,7 +51,7 @@ export default function SearchFamily() {
         >
             <Text className="text-lg font-peachy text-gray-900">{item.name}</Text>
             <Text className="text-gray-600 font-outfit mb-3">{item.city}</Text>
-            <Text className="text-white font-peachy self-start px-4 py-2 rounded-lg bg-[#6C0FF2]">Rejoindre</Text>
+            <Text className="text-white font-peachy self-start px-4 py-2 rounded-lg bg-[#00a16d]">Rejoindre</Text>
         </TouchableOpacity>
     );
 

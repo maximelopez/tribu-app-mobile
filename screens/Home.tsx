@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, View, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Text, View, ScrollView, ActivityIndicator } from 'react-native';
 import { useUserStore } from '../store/userStore';
 import { useFamilyStore } from '../store/familyStore';
 import { useNavigation } from '@react-navigation/native';
@@ -91,7 +91,7 @@ export default function Home() {
 
             {isLoadingFamily ? (
               <View className="mt-6 items-center">
-                <ActivityIndicator size="large" color="#6C0FF2" />
+                <ActivityIndicator size="large" color="#00a16d" />
               </View>
             ) : family ? (
               <View className="mt-2 w-full">
@@ -100,72 +100,6 @@ export default function Home() {
                 {/* Demandes en attente */}
                 {user.id === family.creatorId && family.joinRequests.length > 0 && (
                   <View>
-
-                    {/* {family.joinRequests.map(requestUser => (
-                      <View key={requestUser.id} className="flex-row items-center justify-between mt-2 bg-gray-100 p-2 rounded-lg">
-                        <Text className="ml-2 text-gray-800">{requestUser.name}</Text>
-                        
-                        <View className="flex-row gap-2">
-                          <TouchableOpacity
-                            onPress={async () => {
-                              try {
-                                const response = await fetch(`${API_URL}families/${family.id}/join-requests/${requestUser.id}`, {
-                                  method: 'PATCH',
-                                  headers: { 'Content-Type': 'application/json' },
-                                  body: JSON.stringify({ accept: true }),
-                                });
-                                if (response.ok) {
-                                  // Supprime la demande du store
-                                  setFamily(prev => prev ? {
-                                    ...prev,
-                                    joinRequests: prev.joinRequests.filter(user => user.id !== requestUser.id),
-                                  } : prev);
-
-                                  // Re-fetch les membres
-                                  const resMembers = await fetch(`${API_URL}users?familyId=${family.id}`);
-                                  const dataMembers = await resMembers.json();
-
-                                  // Mettre à jour le store avec la nouvelle liste
-                                  setFamily(prev => prev ? { ...prev, members: dataMembers.users } : prev);
-                                }
-                              } catch (err) {
-                                console.error(err);
-                              }
-                            }}
-                            className="px-3 py-1 rounded bg-green-500"
-                          >
-                            <Text className="text-white">✅</Text>
-                          </TouchableOpacity>
-
-                          <TouchableOpacity
-                            onPress={async () => {
-                              try {
-                                const response = await fetch(`${API_URL}families/${family.id}/join-requests/${requestUser.id}`, {
-                                  method: 'PATCH',
-                                  headers: { 'Content-Type': 'application/json' },
-                                  body: JSON.stringify({
-                                    accept: false,
-                                  }),
-                                });
-                                if (response.ok) {
-                                  // Supprime la demande du store
-                                  setFamily(prev => prev ? {
-                                    ...prev,
-                                    joinRequests: prev.joinRequests.filter(user => user.id !== requestUser.id),
-                                  } : prev);
-                                }
-                              } catch (err) {
-                                console.error(err);
-                              }
-                            }}
-                            className="px-3 py-1 rounded bg-red-500"
-                          >
-                            <Text className="text-white">❌</Text>
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                    ))} */}
-
                     {family.joinRequests.map(requestUser => (
                       <JoinRequestItem
                         key={requestUser.id}
@@ -173,7 +107,6 @@ export default function Home() {
                         familyId={family.id}
                       />
                     ))}
-
                   </View>
                 )}
                 

@@ -90,7 +90,7 @@ export default function FamilyDetails() {
 
                 <TouchableOpacity
                     onPress={handleJoinFamily}
-                    className="w-full h-[56px] rounded-[12px] bg-[#6C0FF2] items-center justify-center"
+                    className="w-full h-[56px] rounded-[12px] bg-[#00a16d] items-center justify-center"
                     activeOpacity={0.8}
                 >
                 <Text className="font-peachy text-[20px] text-white">
