@@ -3,10 +3,11 @@ import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 import { useTheme } from '../context/ThemeContext';
 
 interface ButtonProps {
-title: string;
-onPress: () => void;
-loading?: boolean;
-disabled?: boolean;
+    title: string;
+    onPress: () => void;
+    loading?: boolean;
+    disabled?: boolean;
+    color?: string;
 }
 
 export default function Button({
@@ -14,6 +15,7 @@ export default function Button({
     onPress,
     loading = false,
     disabled = false,
+    color
 }: ButtonProps) {
     const { primaryColor } = useTheme();
     const isDisabled = loading || disabled;
@@ -31,7 +33,7 @@ export default function Button({
             onPress={handlePress}
             activeOpacity={0.8}
             className='w-full h-[48px] justify-center rounded-2xl'
-            style={{ backgroundColor: primaryColor }}
+            style={{ backgroundColor: color || primaryColor }}
         >
             {loading ? (
                 <ActivityIndicator color="white" />

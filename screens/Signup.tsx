@@ -51,7 +51,8 @@ export default function Signup({ navigation }: any) {
         email: data.user.email,
         score: data.user.score,
         familyId: data.user.familyId,
-        avatarUrl: data.user.avatarUrl,
+        avatar: data.user.avatarUrl,
+        theme: data.user.theme,
       });
 
     } catch (error: any) {
@@ -72,6 +73,7 @@ export default function Signup({ navigation }: any) {
             value={name} 
             onChangeText={setName}
             placeholder="Nom"
+            color="#00a16d"
           />
 
           <Input 
@@ -79,13 +81,16 @@ export default function Signup({ navigation }: any) {
             onChangeText={setEmail}
             placeholder="Adresse mail"
             keyboardType="email-address"
+            color="#00a16d"
           />
 
           <Input
             value={password}
             onChangeText={setPassword}
             placeholder="Mot de passe"
+            autoCapitalize='none'
             secureTextEntry
+            color="#00a16d"
           />
         </View>
 
@@ -95,13 +100,14 @@ export default function Signup({ navigation }: any) {
           title="S'inscrire"
           onPress={handleSignup}
           loading={loading}
+          color="#00a16d"
         />
 
         <View className="flex-1 flex-row items-center justify-center">
           <Text className="text-gray-900 text-center mr-[6px] font-outfit">Déjà inscrit(e) ?</Text>
           <TouchableOpacity
             className='rounded-[15px]'
-            style={{ backgroundColor: '#20c1b1' }}
+            style={{ backgroundColor: '#00a16d' }}
             onPress={() => navigation.navigate('Login')} 
             activeOpacity={0.8}>
               <Text className='px-[10px] py-[5px] text-white font-peachy'>Connectez-vous</Text> 

@@ -50,7 +50,8 @@ export default function Login({ navigation }: any) {
         email: data.user.email,
         score: data.user.score,
         familyId: data.user.familyId,
-        avatarUrl: data.user.avatarUrl,
+        avatar: data.user.avatarUrl,
+        theme: data.user.theme,
       });
 
     } catch (error: any) {
@@ -72,13 +73,16 @@ export default function Login({ navigation }: any) {
             onChangeText={setEmail}
             placeholder="Adresse mail"
             keyboardType="email-address"
+            color="#00a16d"
           />
 
           <Input
             value={password}
             onChangeText={setPassword}
             placeholder="Mot de passe"
+            autoCapitalize='none'
             secureTextEntry
+            color="#00a16d"
           />
         </View>
 
@@ -88,13 +92,14 @@ export default function Login({ navigation }: any) {
           title="Se connecter"
           onPress={handleLogin}
           loading={loading}
+          color="#00a16d"
         />
 
         <View className="flex-1 flex-row items-center justify-center">
           <Text className="text-gray-900 text-center mr-[6px] font-outfit">Pas encore de compte ?</Text>
           <TouchableOpacity
             className='rounded-[15px]'
-            style={{ backgroundColor: '#20c1b1' }}
+            style={{ backgroundColor: '#00a16d' }}
             onPress={() => navigation.navigate('Signup')} 
             activeOpacity={0.8}
           >

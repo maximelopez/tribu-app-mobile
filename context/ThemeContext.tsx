@@ -1,12 +1,12 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { createContext, useState, useEffect, useContext, ReactNode } from 'react';
+import { useUserStore } from '../store/userStore';
 
-export type ThemeColor = 'bleu' | 'jaune' | 'orange' | 'vert';
+export type ThemeColor = 'vert' | 'jaune' | 'orange';
 
 const colorMap: Record<ThemeColor, string> = {
-  bleu: '#20c1b1',
+  vert: '#00a16d',
   jaune: '#ff9d00',
   orange: '#ea4a1f',
-  vert: '#00a16d',
 };
 
 interface ThemeContextProps {
@@ -17,15 +17,24 @@ interface ThemeContextProps {
 }
 
 const ThemeContext = createContext<ThemeContextProps>({
-  themeColor: 'bleu',
-  primaryColor: colorMap['bleu'],
+  themeColor: 'vert',
+  primaryColor: colorMap['vert'],
   setThemeColor: () => {},
   nextColor: () => {},
 });
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const colors: ThemeColor[] = ['bleu', 'jaune', 'orange', 'vert'];
-  const [themeColor, setThemeColor] = useState<ThemeColor>('bleu');
+  const colors: ThemeColor[] = ['vert', 'jaune', 'orange'];
+  const [themeColor, setThemeColor] = useState<ThemeColor>('vert');
+
+  const user = useUserStore(state => state.user);
+
+  // Charger le thème du user au démarrage
+  useEffect(() => {
+    if (user?.theme && colors.includes(user.theme as ThemeColor)) {
+      setThemeColor(user.theme);
+    }
+  }, [user]);
 
   const nextColor = () => {
     const currentIndex = colors.indexOf(themeColor);

@@ -8,7 +8,8 @@ export interface User {
   email: string;
   score: number | null;
   familyId: string | null;
-  avatarUrl: string | null;
+  avatar: string | null;
+  theme?: 'vert' | 'jaune' | 'orange';
 }
 
 interface UserStore {
