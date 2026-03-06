@@ -4,6 +4,7 @@ import { useUserStore } from '../store/userStore';
 import { useFamilyStore } from '../store/familyStore';
 import ThemeSwitcher from '../components/ThemeSwitcher';
 import { useTheme } from '../context/ThemeContext';
+import Button from '../components/Button';
 
 export default function Profile() {
   const { primaryColor } = useTheme();
@@ -75,28 +76,8 @@ export default function Profile() {
             </View>
 
           </View>
-
-          <TouchableOpacity
-              className="w-full h-[56px] rounded-[12px] items-center justify-center mb-[16px]"
-              style={{ backgroundColor: primaryColor }}
-              activeOpacity={0.8}
-              >
-              <Text className="font-peachy text-center text-[20px] text-white">
-                Devenir premium
-              </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-              onPress={logoutUser}
-              className="w-full h-[56px] rounded-[12px] bg-white items-center justify-center mb-[16px] border"
-              style={{ borderColor: primaryColor }}
-              activeOpacity={0.8}
-              >
-              <Text
-                className="font-peachy text-center text-[20px]" style={{ color: primaryColor }}>
-                Se déconnecter
-              </Text>
-          </TouchableOpacity>
+          
+          <Button title="Se déconnecter" onPress={logoutUser} />
 
         </View>
       </ScrollView>

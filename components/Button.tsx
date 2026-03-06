@@ -38,7 +38,7 @@ export default function Button({
             {loading ? (
                 <ActivityIndicator color="white" />
             ): (
-                <Text className="text-white text-center font-peachy text-[20px]">
+                <Text className="text-white text-center font-outfit font-bold text-xl">
                     {title}
                 </Text>
             )}

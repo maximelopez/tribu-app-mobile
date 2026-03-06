@@ -75,15 +75,10 @@ export default function Home() {
           <Text className='text-gray-800 font-peachy text-3xl'>Bonjour, {user?.name}</Text>
           <Text className='text-gray-900 font-outfit mb-10 text-xl'>Ton score bien-être</Text>
           <DonutScore
-            size={220}
-            thickness={35}
+            size={180}
+            thickness={30}
             progress={user.score / 100}
             score={user.score}
-            activities={[
-              { label: 'Sport', icon: '🏀', points: 25, position: 'left' },
-              { label: 'Cuisine', icon: '🍳', points: 8, position: 'right' },
-              { label: 'Lecture', icon: '📘', points: 5, position: 'bottom' },
-            ]}
           />
 
           <View className='items-center mt-10'>
