@@ -12,6 +12,8 @@ import {
 import { useUserStore } from '../store/userStore';
 import useFamilyChat from '../hooks/useFamilyChat';
 import { useTheme } from '../context/ThemeContext';
+import MessageBubble from '../components/MessageBubble';
+import SendIcon from '../assets/icons/sendBtn.svg';
 
 export default function Chat() {
   const { primaryColor } = useTheme();
@@ -21,12 +23,11 @@ export default function Chat() {
   const [text, setText] = useState('');
   const flatListRef = useRef<FlatList>(null);
 
-  // Scroll automatique quand nouveau message
   useEffect(() => {
-    setTimeout(() => {
-      flatListRef.current?.scrollToEnd({ animated: true });
-    }, 100);
-  }, [messages]);
+    if (flatListRef.current && messages.length > 0) {
+      flatListRef.current.scrollToEnd({ animated: false });
+    }
+  }, []);
 
   const handleSend = () => {
     if (!text.trim()) return;
@@ -38,38 +39,12 @@ export default function Chat() {
     const isMe = item.sender?._id === user?.id;
 
     return (
-      <View
-        style={{
-          alignSelf: isMe ? 'flex-end' : 'flex-start',
-          backgroundColor: isMe ? primaryColor : '#E5E5EA',
-          padding: 10,
-          borderRadius: 18,
-          marginVertical: 4,
-          maxWidth: '75%',
-        }}
-      >
-
-        <Text>
-          {item.sender?.name || 'Utilisateur inconnu'}:
-        </Text>
-        <Text style={{ color: isMe ? '#fff' : '#000', fontWeight: '500' }}>
-          {item.content}
-        </Text>
-
-        <Text
-          style={{
-            fontSize: 10,
-            marginTop: 4,
-            color: isMe ? '#ddd' : '#555',
-            alignSelf: 'flex-end',
-          }}
-        >
-          {new Date(item.createdAt).toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-          })}
-        </Text>
-      </View>
+      <MessageBubble 
+        content={item.content}
+        senderName={item.sender?.name}
+        createdAt={item.createdAt}
+        isMe={isMe}
+      />
     );
   };
 
@@ -84,10 +59,11 @@ export default function Chat() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F5F8' }}>
       <KeyboardAvoidingView
-        style={{ flex: 1, backgroundColor: '#fff', padding: 10 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{ flex: 1, backgroundColor: '#F7F5F8', padding: 10 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={80}
       >
         <FlatList
           ref={flatListRef}
@@ -95,6 +71,7 @@ export default function Chat() {
           keyExtractor={(item) => item._id}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
+          onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
         />
 
         {/* Input */}
@@ -115,23 +92,24 @@ export default function Chat() {
               borderColor: '#ddd',
               borderRadius: 25,
               paddingHorizontal: 15,
-              paddingVertical: 10,
+              paddingVertical: 12,
               marginRight: 8,
             }}
           />
 
-          <TouchableOpacity
-            onPress={handleSend}
+          <TouchableOpacity 
+            onPress={handleSend} 
+            activeOpacity={0.8}
             style={{
               backgroundColor: primaryColor,
-              paddingHorizontal: 18,
-              paddingVertical: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
               borderRadius: 25,
+              width: 50,
+              height: 50,
             }}
           >
-            <Text style={{ color: '#fff', fontWeight: 'bold' }}>
-              Envoyer
-            </Text>
+            <SendIcon width={28} height={28} fill={primaryColor} />
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>

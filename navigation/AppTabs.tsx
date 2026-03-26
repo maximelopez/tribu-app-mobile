@@ -58,7 +58,7 @@ export default function AppTabs() {
         component={Challenges}
         options={{
           tabBarLabel: '',
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ focused }) => (
             <View
               style={{
                 width: 52,

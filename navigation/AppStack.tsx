@@ -17,10 +17,7 @@ export default function AppStack() {
         name="Tabs"
         component={AppTabs}
         options={{
-          headerShown: true,
-          headerStyle: { backgroundColor: primaryColor },
-          headerShadowVisible: false,
-          headerTitle: '',
+          headerShown: false,
         }}
       />
 

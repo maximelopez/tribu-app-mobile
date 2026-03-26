@@ -73,7 +73,7 @@ export default function Home() {
         showsVerticalScrollIndicator={false}
       >
 
-        <View className='flex-1'>
+        <View className='flex-1 mt-4'>
           <Text className='text-gray-800 font-peachy text-3xl'>
             Bonjour, <Text style={{ color: primaryColor }}>{user?.name}</Text>
           </Text>
