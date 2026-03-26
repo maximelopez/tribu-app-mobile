@@ -45,7 +45,7 @@ export default function AppTabs() {
 
       <Tab.Screen
         name="Badges"
-        component={Dashboard}
+        component={Challenges}
         options={{
           tabBarIcon: ({ color, size }) => (
             <BadgesIcon width={20} height={20} fill={color} />
@@ -54,20 +54,22 @@ export default function AppTabs() {
       />
 
       <Tab.Screen
-        name="Challenges"
-        component={Challenges}
+        name="Dashboard"
+        component={Dashboard}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
             <View
               style={{
-                width: 52,
-                height: 52,
-                borderRadius: 26,
+                width: 56,
+                height: 56,
+                borderRadius: 28,
                 backgroundColor: primaryColor,
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginBottom: 20,
+                marginBottom: 18 ,
+                borderColor: 'white',
+                borderWidth: 4,
               }}
             >
               <DashboardIcon width={20} height={20} fill='white' />

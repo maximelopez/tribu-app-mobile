@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function Challenges() {
   return (
     <View style={styles.container}>
-      <Text>Challenges</Text>
+      <Text>Badges</Text>
     </View>
   );
 }

@@ -50,7 +50,7 @@ export default function Chat() {
 
   if (!user?.familyId) {
     return (
-      <SafeAreaView className='flex-1 justify-center items-center'>
+      <SafeAreaView className='flex-1 justify-center items-center' edges={['top']}>
         <Text className='mx-4 font-outfit'>
           Vous devez rejoindre une famille pour accéder au chat.
         </Text>
@@ -59,13 +59,14 @@ export default function Chat() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F5F8' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }} edges={['top']}>
       <KeyboardAvoidingView
-        style={{ flex: 1, backgroundColor: '#F7F5F8', padding: 10 }}
+        style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={80}
+        keyboardVerticalOffset={35}
       >
         <FlatList
+          className='bg-[#F7F5F8] px-4'
           ref={flatListRef}
           data={messages}
           keyExtractor={(item) => item._id}
@@ -75,25 +76,18 @@ export default function Chat() {
         />
 
         {/* Input */}
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 10,
-          }}
-        >
+        <View className='px-4 flex-row items-center mt-2'>
           <TextInput
             value={text}
             onChangeText={setText}
             placeholder="Écris un message..."
             style={{
               flex: 1,
-              borderWidth: 1,
-              borderColor: '#ddd',
-              borderRadius: 25,
-              paddingHorizontal: 15,
-              paddingVertical: 12,
-              marginRight: 8,
+              backgroundColor: '#F0F0F3',
+              borderRadius: 8,
+              paddingHorizontal: 16,
+              marginRight: 12,
+              height: 56,
             }}
           />
 
