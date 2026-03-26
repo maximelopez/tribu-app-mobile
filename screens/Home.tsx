@@ -9,6 +9,7 @@ import DonutScore from '../components/DonutScore';
 import JoinRequestItem from '../components/JoinRequestItem';
 import FamilyMember from '../components/FamilyMember';
 import Button from '../components/Button';
+import { useTheme } from '../context/ThemeContext';
 
 const API_URL = 'https://tribu-app.onrender.com/api/';
 
@@ -18,6 +19,7 @@ export default function Home() {
   const setFamily = useFamilyStore(state => state.setFamily);
   const navigation = useNavigation<any>();
   const [isLoadingFamily, setIsLoadingFamily] = useState(false);
+  const { primaryColor } = useTheme();
 
   // Active le WebSocket pour le temps réel
   useFamilyRealtime();
@@ -71,8 +73,10 @@ export default function Home() {
         showsVerticalScrollIndicator={false}
       >
 
-        <View className='flex-1 mt-10'>
-          <Text className='text-gray-800 font-peachy text-3xl'>Bonjour, {user?.name}</Text>
+        <View className='flex-1'>
+          <Text className='text-gray-800 font-peachy text-3xl'>
+            Bonjour, <Text style={{ color: primaryColor }}>{user?.name}</Text>
+          </Text>
           <Text className='text-gray-900 font-outfit mb-10 text-xl'>Ton score bien-être</Text>
           <DonutScore
             size={180}

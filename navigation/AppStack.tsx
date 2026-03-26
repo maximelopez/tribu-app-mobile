@@ -1,0 +1,68 @@
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AppTabs from './AppTabs';
+import CreateFamily from '../screens/CreateFamily';
+import SearchFamily from '../screens/SearchFamily';
+import FamilyDetails from '../screens/FamilyDetails';
+import { useTheme } from '../context/ThemeContext';
+
+const Stack = createNativeStackNavigator();
+
+export default function AppStack() {
+  const { primaryColor } = useTheme();
+
+  return (
+    <Stack.Navigator>
+      {/* Tabs : header vert sans titre */}
+      <Stack.Screen
+        name="Tabs"
+        component={AppTabs}
+        options={{
+          headerShown: true,
+          headerStyle: { backgroundColor: primaryColor },
+          headerShadowVisible: false,
+          headerTitle: '',
+        }}
+      />
+
+      {/* Écrans enfants : header vert avec titre blanc */}
+      <Stack.Screen
+        name="CreateFamily"
+        component={CreateFamily}
+        options={{
+          headerShown: true,
+          headerStyle: { backgroundColor: primaryColor },
+          headerShadowVisible: false,
+          headerTitle: 'Créer une famille',
+          headerTitleStyle: { color: 'white', fontWeight: 'bold' },
+          headerTintColor: 'white',
+        }}
+      />
+
+      <Stack.Screen
+        name="SearchFamily"
+        component={SearchFamily}
+        options={{
+          headerShown: true,
+          headerStyle: { backgroundColor: primaryColor },
+          headerShadowVisible: false,
+          headerTitle: 'Rejoindre une famille',
+          headerTitleStyle: { color: 'white', fontWeight: 'bold' },
+          headerTintColor: 'white',
+        }}
+      />
+
+      <Stack.Screen
+        name="FamilyDetails"
+        component={FamilyDetails}
+        options={{
+          headerShown: true,
+          headerStyle: { backgroundColor: primaryColor },
+          headerShadowVisible: false,
+          headerTitle: 'Détails famille',
+          headerTitleStyle: { color: 'white', fontWeight: 'bold' },
+          headerTintColor: 'white',
+        }}
+      />
+    </Stack.Navigator>
+  );
+}

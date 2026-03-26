@@ -3,9 +3,8 @@ import { useUserStore } from '../store/userStore';
 
 import Signup from '../screens/Signup';
 import Login from '../screens/Login';
-//import Questionnaire from '../screens/Questionnaire';
 import WelcomeQuiz from '../screens/WelcomeQuiz';
-import AppTabs from './AppTabs';
+import AppStack from './AppStack';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +21,7 @@ export default function MainNavigator() {
             ) : user.score == null ? (
                 <Stack.Screen name="WelcomeQuiz" component={WelcomeQuiz} />
             ) : (
-                <Stack.Screen name="AppTabs" component={AppTabs} />
+                <Stack.Screen name="App" component={AppStack} />
             )}
         </Stack.Navigator>
     );
