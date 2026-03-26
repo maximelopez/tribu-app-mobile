@@ -33,7 +33,7 @@ export default function AppStack() {
           headerStyle: { backgroundColor: primaryColor },
           headerShadowVisible: false,
           headerTitleAlign: 'center',
-          headerTitle: 'Créer une famille',
+          headerTitle: 'Créer une Tribu',
           headerTitleStyle: { color: 'white', fontWeight: 'bold' },
           headerTintColor: 'white',
         }}
@@ -47,7 +47,7 @@ export default function AppStack() {
           headerStyle: { backgroundColor: primaryColor },
           headerShadowVisible: false,
           headerTitleAlign: 'center',
-          headerTitle: 'Rejoindre une famille',
+          headerTitle: 'Rejoindre une Tribu',
           headerTitleStyle: { color: 'white', fontWeight: 'bold' },
           headerTintColor: 'white',
         }}
@@ -61,7 +61,7 @@ export default function AppStack() {
           headerStyle: { backgroundColor: primaryColor },
           headerShadowVisible: false,
           headerTitleAlign: 'center',
-          headerTitle: 'Détails famille',
+          headerTitle: 'Détails de la Tribu',
           headerTitleStyle: { color: 'white', fontWeight: 'bold' },
           headerTintColor: 'white',
         }}

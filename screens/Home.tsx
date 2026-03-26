@@ -127,8 +127,8 @@ export default function Home() {
               <>
                 <Text className='text-gray-900 font-outfit mb-4 text-lg'>Tu n'as pas encore de Tribu</Text>
                 <View className='w-full gap-4'>
-                  <Button title="Rejoindre une famille" onPress={handleJoinFamily} />
-                  <Button title="Créer une famille" onPress={handleCreateFamily} />
+                  <Button title="Rejoindre une Tribu" onPress={handleJoinFamily} />
+                  <Button title="Créer une Tribu" onPress={handleCreateFamily} />
                 </View>
               </>
             )}

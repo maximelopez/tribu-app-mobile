@@ -1,5 +1,4 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MaterialIcons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
 import Home from '../screens/Home';
 import Dashboard from '../screens/Dashboard';
@@ -7,6 +6,12 @@ import Challenges from '../screens/Challenges';
 import Chat from '../screens/Chat';
 import Profile from '../screens/Profile';
 import { View } from 'react-native';
+
+import HomeIcon from '../assets/icons/home.svg';
+import ChatIcon from '../assets/icons/chat.svg';
+import BadgesIcon from '../assets/icons/badges.svg';
+import DashboardIcon from '../assets/icons/dashboard.svg';
+import ProfileIcon from '../assets/icons/profile.svg';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,6 +23,7 @@ export default function AppTabs() {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: primaryColor,
+        tabBarInactiveTintColor: '#161616',
         tabBarStyle: {
           borderTopWidth: 0,
           elevation: 0,
@@ -31,8 +37,8 @@ export default function AppTabs() {
         component={Home}
         options={{
           tabBarLabel: 'Accueil',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="home" size={size} color={color} />
+          tabBarIcon: ({ color }) => (
+            <HomeIcon width={20} height={20} fill={color} />
           ),
         }}
       />
@@ -42,7 +48,7 @@ export default function AppTabs() {
         component={Dashboard}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="bar-chart" size={size} color={color} />
+            <BadgesIcon width={20} height={20} fill={color} />
           ),
         }}
       />
@@ -64,7 +70,7 @@ export default function AppTabs() {
                 marginBottom: 20,
               }}
             >
-              <MaterialIcons name="emoji-events" size={size} color="white" />
+              <DashboardIcon width={20} height={20} fill='white' />
             </View>
           ),
         }}
@@ -75,7 +81,7 @@ export default function AppTabs() {
         component={Chat}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="forum" size={size} color={color} />
+            <ChatIcon width={20} height={20} fill={color} />
           ),
         }}
       />
@@ -85,7 +91,7 @@ export default function AppTabs() {
         component={Profile}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="account-circle" size={size} color={color} />
+            <ProfileIcon width={20} height={20} fill={color} />
           ),
         }}
       />
