@@ -6,6 +6,7 @@ import Dashboard from '../screens/Dashboard';
 import Challenges from '../screens/Challenges';
 import Chat from '../screens/Chat';
 import Profile from '../screens/Profile';
+import { View } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +38,7 @@ export default function AppTabs() {
       />
 
       <Tab.Screen
-        name="Dashboard"
+        name="Badges"
         component={Dashboard}
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -50,8 +51,21 @@ export default function AppTabs() {
         name="Challenges"
         component={Challenges}
         options={{
+          tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="emoji-events" size={size} color={color} />
+            <View
+              style={{
+                width: 52,
+                height: 52,
+                borderRadius: 26,
+                backgroundColor: primaryColor,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: 20,
+              }}
+            >
+              <MaterialIcons name="emoji-events" size={size} color="white" />
+            </View>
           ),
         }}
       />

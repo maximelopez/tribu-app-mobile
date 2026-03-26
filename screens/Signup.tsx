@@ -1,4 +1,4 @@
-import { useState } from 'react';
+ import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { useUserStore } from '../store/userStore';
@@ -66,28 +66,31 @@ export default function Signup({ navigation }: any) {
   return (
     <SafeAreaView className='flex-1 bg-[#F7F5F8]' edges={['top']}>
       <View className='flex-1 p-5 items-center mt-[40px]'>
-        <Text className="text-4xl mb-6 text-gray-800 font-peachy">Inscription</Text>
+        <Text className="text-4xl mb-6 text-[#00a16d] font-peachy">Inscription</Text>
         <Text className="text-xl text-gray-900 mb-9 font-outfit">Saisissez vos informations ci-dessous</Text>
-        <View className='w-full gap-[20px] mb-[20px]'>
+        <View className='w-full gap-[10px] mb-[20px]'>
+          <Text>Prénom :</Text>
           <Input 
             value={name} 
             onChangeText={setName}
-            placeholder="Nom"
+            placeholder="Anastasia"
             color="#00a16d"
           />
 
+          <Text>Votre adresse mail :</Text>
           <Input 
             value={email} 
             onChangeText={setEmail}
-            placeholder="Adresse mail"
+            placeholder="email@example.com"
             keyboardType="email-address"
             color="#00a16d"
           />
 
+          <Text>Renseignez votre mot de passe :</Text>
           <Input
             value={password}
             onChangeText={setPassword}
-            placeholder="Mot de passe"
+            placeholder="**********"
             autoCapitalize='none'
             secureTextEntry
             color="#00a16d"

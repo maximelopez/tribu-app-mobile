@@ -86,7 +86,7 @@ export default function Home() {
           />
 
           <View className='items-center mt-10'>
-            <Text className='text-gray-800 font-peachy text-3xl'>Ma famille</Text>
+            <Text className='text-gray-800 font-peachy text-3xl'>Tableau de bord</Text>
 
             {isLoadingFamily ? (
               <View className="mt-6 items-center">
@@ -125,7 +125,7 @@ export default function Home() {
               </View>
             ) : (
               <>
-                <Text className='text-gray-900 font-outfit mb-4 text-lg'>Vous ne faites pas encore partie d'une famille</Text>
+                <Text className='text-gray-900 font-outfit mb-4 text-lg'>Tu n'as pas encore de Tribu</Text>
                 <View className='w-full gap-4'>
                   <Button title="Rejoindre une famille" onPress={handleJoinFamily} />
                   <Button title="Créer une famille" onPress={handleCreateFamily} />
