@@ -21,10 +21,6 @@ export default function ThemeSelection() {
 
     const colors: ThemeColor[] = ['vert', 'jaune', 'orange'];
 
-    const handleStartQuiz = () => {
-        navigation.navigate('WelcomeQuiz');
-    };
-
     const changeTheme = async (color: ThemeColor) => {
         // 1 - mise à jour immédiate de l'UI
         setThemeColor(color);
@@ -76,7 +72,7 @@ export default function ThemeSelection() {
                     </View>
 
                     <TouchableOpacity
-                        onPress={handleStartQuiz}
+                        onPress={() => navigation.navigate('WelcomeQuiz')}
                         className="mt-10 items-center"
                     >
                         <Text className="text-white font-bold text-lg">Suivant</Text>

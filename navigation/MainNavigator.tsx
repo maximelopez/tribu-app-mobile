@@ -3,6 +3,7 @@ import { useUserStore } from '../store/userStore';
 
 import Signup from '../screens/Signup';
 import Login from '../screens/Login';
+import Birthdate from '../screens/Birthdate';
 import ThemeSelection from '../screens/ThemeSelection';
 import WelcomeQuiz from '../screens/WelcomeQuiz';
 import AppStack from './AppStack';
@@ -21,6 +22,7 @@ export default function MainNavigator() {
                 </>
             ) : user.score == null ? (
                 <>
+                    <Stack.Screen name='Birthdate' component={Birthdate} />
                     <Stack.Screen name='ThemeSelection' component={ThemeSelection} />
                     <Stack.Screen name="WelcomeQuiz" component={WelcomeQuiz} />
                 </>
