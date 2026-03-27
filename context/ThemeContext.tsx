@@ -25,16 +25,17 @@ const ThemeContext = createContext<ThemeContextProps>({
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const colors: ThemeColor[] = ['vert', 'jaune', 'orange'];
-  const [themeColor, setThemeColor] = useState<ThemeColor>('vert');
-
   const user = useUserStore(state => state.user);
 
-  // Charger le thème du user au démarrage
+  const [themeColor, setThemeColor] = useState<ThemeColor>(
+    (user?.theme as ThemeColor) || 'vert'
+  );
+
   useEffect(() => {
     if (user?.theme && colors.includes(user.theme as ThemeColor)) {
-      setThemeColor(user.theme);
+      setThemeColor(user.theme as ThemeColor);
     }
-  }, [user]);
+  }, [user?.theme]);
 
   const nextColor = () => {
     const currentIndex = colors.indexOf(themeColor);
@@ -44,7 +45,12 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <ThemeContext.Provider
-      value={{ themeColor, primaryColor: colorMap[themeColor], setThemeColor, nextColor }}
+      value={{
+        themeColor,
+        primaryColor: colorMap[themeColor],
+        setThemeColor,
+        nextColor
+      }}
     >
       {children}
     </ThemeContext.Provider>

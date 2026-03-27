@@ -49,7 +49,7 @@ export default function ThemeSelection() {
     };
 
     return (
-        <SafeAreaView className="flex-1 it">
+        <SafeAreaView className="flex-1">
             <ImageBackground
                 source={backgroundImage}
                 style={{ flex: 1 }}
