@@ -10,7 +10,7 @@ export default function ThemeSwitcher() {
 
   const changeTheme = async (color: ThemeColor) => {
     try {
-      // 1 - mise à jour immédiate dans l'app
+      // 1 - mise à jour immédiate de l'UI
       setThemeColor(color);
 
       if (!user?.id) return;
