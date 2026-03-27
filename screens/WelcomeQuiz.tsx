@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Question from '../components/Question';
 import { useUserStore } from '../store/userStore';
@@ -11,6 +11,7 @@ import Animated, {
     withTiming,
     withSequence
 } from 'react-native-reanimated'
+import { useTheme } from '../context/ThemeContext';
 
 const API_URL = 'https://tribu-app.onrender.com/api/';
 
@@ -25,10 +26,19 @@ const questions = [
     { category: 'Quotidien', label: "Tu te sens bien à la maison ces derniers jours ?" },
 ];
 
+const backgroundMap: Record<string, any> = {
+  vert: require('../assets/images/bg-vert.png'),
+  jaune: require('../assets/images/bg-jaune.png'),
+  orange: require('../assets/images/bg-orange.png'),
+};
+
 export default function WelcomeQuiz() {
     const user = useUserStore(state => state.user);
     const setUser = useUserStore(state => state.setUser);
     const userId = user?.id;
+
+    const { themeColor } = useTheme();
+    const backgroundImage = backgroundMap[themeColor];
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [answers, setAnswers] = useState<number[]>([]);
@@ -95,39 +105,47 @@ export default function WelcomeQuiz() {
     const currentQuestion = questions[currentIndex];
 
     return (
-        <SafeAreaView className="flex-1 bg-[#00A16D]">
-            <Text className='text-center text-white text-2xl font-bold mt-20 mb-10'>
-                Pour mieux vous connaître...
-            </Text>
-
-            {/* Progress bar */}
-            <View className="w-full px-4 mb-4">
-                <View className="w-full h-4 bg-white/30 rounded-full overflow-hidden">
-                    <Animated.View
-                        className="h-4 bg-white rounded-full"
-                        style={progressStyle}
-                    />
-                </View>
-            </View>
-
-            <View className='mb-10 px-4'>
-                <Text className='text-white'>
-                    Question {currentIndex + 1} sur {questions.length}
-                </Text>
-            </View>
-
-           <Animated.View
-                key={currentIndex}
-                entering={FadeInRight.springify()}
-                exiting={FadeOutLeft.duration(200)}
+        <SafeAreaView className="flex-1">
+            <ImageBackground
+                source={backgroundImage}
+                style={{ flex: 1 }}
+                imageStyle={{ resizeMode: 'cover' }}
             >
-                <Question
-                category={currentQuestion.category}
-                label={currentQuestion.label}
-                onAnswer={handleAnswer}
-                />
-            </Animated.View>
+            
+                <View>
+                    <Text className='text-center text-white text-2xl font-bold mt-20 mb-10'>
+                        Pour mieux vous connaître...
+                    </Text>
 
+                    {/* Progress bar */}
+                    <View className="w-full px-4 mb-4">
+                        <View className="w-full h-4 bg-white/30 rounded-full overflow-hidden">
+                            <Animated.View
+                                className="h-4 bg-white rounded-full"
+                                style={progressStyle}
+                            />
+                        </View>
+                    </View>
+
+                    <View className='mb-10 px-4'>
+                        <Text className='text-white'>
+                            Question {currentIndex + 1} sur {questions.length}
+                        </Text>
+                    </View>
+
+                <Animated.View
+                        key={currentIndex}
+                        entering={FadeInRight.springify()}
+                        exiting={FadeOutLeft.duration(200)}
+                    >
+                        <Question
+                        category={currentQuestion.category}
+                        label={currentQuestion.label}
+                        onAnswer={handleAnswer}
+                        />
+                    </Animated.View>
+                </View>
+            </ImageBackground>
         </SafeAreaView>
     );
 }

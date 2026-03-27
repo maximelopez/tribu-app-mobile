@@ -92,7 +92,7 @@ export default function Home() {
 
             {isLoadingFamily ? (
               <View className="mt-6 items-center">
-                <ActivityIndicator size="large" color="#00a16d" />
+                <ActivityIndicator size="large" color={primaryColor} />
               </View>
             ) : family ? (
               <View className="mt-2 w-full">
