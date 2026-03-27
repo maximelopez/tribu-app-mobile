@@ -24,10 +24,13 @@ export default function Chat() {
   const flatListRef = useRef<FlatList>(null);
 
   useEffect(() => {
-    if (flatListRef.current && messages.length > 0) {
-      flatListRef.current.scrollToEnd({ animated: false });
+    if (messages.length > 0) {
+      flatListRef.current?.scrollToOffset({
+        offset: 0,
+        animated: true,
+      });
     }
-  }, []);
+  }, [messages]);
 
   const handleSend = () => {
     if (!text.trim()) return;
@@ -66,13 +69,14 @@ export default function Chat() {
         keyboardVerticalOffset={35}
       >
         <FlatList
+          inverted
           className='bg-[#F7F5F8] px-4'
           ref={flatListRef}
-          data={messages}
+          data={[...messages].reverse()}
           keyExtractor={(item) => item._id}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
-          onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
+          contentContainerStyle={{ paddingTop: 10, paddingBottom: 10 }}
         />
 
         {/* Input */}
