@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, Text, ActivityIndicator, View } from 'react-native';
 import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 import { useTheme } from '../context/ThemeContext';
 
@@ -8,6 +8,7 @@ interface ButtonProps {
     loading?: boolean;
     disabled?: boolean;
     color?: string;
+    icon?: React.ReactNode;
 }
 
 export default function Button({
@@ -15,7 +16,8 @@ export default function Button({
     onPress,
     loading = false,
     disabled = false,
-    color
+    color,
+    icon
 }: ButtonProps) {
     const { primaryColor } = useTheme();
     const isDisabled = loading || disabled;
@@ -38,9 +40,11 @@ export default function Button({
             {loading ? (
                 <ActivityIndicator color="white" />
             ): (
-                <Text className="text-white text-center font-outfit text-xl">
-                    {title}
-                </Text>
+                <View className="flex-row justify-center items-center gap-4">
+                    <Text className="text-white text-center font-outfit text-xl">{title}</Text>
+                    {icon && <View>{icon}</View>}
+                </View>
+                
             )}
         </TouchableOpacity>
     )

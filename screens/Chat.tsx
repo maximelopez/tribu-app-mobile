@@ -85,6 +85,7 @@ export default function Chat() {
             value={text}
             onChangeText={setText}
             placeholder="Écris un message..."
+            selectionColor={primaryColor}
             style={{
               flex: 1,
               backgroundColor: '#F0F0F3',

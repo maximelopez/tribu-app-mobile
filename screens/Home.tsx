@@ -4,12 +4,14 @@ import { Text, View, ScrollView, ActivityIndicator } from 'react-native';
 import { useUserStore } from '../store/userStore';
 import { useFamilyStore } from '../store/familyStore';
 import { useNavigation } from '@react-navigation/native';
+import { useTheme } from '../context/ThemeContext';
 import useFamilyRealtime from '../hooks/useFamilyRealtime';
 import DonutScore from '../components/DonutScore';
 import JoinRequestItem from '../components/JoinRequestItem';
 import FamilyMember from '../components/FamilyMember';
 import Button from '../components/Button';
-import { useTheme } from '../context/ThemeContext';
+import UsersIcon from '../assets/icons/users.svg';
+import AddIcon from '../assets/icons/add.svg';
 
 const API_URL = 'https://tribu-app.onrender.com/api/';
 
@@ -94,7 +96,9 @@ export default function Home() {
               </View>
             ) : family ? (
               <View className="mt-2 w-full">
-                <Text className='text-gray-900 font-outfit text-lg'>Famille {family.name}</Text>
+                <Text className='font-outfit text-xl text-center' style={{ color: primaryColor }}>
+                    Tribu {family.name}
+                </Text>
 
                 {/* Demandes en attente */}
                 {user.id === family.creatorId && family.joinRequests.length > 0 && (
@@ -111,7 +115,7 @@ export default function Home() {
                 
                 {/* Membres de la famille */}
                 <View className="mt-2">
-                  <Text className="font-outfit text-gray-600 mt-2">Membres :</Text>
+                  <Text className="font-outfit text-gray-600 mt-2">Membres de cette Tribu :</Text>
                   
                   {family.members && family.members.length > 0 ? (
                     family.members.map(member => (
@@ -127,8 +131,16 @@ export default function Home() {
               <>
                 <Text className='text-gray-900 font-outfit mb-4 text-lg'>Tu n'as pas encore de Tribu</Text>
                 <View className='w-full gap-4'>
-                  <Button title="Rejoindre une Tribu" onPress={handleJoinFamily} />
-                  <Button title="Créer une Tribu" onPress={handleCreateFamily} />
+                  <Button 
+                    title="Rejoindre une Tribu" 
+                    onPress={handleJoinFamily}
+                    icon={<UsersIcon fill="white" />}
+                  />
+                  <Button 
+                    title="Créer une Tribu" 
+                    onPress={handleCreateFamily}
+                    icon={<AddIcon fill="white" />}
+                  />
                 </View>
               </>
             )}

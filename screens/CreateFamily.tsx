@@ -78,16 +78,18 @@ export default function CreateFamily() {
         <SafeAreaView className='flex-1 bg-white'>
             <View className='flex-1 mx-4'>
 
-                <View className='w-full gap-[20px] mb-[20px]'>
+                <View className='w-full gap-[10px] mb-[20px]'>
+                   <Text>Nom de la Tribu :</Text> 
                     <Input 
                         value={name} 
                         onChangeText={setName}
-                        placeholder="Nom de votre famille"
+                        placeholder="Ex : Champions"
                     />
+                    <Text>Ville :</Text>
                     <Input 
                         value={city} 
                         onChangeText={setCity}
-                        placeholder="Ville"
+                        placeholder="Ex : Angers"
                     />
                 </View>
 

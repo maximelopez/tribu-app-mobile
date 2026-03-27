@@ -62,21 +62,24 @@ export default function SearchFamily() {
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                 keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
             >
-                <View className='flex-1 mx-4'>
-                <TextInput
-                    value={search}
-                    onChangeText={setSearch}
-                    placeholder="Rechercher une famille"
-                    className="border border-gray-300 rounded-xl px-4 py-3 mb-4 font-outfit"
-                />
+                <View className='flex-1 mx-4 gap-[10px]'>
+                    <Text>Rechercher une Tribu :</Text>
+                    <TextInput
+                        value={search}
+                        onChangeText={setSearch}
+                        placeholder="Saisissez votre recherche"
+                        className="border border-gray-300 rounded-xl px-4 font-outfit h-[48px]"
+                    />
 
-                <FlatList
-                    data={families}
-                    keyExtractor={item => item.id}
-                    renderItem={renderItem}
-                    showsVerticalScrollIndicator={false}
-                    keyboardShouldPersistTaps="handled"
-                />
+                    <Text className='text-center mt-4'>Résultats :</Text>
+
+                    <FlatList
+                        data={families}
+                        keyExtractor={item => item.id}
+                        renderItem={renderItem}
+                        showsVerticalScrollIndicator={false}
+                        keyboardShouldPersistTaps="handled"
+                    />
                 </View>
             </KeyboardAvoidingView>
         </SafeAreaView>

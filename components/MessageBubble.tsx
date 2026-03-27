@@ -22,7 +22,7 @@ export default function MessageBubble({ content, senderName, createdAt, isMe }: 
                 borderBottomRightRadius: isMe ? 0 : 16,
                 borderBottomLeftRadius: isMe ? 16 : 0,
                 marginVertical: 4,
-                maxWidth: '75%',
+                maxWidth: '85%',
             }}
         >
             {!isMe && <Text>{senderName || 'Utilisateur inconnu'}</Text>}
