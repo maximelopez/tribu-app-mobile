@@ -64,7 +64,7 @@ export default function CreateFamily() {
             setUser({ ...user, familyId: familyId});
 
             // 4 - Naviguer vers Home
-            navigation.navigate('Home');
+            navigation.navigate('Tabs');
             
         } catch (error) {
             console.error('Erreur :', error);

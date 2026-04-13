@@ -33,6 +33,7 @@ export default function AppStack() {
           headerTitle: 'Créer une Tribu',
           headerTitleStyle: { color: 'white', fontWeight: 'bold' },
           headerTintColor: 'white',
+          headerBackTitle: '',
         }}
       />
 
@@ -47,6 +48,7 @@ export default function AppStack() {
           headerTitle: 'Rejoindre une Tribu',
           headerTitleStyle: { color: 'white', fontWeight: 'bold' },
           headerTintColor: 'white',
+          headerBackTitle: '',
         }}
       />
 
@@ -61,6 +63,7 @@ export default function AppStack() {
           headerTitle: 'Détails de la Tribu',
           headerTitleStyle: { color: 'white', fontWeight: 'bold' },
           headerTintColor: 'white',
+          headerBackTitle: '',
         }}
       />
     </Stack.Navigator>

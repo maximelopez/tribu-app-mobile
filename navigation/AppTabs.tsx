@@ -33,7 +33,7 @@ export default function AppTabs() {
       }}
     >
       <Tab.Screen
-        name="HomeTab"
+        name="Home"
         component={Home}
         options={{
           tabBarLabel: 'Accueil',

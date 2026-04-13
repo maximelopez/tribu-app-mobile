@@ -66,7 +66,7 @@ export default function FamilyDetails() {
                 return;
             }
 
-            navigation.navigate('Home');
+            navigation.navigate('Tabs');
         } catch (error) {
             console.error('Erreur rejoindre famille :', error);
             setErrorMessage('Erreur serveur.');
