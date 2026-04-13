@@ -20,7 +20,7 @@ export default function Input({
     secureTextEntry = false,
     color
 }: InputProps) {
-    const { primaryColor } = useTheme();
+    const { theme } = useTheme();
     
     return (
         <View className="w-full">
@@ -32,7 +32,7 @@ export default function Input({
                 keyboardType={keyboardType}
                 secureTextEntry={secureTextEntry}
                 autoCapitalize={keyboardType === 'email-address' ? 'none' : autoCapitalize}
-                selectionColor={color || primaryColor}
+                selectionColor={color || theme.primary}
                 className="w-full border border-gray-200 rounded-2xl h-[48px] px-[24px]"
             />
         </View>

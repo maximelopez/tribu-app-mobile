@@ -21,7 +21,7 @@ export default function Home() {
   const setFamily = useFamilyStore(state => state.setFamily);
   const navigation = useNavigation<any>();
   const [isLoadingFamily, setIsLoadingFamily] = useState(false);
-  const { primaryColor } = useTheme();
+  const { theme } = useTheme();
 
   // Active le WebSocket pour le temps réel
   useFamilyRealtime();
@@ -77,7 +77,7 @@ export default function Home() {
 
         <View className='flex-1 mt-4'>
           <Text className='text-gray-800 font-peachy text-3xl'>
-            Bonjour, <Text style={{ color: primaryColor }}>{user?.name}</Text>
+            Bonjour, <Text style={{ color: theme.primary }}>{user?.name}</Text>
           </Text>
           <Text className='text-gray-900 font-outfit mb-10 text-xl'>Ton score bien-être</Text>
           <DonutScore
@@ -92,11 +92,11 @@ export default function Home() {
 
             {isLoadingFamily ? (
               <View className="mt-6 items-center">
-                <ActivityIndicator size="large" color={primaryColor} />
+                <ActivityIndicator size="large" color={theme.primary} />
               </View>
             ) : family ? (
               <View className="mt-2 w-full">
-                <Text className='font-outfit text-xl text-center' style={{ color: primaryColor }}>
+                <Text className='font-outfit text-xl text-center' style={{ color: theme.primary }}>
                     Tribu {family.name}
                 </Text>
 

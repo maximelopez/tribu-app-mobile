@@ -13,7 +13,7 @@ const backgroundMap: Record<string, any> = {
 };
 
 export default function ThemeSelection() {
-    const { themeColor, setThemeColor, primaryColor } = useTheme();
+    const { themeColor, setThemeColor } = useTheme();
     const backgroundImage = backgroundMap[themeColor];
 
     const user = useUserStore(state => state.user);

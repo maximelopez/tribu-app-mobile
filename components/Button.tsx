@@ -19,7 +19,7 @@ export default function Button({
     color,
     icon
 }: ButtonProps) {
-    const { primaryColor } = useTheme();
+    const { theme } = useTheme();
     const isDisabled = loading || disabled;
 
     const handlePress = async () => {
@@ -35,7 +35,7 @@ export default function Button({
             onPress={handlePress}
             activeOpacity={0.8}
             className='w-full h-[48px] justify-center rounded-2xl'
-            style={{ backgroundColor: color || primaryColor }}
+            style={{ backgroundColor: color || theme.primary }}
         >
             {loading ? (
                 <ActivityIndicator color="white" />

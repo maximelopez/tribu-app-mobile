@@ -7,7 +7,7 @@ import { useTheme } from '../context/ThemeContext';
 import Button from '../components/Button';
 
 export default function Profile() {
-  const { primaryColor } = useTheme();
+  const { theme } = useTheme();
   const user = useUserStore(state => state.user);
   const logout = useUserStore(state => state.logout);
   const clearFamily = useFamilyStore(state => state.clearFamily);

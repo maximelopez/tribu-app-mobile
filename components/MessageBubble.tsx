@@ -9,13 +9,13 @@ interface MessageBubbleProps {
 }
 
 export default function MessageBubble({ content, senderName, createdAt, isMe }: MessageBubbleProps) {
-    const { primaryColor } = useTheme();
+    const { theme } = useTheme();
 
     return (
         <View
             style={{
                 alignSelf: isMe ? 'flex-end' : 'flex-start',
-                backgroundColor: isMe ? primaryColor : '#E5E5EA',
+                backgroundColor: isMe ? theme.primary : '#E5E5EA',
                 paddingInline: 16,
                 paddingVertical: 12,
                 borderRadius: 16,

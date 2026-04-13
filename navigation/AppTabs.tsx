@@ -16,13 +16,13 @@ import ProfileIcon from '../assets/icons/profile.svg';
 const Tab = createBottomTabNavigator();
 
 export default function AppTabs() {
-  const { primaryColor } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: primaryColor,
+        tabBarActiveTintColor: theme.primary,
         tabBarInactiveTintColor: '#161616',
         tabBarStyle: {
           borderTopWidth: 0,
@@ -64,7 +64,7 @@ export default function AppTabs() {
                 width: 56,
                 height: 56,
                 borderRadius: 28,
-                backgroundColor: primaryColor,
+                backgroundColor: theme.primary,
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginBottom: 18 ,

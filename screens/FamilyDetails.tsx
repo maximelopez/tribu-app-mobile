@@ -21,7 +21,7 @@ interface Family {
 export default function FamilyDetails() {
     const route = useRoute<any>();
     const navigation = useNavigation<any>();
-    const { primaryColor } = useTheme();
+    const { theme } = useTheme();
 
     const user = useUserStore(state => state.user);
     const setUser = useUserStore(state => state.setUser);
@@ -78,7 +78,7 @@ export default function FamilyDetails() {
     return (
         <SafeAreaView className="flex-1 bg-white">
             <View className="flex-1 mx-6 mt-10">
-                <Text className="text-xl text-center font-outfit mb-2" style={{ color: primaryColor }}>
+                <Text className="text-xl text-center font-outfit mb-2" style={{ color: theme.primary }}>
                     {familyDetails.name}
                 </Text>
 
@@ -93,7 +93,7 @@ export default function FamilyDetails() {
                 <TouchableOpacity
                     onPress={handleJoinFamily}
                     className="w-full h-[48px] rounded-[16px] items-center justify-center"
-                    style={{ backgroundColor: primaryColor }}
+                    style={{ backgroundColor: theme.primary }}
                     activeOpacity={0.8}
                 >
                 <Text className="font-outfit text-[20px] text-white">

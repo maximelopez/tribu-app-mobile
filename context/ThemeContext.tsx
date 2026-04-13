@@ -1,41 +1,61 @@
-import { createContext, useState, useEffect, useContext, ReactNode } from 'react';
+import { createContext, useState, useEffect, useContext, useMemo, ReactNode } from 'react';
 import { useUserStore } from '../store/userStore';
 
 export type ThemeColor = 'vert' | 'jaune' | 'orange';
 
-const colorMap: Record<ThemeColor, string> = {
-  vert: '#00a16d',
-  jaune: '#ff9d00',
-  orange: '#ea4a1f',
+type Theme = {
+  primary: string;
+  secondary: string;
 };
+
+const themeMap: Record<ThemeColor, Theme> = {
+  vert: {
+    primary: '#00a16d',
+    secondary: '#00a16d33',
+  },
+  jaune: {
+    primary: '#ff9d00',
+    secondary: '#ff9d0033',
+  },
+  orange: {
+    primary: '#ea4a1f',
+    secondary: '#ea4a1f33',
+  },
+};
+
+const colors = Object.keys(themeMap) as ThemeColor[];
+
+const isThemeColor = (value: any): value is ThemeColor =>
+  colors.includes(value);
 
 interface ThemeContextProps {
   themeColor: ThemeColor;
-  primaryColor: string;
+  theme: Theme;
   setThemeColor: (color: ThemeColor) => void;
   nextColor: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextProps>({
   themeColor: 'vert',
-  primaryColor: colorMap['vert'],
+  theme: themeMap.vert,
   setThemeColor: () => {},
   nextColor: () => {},
 });
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const colors: ThemeColor[] = ['vert', 'jaune', 'orange'];
   const user = useUserStore(state => state.user);
 
   const [themeColor, setThemeColor] = useState<ThemeColor>(
-    (user?.theme as ThemeColor) || 'vert'
+    isThemeColor(user?.theme) ? user.theme : 'vert'
   );
 
   useEffect(() => {
-    if (user?.theme && colors.includes(user.theme as ThemeColor)) {
-      setThemeColor(user.theme as ThemeColor);
+    if (isThemeColor(user?.theme)) {
+      setThemeColor(user.theme);
     }
   }, [user?.theme]);
+
+  const theme = useMemo(() => themeMap[themeColor], [themeColor]);
 
   const nextColor = () => {
     const currentIndex = colors.indexOf(themeColor);
@@ -47,7 +67,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     <ThemeContext.Provider
       value={{
         themeColor,
-        primaryColor: colorMap[themeColor],
+        theme,
         setThemeColor,
         nextColor
       }}

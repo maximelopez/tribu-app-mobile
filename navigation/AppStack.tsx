@@ -8,7 +8,7 @@ import { useTheme } from '../context/ThemeContext';
 const Stack = createNativeStackNavigator();
 
 export default function AppStack() {
-  const { primaryColor } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <Stack.Navigator>
@@ -27,13 +27,13 @@ export default function AppStack() {
         component={CreateFamily}
         options={{
           headerShown: true,
-          headerStyle: { backgroundColor: primaryColor },
+          headerStyle: { backgroundColor: theme.primary },
           headerShadowVisible: false,
           headerTitleAlign: 'center',
           headerTitle: 'Créer une Tribu',
           headerTitleStyle: { color: 'white', fontWeight: 'bold' },
           headerTintColor: 'white',
-          headerBackTitle: '',
+          headerBackButtonDisplayMode: 'minimal',
         }}
       />
 
@@ -42,13 +42,13 @@ export default function AppStack() {
         component={SearchFamily}
         options={{
           headerShown: true,
-          headerStyle: { backgroundColor: primaryColor },
+          headerStyle: { backgroundColor: theme.primary },
           headerShadowVisible: false,
           headerTitleAlign: 'center',
           headerTitle: 'Rejoindre une Tribu',
           headerTitleStyle: { color: 'white', fontWeight: 'bold' },
           headerTintColor: 'white',
-          headerBackTitle: '',
+          headerBackButtonDisplayMode: 'minimal',
         }}
       />
 
@@ -57,13 +57,13 @@ export default function AppStack() {
         component={FamilyDetails}
         options={{
           headerShown: true,
-          headerStyle: { backgroundColor: primaryColor },
+          headerStyle: { backgroundColor: theme.primary },
           headerShadowVisible: false,
           headerTitleAlign: 'center',
           headerTitle: 'Détails de la Tribu',
           headerTitleStyle: { color: 'white', fontWeight: 'bold' },
           headerTintColor: 'white',
-          headerBackTitle: '',
+          headerBackButtonDisplayMode: 'minimal',
         }}
       />
     </Stack.Navigator>

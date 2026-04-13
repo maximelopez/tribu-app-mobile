@@ -16,7 +16,7 @@ import MessageBubble from '../components/MessageBubble';
 import SendIcon from '../assets/icons/sendBtn.svg';
 
 export default function Chat() {
-  const { primaryColor } = useTheme();
+  const { theme } = useTheme();
   const { messages, sendMessage } = useFamilyChat();
   const user = useUserStore(state => state.user);
 
@@ -85,7 +85,7 @@ export default function Chat() {
             value={text}
             onChangeText={setText}
             placeholder="Écris un message..."
-            selectionColor={primaryColor}
+            selectionColor={theme.primary}
             style={{
               flex: 1,
               backgroundColor: '#F0F0F3',
@@ -100,7 +100,7 @@ export default function Chat() {
             onPress={handleSend} 
             activeOpacity={0.8}
             style={{
-              backgroundColor: primaryColor,
+              backgroundColor: theme.primary,
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 25,
@@ -108,7 +108,7 @@ export default function Chat() {
               height: 50,
             }}
           >
-            <SendIcon width={28} height={28} fill={primaryColor} />
+            <SendIcon width={28} height={28} fill={theme.primary} />
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>

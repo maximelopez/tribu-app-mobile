@@ -30,7 +30,7 @@ export default function DonutScore({
   score,
   activities = [],
 }: DonutScoreProps) {
-  const { primaryColor } = useTheme();
+  const { theme } = useTheme();
 
   const radius = (size - thickness) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -71,7 +71,7 @@ export default function DonutScore({
             cx={size / 2}
             cy={size / 2}
             r={radius}
-            stroke={primaryColor}
+            stroke={theme.primary}
             strokeWidth={thickness}
             fill="none"
             strokeLinecap="round"
@@ -93,8 +93,8 @@ export default function DonutScore({
             borderRadius: innerSize / 2,
           }}
         >
-          <Text className="text-[38px] font-bold" style={{ color: primaryColor }}>{score}</Text>
-          <Text className="text-[14px] font-bold" style={{ color: primaryColor }}>points</Text>
+          <Text className="text-[38px] font-bold" style={{ color: theme.primary }}>{score}</Text>
+          <Text className="text-[14px] font-bold" style={{ color: theme.primary }}>points</Text>
         </View>
 
         {/* Activities */}
