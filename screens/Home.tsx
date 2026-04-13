@@ -139,7 +139,10 @@ export default function Home() {
                   <Button 
                     title="Créer une Tribu" 
                     onPress={handleCreateFamily}
-                    icon={<AddIcon fill="white" />}
+                    icon={<AddIcon fill={theme.primary} />}
+                    color={theme.secondary}
+                    textColor={theme.primary}
+                    borderColor={theme.primary}
                   />
                 </View>
               </>

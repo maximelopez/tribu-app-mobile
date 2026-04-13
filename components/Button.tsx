@@ -8,7 +8,9 @@ interface ButtonProps {
     loading?: boolean;
     disabled?: boolean;
     color?: string;
+    textColor?: string;
     icon?: React.ReactNode;
+    borderColor?: string;
 }
 
 export default function Button({
@@ -17,7 +19,9 @@ export default function Button({
     loading = false,
     disabled = false,
     color,
-    icon
+    textColor,
+    icon,
+    borderColor,
 }: ButtonProps) {
     const { theme } = useTheme();
     const isDisabled = loading || disabled;
@@ -35,13 +39,22 @@ export default function Button({
             onPress={handlePress}
             activeOpacity={0.8}
             className='w-full h-[48px] justify-center rounded-2xl'
-            style={{ backgroundColor: color || theme.primary }}
+            style={{ 
+                backgroundColor: color || theme.primary,
+                borderColor: borderColor,
+                borderWidth: borderColor ? 0.5 : 0,
+            }}
         >
             {loading ? (
                 <ActivityIndicator color="white" />
             ): (
                 <View className="flex-row justify-center items-center gap-4">
-                    <Text className="text-white text-center font-outfit text-xl">{title}</Text>
+                    <Text 
+                        className="text-center font-outfit text-xl"
+                        style={{ color: textColor || 'white' }}
+                    >
+                        {title}
+                    </Text>
                     {icon && <View>{icon}</View>}
                 </View>
                 
