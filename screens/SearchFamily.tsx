@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, View, TextInput, FlatList, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { useUserStore } from '../store/userStore';
 import { useNavigation } from '@react-navigation/native';
+import { useTheme } from '../context/ThemeContext';
 
 const API_URL = 'https://tribu-app.onrender.com/api/';
 
@@ -17,6 +18,7 @@ export default function SearchFamily() {
     const navigation = useNavigation<any>();
     const [search, setSearch] = useState('');
     const [families, setFamilies] = useState<Family[]>([]);
+    const { theme } = useTheme();
 
     if (!user) return null;
 
@@ -47,16 +49,18 @@ export default function SearchFamily() {
         <TouchableOpacity
             onPress={() => navigation.navigate('FamilyDetails', { familyId: item.id })}
             activeOpacity={0.8}
-            className="bg-gray-100 rounded-xl p-4 mb-3"
+            className="bg-white rounded-xl p-4 mb-3 flex-row items-center justify-between h-[88px]"
         >
-            <Text className="text-lg font-peachy text-gray-900">{item.name}</Text>
-            <Text className="text-gray-600 font-outfit mb-3">{item.city}</Text>
-            <Text className="text-white font-peachy self-start px-4 py-2 rounded-lg bg-[#00a16d]">Rejoindre</Text>
+            <View>
+                <Text className="text-lg font-peachy text-gray-900">{item.name}</Text>
+                <Text className="text-gray-600 font-outfit mb-3">{item.city}</Text>
+            </View>    
+            <Text style={{ color: theme.primary }}>Détails</Text>
         </TouchableOpacity>
     );
 
     return (
-        <SafeAreaView className='flex-1 bg-white'>
+        <SafeAreaView className='flex-1 bg-[#F7F5F8]'>
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}

@@ -8,7 +8,7 @@ export interface User {
   email: string;
   score: number | null;
   familyId: string | null;
-  avatar: string | null;
+  avatar: number | null;
   theme?: 'vert' | 'jaune' | 'orange';
 }
 

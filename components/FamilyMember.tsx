@@ -6,7 +6,7 @@ interface Member {
   name: string;
   score: number;
   imageUrl?: string;
-  avatar?: string;
+  avatar?: number;
 }
 
 interface FamilyMemberProps {
@@ -19,8 +19,17 @@ const backgroundImages = {
   orange: require('../assets/images/bg-card-orange.png'),
 };
 
+const avatars = [
+  require('../assets/images/avatar1.png'),
+  require('../assets/images/avatar2.png'),
+  require('../assets/images/avatar3.png'),
+  require('../assets/images/avatar4.png'),
+];
+
 const FamilyMember = ({ member }: FamilyMemberProps) => {
-  const { theme, themeColor } = useTheme();
+  const { themeColor } = useTheme();
+
+  const avatarImage = avatars[member.avatar ? member.avatar - 1 : 0] || avatars[0];
 
     return(
         <ImageBackground 
@@ -30,7 +39,7 @@ const FamilyMember = ({ member }: FamilyMemberProps) => {
         >
             <View className='flex flex-row items-center justify-center'>
               <Image
-                source={member.avatar ? { uri: member.avatar } : require('../assets/images/avatar4.png')}
+                source={avatarImage}
                 className="w-16 h-16"
               />
               <Text className="ml-2 text-white">{member.name}</Text>

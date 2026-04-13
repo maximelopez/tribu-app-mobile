@@ -65,7 +65,7 @@ export default function Home() {
     };
 
     fetchFamily();
-  }, [user.familyId, setFamily]);
+  }, [user, setFamily]);
 
   return (
     <SafeAreaView className='flex-1 bg-[#F7F5F8] '>
