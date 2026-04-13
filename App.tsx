@@ -7,7 +7,8 @@ import "./global.css";
 export default function App() {
   const [fontsLoaded] = useFonts({
     'peachy-keen': require('./assets/fonts/peachy-keen-jf.otf'),
-    'outfit': require('./assets/fonts/Outfit-VariableFont_wght.otf'),
+    'outfit': require('./assets/fonts/Outfit-Regular.ttf'),
+    'outfit-bold': require('./assets/fonts/Outfit-SemiBold.ttf'),
   });
 
   if (!fontsLoaded) return null;

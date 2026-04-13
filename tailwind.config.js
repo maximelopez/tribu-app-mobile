@@ -8,6 +8,7 @@ module.exports = {
       fontFamily: {
         peachy: ['peachy-keen'],
         outfit: ['outfit'],
+        outfitBold: ['outfit-bold'],
       },
     },
   },

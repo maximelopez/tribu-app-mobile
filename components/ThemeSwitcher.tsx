@@ -42,7 +42,7 @@ export default function ThemeSwitcher() {
     <View style={{ marginTop: 16 }}>
       <Text style={{ fontFamily: 'outfit', color: '#333', marginBottom: 8 }}>Thème de l'application :</Text>
 
-      <View style={{ flexDirection: 'row', gap: 12 }}>
+      <View style={{ flexDirection: 'row', gap: 20 }}>
         {colors.map((color) => {
           const bgColor =
             color.value === 'vert'
@@ -58,9 +58,9 @@ export default function ThemeSwitcher() {
               key={color.value}
               onPress={() => changeTheme(color.value)}
               style={{
-                width: 40,
-                height: 40,
-                borderRadius: 20,
+                width: 45,
+                height: 45,
+                borderRadius: 100,
                 backgroundColor: bgColor,
                 borderWidth: themeColor === color.value ? 2 : 0,
                 borderColor: '#000',
