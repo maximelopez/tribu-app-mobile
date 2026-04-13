@@ -4,10 +4,10 @@
     "slug": "tribu-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon1.png",
+    "icon": "./assets/tribu-icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash-icon1.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -16,7 +16,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon1.png",
+        "foregroundImage": "./assets/tribu-icon.png",
         "backgroundColor": "#ffffff"
       },
       "predictiveBackGestureEnabled": false

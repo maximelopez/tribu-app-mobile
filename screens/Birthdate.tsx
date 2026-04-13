@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -9,10 +9,14 @@ const API_URL = 'https://tribu-app.onrender.com/api/';
 export default function Birthdate() {
     const user = useUserStore(state => state.user);
     const navigation = useNavigation<any>();
+
     const [day, setDay] = useState('');
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');
     const [error, setError] = useState('');
+
+    const monthRef = useRef<TextInput>(null);
+    const yearRef = useRef<TextInput>(null);
 
     const handleNext = async () => {
         setError('');
@@ -36,7 +40,6 @@ export default function Birthdate() {
             return;
         }
 
-        // Formater en ISO string YYYY-MM-DD
         const birthdate = `${yearNum.toString().padStart(4, '0')}-${monthNum.toString().padStart(2, '0')}-${dayNum.toString().padStart(2, '0')}`;
 
         if (!user?.id) return;
@@ -54,7 +57,6 @@ export default function Birthdate() {
             }
 
             const updatedUser = await response.json();
-            console.log('Utilisateur mis à jour:', updatedUser);
 
             // Navigation vers la page suivante
             navigation.navigate('ThemeSelection');
@@ -79,26 +81,44 @@ export default function Birthdate() {
                     <View className="flex-row justify-center gap-2 mb-10">
                         <TextInput
                             value={day}
-                            onChangeText={setDay}
-                            placeholder="DD"
+                            onChangeText={(text) => {
+                                setDay(text);
+                                if (text.length === 2) {
+                                    monthRef.current?.focus();
+                                }
+                            }}
+                            placeholder="JJ"
                             keyboardType="numeric"
                             maxLength={2}
+                            returnKeyType="next"
+                            onSubmitEditing={() => monthRef.current?.focus()}
                             className="bg-white w-[115px] h-[40px] text-center rounded-2xl"
                         />
                         <TextInput
+                            ref={monthRef}
                             value={month}
-                            onChangeText={setMonth}
+                            onChangeText={(text) => {
+                                setMonth(text);
+                                if (text.length === 2) {
+                                    yearRef.current?.focus();
+                                }
+                            }}
                             placeholder="MM"
                             keyboardType="numeric"
                             maxLength={2}
+                            returnKeyType="next"
+                            onSubmitEditing={() => yearRef.current?.focus()}
                             className="bg-white w-[110px] h-[40px] text-center rounded-2xl"
                         />
                         <TextInput
+                            ref={yearRef}
                             value={year}
                             onChangeText={setYear}
-                            placeholder="YYYY"
+                            placeholder="AAAA"
                             keyboardType="numeric"
                             maxLength={4}
+                            returnKeyType="done"
+                            onSubmitEditing={handleNext}
                             className="bg-white w-[115px] h-[40px] text-center rounded-2xl"
                         />
                     </View>
