@@ -16,14 +16,14 @@ import { useTheme } from '../context/ThemeContext';
 const API_URL = 'https://tribu-app.onrender.com/api/';
 
 const questions = [
-    { category: 'Mental', label: "Aujourd’hui, tu te sens bien ou pas vraiment ?" },
-    { category: 'Mental', label: "Tu arrives facilement à te sentir mieux quand quelque chose te dérange ?" },
-    { category: 'Mental', label: "Cette semaine, tu t’es senti(e) plutôt calme ou souvent tendu(e) ?" },
-    { category: 'Social', label: "En ce moment, tu te sens proche de ta famille ?" },
-    { category: 'Social', label: "Tu as eu des moments agréables avec tes proches cette semaine ?" },
-    { category: 'Quotidien', label: "Tu dors bien la nuit ?" },
-    { category: 'Quotidien', label: "Comment ça se passe pour toi au travail / à l’université / à l’école en ce moment ?" },
-    { category: 'Quotidien', label: "Tu te sens bien à la maison ces derniers jours ?" },
+    { category: 'Mental', label: "Aujourd’hui, tu te sens bien ou pas vraiment ?", leftLabel: "Pas bien", rightLabel: "Très bien" },
+    { category: 'Mental', label: "Tu arrives facilement à te sentir mieux quand quelque chose te dérange ?", leftLabel: "Non, du tout", rightLabel: "Oui" },
+    { category: 'Mental', label: "Cette semaine, tu t’es senti(e) plutôt calme ou souvent tendu(e) ?", leftLabel: "Très tendu(e)", rightLabel: "Très calme" },
+    { category: 'Social', label: "En ce moment, tu te sens proche de ta famille ?", leftLabel: "Non, du tout", rightLabel: "Oui" },
+    { category: 'Social', label: "Tu as eu des moments agréables avec tes proches cette semaine ?", leftLabel: "Non, du tout", rightLabel: "Oui, beaucoup" },
+    { category: 'Quotidien', label: "Tu dors bien la nuit ?", leftLabel: "Pas bien", rightLabel: "Très bien" },
+    { category: 'Quotidien', label: "Comment ça se passe pour toi au travail / à l’université / à l’école en ce moment ?", leftLabel: "Pas bien", rightLabel: "Très bien" },
+    { category: 'Quotidien', label: "Tu te sens bien à la maison ces derniers jours ?", leftLabel: "Non, du tout", rightLabel: "Oui, tout à fait" },
 ];
 
 const backgroundMap: Record<string, any> = {
@@ -113,12 +113,21 @@ export default function WelcomeQuiz() {
             >
             
                 <View>
-                    <Text className='text-center text-white text-2xl font-bold mt-20 mb-10'>
-                        Pour mieux vous connaître...
+                    <Text className='text-center text-white text-3xl font-outfit-bold mt-20'>
+                        Pour mieux vous
+                    </Text>
+                    <Text className='text-center text-white text-3xl font-outfit-bold mb-10'>
+                        connaître...
                     </Text>
 
+                    <View className='mb-4 px-4'>
+                        <Text className='text-white'>
+                            Question {currentIndex + 1} sur {questions.length}
+                        </Text>
+                    </View>
+
                     {/* Progress bar */}
-                    <View className="w-full px-4 mb-4">
+                    <View className="w-full px-4 mb-10">
                         <View className="w-full h-4 bg-white/30 rounded-full overflow-hidden">
                             <Animated.View
                                 className="h-4 bg-white rounded-full"
@@ -127,21 +136,17 @@ export default function WelcomeQuiz() {
                         </View>
                     </View>
 
-                    <View className='mb-10 px-4'>
-                        <Text className='text-white'>
-                            Question {currentIndex + 1} sur {questions.length}
-                        </Text>
-                    </View>
-
                 <Animated.View
                         key={currentIndex}
                         entering={FadeInRight.springify()}
                         exiting={FadeOutLeft.duration(200)}
                     >
                         <Question
-                        category={currentQuestion.category}
-                        label={currentQuestion.label}
-                        onAnswer={handleAnswer}
+                            category={currentQuestion.category}
+                            label={currentQuestion.label}
+                            onAnswer={handleAnswer}
+                            leftLabel={currentQuestion.leftLabel}
+                            rightLabel={currentQuestion.rightLabel}
                         />
                     </Animated.View>
                 </View>

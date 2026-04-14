@@ -6,9 +6,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        peachy: ['peachy-keen'],
-        outfit: ['outfit'],
-        outfitBold: ['outfit-bold'],
+        'peachy': ['peachy-keen'],
+        'outfit': ['outfit'],
+        'outfit-bold': ['outfit-bold'],
       },
     },
   },

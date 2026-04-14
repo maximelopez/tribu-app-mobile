@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, ImageBackground, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, ThemeColor } from '../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
@@ -51,9 +51,14 @@ export default function ThemeSelection() {
                 style={{ flex: 1 }}
                 imageStyle={{ resizeMode: 'cover' }}
             >
-                <View className='flex-1 px-4 justify-center'>
-                    <Text className="text-3xl text-center text-white font-outfit mb-10">Avant de commencer...</Text>
-                    <Text className="text-xl text-white font-outfit mb-10">Choisissez la couleur de thème :</Text>
+                <View className='flex-1 px-4'>
+                    <Image
+                        source={require('../assets/images/logo-tribu.png')}
+                        className="w-[179px] h-[179px] mx-auto mt-5"
+                    />
+
+                    <Text className="text-3xl text-center text-white font-outfit-bold mb-24">Avant de commencer...</Text>
+                    <Text className="text-xl text-white font-outfit mb-2 mx-auto">Choisissez la couleur de thème :</Text>
 
                     <View className="flex-row gap-[30px] justify-center">
                         {colors.map((color) => {
@@ -73,9 +78,10 @@ export default function ThemeSelection() {
 
                     <TouchableOpacity
                         onPress={() => navigation.navigate('WelcomeQuiz')}
-                        className="mt-10 items-center"
+                        className="mt-24 items-center"
+                        activeOpacity={0.8}
                     >
-                        <Text className="text-white font-bold text-lg">Suivant</Text>
+                        <Text className="text-white font-outfit-bold text-2xl underline">Suivant</Text>
                     </TouchableOpacity>
                 </View>
             </ImageBackground>

@@ -23,8 +23,32 @@ export default function MainNavigator() {
             ) : user.score == null ? (
                 <>
                     <Stack.Screen name='Birthdate' component={Birthdate} />
-                    <Stack.Screen name='ThemeSelection' component={ThemeSelection} />
-                    <Stack.Screen name="WelcomeQuiz" component={WelcomeQuiz} />
+                    <Stack.Screen 
+                        name='ThemeSelection' 
+                        component={ThemeSelection}
+                        options={{
+                            headerShown: true,
+                            headerTitle: '',
+                            headerStyle: { backgroundColor: 'transparent' },
+                            headerTransparent: true,
+                            headerShadowVisible: false,
+                            headerTintColor: 'white',
+                            headerBackButtonDisplayMode: 'minimal',
+                        }}
+                    />
+                    <Stack.Screen 
+                        name="WelcomeQuiz" 
+                        component={WelcomeQuiz}
+                        options={{
+                            headerShown: true,
+                            headerTitle: '',
+                            headerStyle: { backgroundColor: 'transparent' },
+                            headerTransparent: true,
+                            headerShadowVisible: false,
+                            headerTintColor: 'white',
+                            headerBackButtonDisplayMode: 'minimal',
+                        }}
+                    />
                 </>
             ) : (
                 <Stack.Screen name="App" component={AppStack} />

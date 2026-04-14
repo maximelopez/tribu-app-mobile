@@ -71,82 +71,90 @@ export default function Home() {
     <SafeAreaView className='flex-1 bg-[#F7F5F8] '>
       {/* ScrollView pour toute la page */}
       <ScrollView
-        contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 10, paddingBottom: 40 }}
+        contentContainerStyle={{ paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
       >
 
-        <View className='flex-1 mt-4'>
-          <Text className='text-gray-800 font-peachy text-3xl'>
-            Bonjour, <Text style={{ color: theme.primary }}>{user?.name}</Text>
-          </Text>
-          <Text className='text-gray-900 font-outfit mb-10 text-xl'>Ton score bien-être</Text>
-          <DonutScore
-            size={180}
-            thickness={30}
-            progress={user.score / 100}
-            score={user.score}
-          />
+        <View className='flex-1'>
+          <View className='bg-white w-full px-4 py-5'>
+            <Text className='text-gray-800 font-peachy text-3xl'>
+              Bonjour, <Text style={{ color: theme.primary }}>{user?.name}</Text>
+            </Text>
+          </View>
+          
+          
 
-          <View className='items-center mt-10'>
-            <Text className='text-gray-800 font-peachy text-3xl'>Tableau de bord</Text>
+          <View className='px-4'>
+            <Text className='text-gray-900 font-outfit mb-5 mt-2 text-xl'>Ton score bien-être</Text>
+            <DonutScore
+              size={180}
+              thickness={30}
+              progress={user.score / 100}
+              score={user.score}
+            />
 
-            {isLoadingFamily ? (
-              <View className="mt-6 items-center">
-                <ActivityIndicator size="large" color={theme.primary} />
-              </View>
-            ) : family ? (
-              <View className="mt-2 w-full">
-                <Text className='font-outfit text-xl text-center' style={{ color: theme.primary }}>
-                    Tribu {family.name}
-                </Text>
+            <View className='items-center mt-8'>
+              <Text className='text-gray-800 font-peachy text-3xl'>Tableau de bord</Text>
 
-                {/* Demandes en attente */}
-                {user.id === family.creatorId && family.joinRequests.length > 0 && (
-                  <View>
-                    {family.joinRequests.map(requestUser => (
-                      <JoinRequestItem
-                        key={requestUser.id}
-                        requestUser={requestUser}
-                        familyId={family.id}
-                      />
-                    ))}
-                  </View>
-                )}
-                
-                {/* Membres de la famille */}
-                <View className="mt-2">
-                  <Text className="font-outfit text-gray-600 mt-2">Membres de cette Tribu :</Text>
-                  
-                  {family.members && family.members.length > 0 ? (
-                    family.members.map(member => (
-                      <FamilyMember key={member.id} member={member} />
-                    ))
-                  ) : (
-                    <Text className="ml-2 text-gray-500 mt-2">Aucun membre pour le moment</Text>
+              {isLoadingFamily ? (
+                <View className="mt-6 items-center">
+                  <ActivityIndicator size="large" color={theme.primary} />
+                </View>
+              ) : family ? (
+                <View className="mt-2 w-full">
+                  <Text className='font-outfit text-xl text-center' style={{ color: theme.primary }}>
+                      Tribu {family.name}
+                  </Text>
+
+                  {/* Demandes en attente */}
+                  {user.id === family.creatorId && family.joinRequests.length > 0 && (
+                    <View>
+                      {family.joinRequests.map(requestUser => (
+                        <JoinRequestItem
+                          key={requestUser.id}
+                          requestUser={requestUser}
+                          familyId={family.id}
+                        />
+                      ))}
+                    </View>
                   )}
-                </View>
+                  
+                  {/* Membres de la famille */}
+                  <View className="mt-2">
+                    <Text className="font-outfit text-gray-600 mt-2">Membres de cette Tribu :</Text>
+                    
+                    {family.members && family.members.length > 0 ? (
+                      family.members.map(member => (
+                        <FamilyMember key={member.id} member={member} />
+                      ))
+                    ) : (
+                      <Text className="ml-2 text-gray-500 mt-2">Aucun membre pour le moment</Text>
+                    )}
+                  </View>
 
-              </View>
-            ) : (
-              <>
-                <Text className='text-gray-900 font-outfit mb-4 text-lg'>Tu n'as pas encore de Tribu</Text>
-                <View className='w-full gap-4'>
-                  <Button 
-                    title="Rejoindre une Tribu" 
-                    onPress={handleJoinFamily}
-                    icon={<UsersIcon fill="white" />}
-                  />
-                  <Button 
-                    title="Créer une Tribu" 
-                    onPress={handleCreateFamily}
-                    icon={<AddIcon fill={theme.primary} />}
-                    color={theme.secondary}
-                    textColor={theme.primary}
-                    borderColor={theme.primary}
-                  />
                 </View>
-              </>
-            )}
+              ) : (
+                <>
+                  <Text className='text-gray-900 font-outfit mb-4 text-lg'>Tu n'as pas encore de Tribu</Text>
+                  <View className='w-full gap-4'>
+                    <Button 
+                      title="Rejoindre une Tribu" 
+                      onPress={handleJoinFamily}
+                      icon={<UsersIcon fill="white" />}
+                    />
+                    <Button 
+                      title="Créer une Tribu" 
+                      onPress={handleCreateFamily}
+                      icon={<AddIcon fill={theme.primary} />}
+                      color={theme.secondary}
+                      textColor={theme.primary}
+                      borderColor={theme.primary}
+                    />
+                  </View>
+                </>
+              )}
+            </View>
+
           </View>
         </View>
       </ScrollView>

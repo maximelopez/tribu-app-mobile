@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { View, Text, ImageBackground, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity, TextInput, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { useUserStore } from '../store/userStore';
@@ -74,9 +74,14 @@ export default function Birthdate() {
                 style={{ flex: 1 }}
                 imageStyle={{ resizeMode: 'cover' }}
             >
-                <View className='flex-1 px-4 justify-center'>
-                    <Text className="text-3xl text-center text-white font-outfit mb-10">Avant de commencer...</Text>
-                    <Text className="text-xl text-white font-outfit mb-10">Quelle est ta date de naissance :</Text>
+                <View className='flex-1 px-4'>
+                    <Image
+                        source={require('../assets/images/logo-tribu.png')}
+                        className="w-[179px] h-[179px] mx-auto mt-5"
+                    />
+
+                    <Text className="text-3xl text-center text-white font-outfit-bold mb-24">Avant de commencer...</Text>
+                    <Text className="text-xl text-white font-outfit mb-2">Quelle est ta date de naissance :</Text>
 
                     <View className="flex-row justify-center gap-2 mb-10">
                         <TextInput
@@ -129,9 +134,10 @@ export default function Birthdate() {
 
                     <TouchableOpacity
                         onPress={handleNext}
-                        className="mt-10 items-center"
+                        className="mt-20 items-center"
+                        activeOpacity={0.8}
                     >
-                        <Text className="text-white font-bold text-lg">Suivant</Text>
+                        <Text className="text-white font-outfit-bold text-2xl underline">Suivant</Text>
                     </TouchableOpacity>
                 </View>
             </ImageBackground>
