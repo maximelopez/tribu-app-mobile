@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { View, Text, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Question from '../components/Question';
 import { useUserStore } from '../store/userStore';
-import Animated, { 
+import Animated, {
+    SlideInRight,
+    SlideInLeft,
+    SlideOutLeft,
+    SlideOutRight,
     FadeInRight, 
     FadeOutLeft,
     useSharedValue,
@@ -40,8 +45,29 @@ export default function WelcomeQuiz() {
     const { themeColor } = useTheme();
     const backgroundImage = backgroundMap[themeColor];
 
+    const navigation = useNavigation();
+
     const [currentIndex, setCurrentIndex] = useState(0);
     const [answers, setAnswers] = useState<number[]>([]);
+    const [direction, setDirection] = useState<'next' | 'back'>('next');
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+            // Si on est à la première question → comportement normal
+            if (currentIndex === 0) return;
+
+            // Sinon on bloque le retour écran
+            e.preventDefault();
+
+            setDirection('back');
+
+            // On revient à la question précédente
+            setAnswers(prev => prev.slice(0, -1));
+            setCurrentIndex(prev => prev - 1);
+        });
+
+        return unsubscribe;
+    }, [navigation, currentIndex]);
     
     const progressWidth = useSharedValue(0);
     const progressScale = useSharedValue(1);
@@ -62,6 +88,8 @@ export default function WelcomeQuiz() {
     });
 
     const handleAnswer = async (value: number) => {
+        setDirection('next');
+
         const newAnswers = [...answers, value];
         setAnswers(newAnswers);
 
@@ -136,11 +164,11 @@ export default function WelcomeQuiz() {
                         </View>
                     </View>
 
-                <Animated.View
+                    <Animated.View
                         key={currentIndex}
-                        entering={FadeInRight.springify()}
-                        exiting={FadeOutLeft.duration(200)}
-                    >
+                        entering={direction === 'next'? SlideInRight.springify() : SlideInLeft.springify()}
+                        exiting={direction === 'next'? SlideOutLeft.duration(200) : SlideOutRight.duration(200)}
+                        >
                         <Question
                             category={currentQuestion.category}
                             label={currentQuestion.label}
