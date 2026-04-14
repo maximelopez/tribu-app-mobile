@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, View, ScrollView, ActivityIndicator } from 'react-native';
 import { useUserStore } from '../store/userStore';
@@ -69,6 +70,13 @@ export default function Home() {
 
   return (
     <SafeAreaView className='flex-1 bg-[#F7F5F8] '>
+      
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor="white"
+        translucent={false}
+      />
+
       {/* ScrollView pour toute la page */}
       <ScrollView
         contentContainerStyle={{ paddingBottom: 40 }}
@@ -78,7 +86,7 @@ export default function Home() {
         <View className='flex-1'>
           <View className='bg-white w-full px-4 py-5'>
             <Text className='text-gray-800 font-peachy text-3xl'>
-              Bonjour, <Text style={{ color: theme.primary }}>{user?.name}</Text>
+              Bonjour, <Text style={{ color: theme.primary }}>{user?.name} 👋</Text>
             </Text>
           </View>
           
@@ -94,21 +102,18 @@ export default function Home() {
             />
 
             <View className='items-center mt-8'>
-              <Text className='text-gray-800 font-peachy text-3xl'>Tableau de bord</Text>
+              
 
               {isLoadingFamily ? (
                 <View className="mt-6 items-center">
                   <ActivityIndicator size="large" color={theme.primary} />
                 </View>
               ) : family ? (
-                <View className="mt-2 w-full">
-                  <Text className='font-outfit text-xl text-center' style={{ color: theme.primary }}>
-                      Tribu {family.name}
-                  </Text>
+                <View className="w-full">
 
                   {/* Demandes en attente */}
                   {user.id === family.creatorId && family.joinRequests.length > 0 && (
-                    <View>
+                    <View className='mb-4'>
                       {family.joinRequests.map(requestUser => (
                         <JoinRequestItem
                           key={requestUser.id}
@@ -118,6 +123,11 @@ export default function Home() {
                       ))}
                     </View>
                   )}
+
+                  <Text className='text-gray-800 font-peachy text-3xl text-center'>Tableau de bord</Text>
+                  <Text className='font-outfit text-xl text-center' style={{ color: theme.primary }}>
+                      Tribu {family.name}
+                  </Text>     
                   
                   {/* Membres de la famille */}
                   <View className="mt-2">

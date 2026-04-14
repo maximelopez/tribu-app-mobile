@@ -9,8 +9,6 @@ import Animated, {
     SlideInLeft,
     SlideOutLeft,
     SlideOutRight,
-    FadeInRight, 
-    FadeOutLeft,
     useSharedValue,
     useAnimatedStyle,
     withTiming,
@@ -39,7 +37,6 @@ const backgroundMap: Record<string, any> = {
 
 export default function WelcomeQuiz() {
     const user = useUserStore(state => state.user);
-    const setUser = useUserStore(state => state.setUser);
     const userId = user?.id;
 
     const { themeColor } = useTheme();

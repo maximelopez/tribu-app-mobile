@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, View } from 'react-native';
+import { StatusBar, Text, View } from 'react-native';
 import { useUserStore } from '../store/userStore';
 import { useNavigation } from '@react-navigation/native';
+import { useTheme } from '../context/ThemeContext';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
@@ -12,6 +13,7 @@ export default function CreateFamily() {
     const user = useUserStore(state => state.user);
     const setUser = useUserStore(state => state.setUser);
     const navigation = useNavigation<any>();
+    const { theme } = useTheme();
 
     if (!user) return null;
 
@@ -76,6 +78,12 @@ export default function CreateFamily() {
     
     return (
         <SafeAreaView className='flex-1 bg-white'>
+            <StatusBar
+                barStyle="light-content"
+                backgroundColor={theme.primary}
+                translucent={false}
+            />
+
             <View className='flex-1 mx-4 items-center'>
 
                 <View className='w-full gap-[10px] mb-[20px]'>

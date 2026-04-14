@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, View, TextInput, FlatList, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { StatusBar, Text, View, TextInput, FlatList, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { useUserStore } from '../store/userStore';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
@@ -61,6 +61,12 @@ export default function SearchFamily() {
 
     return (
         <SafeAreaView className='flex-1 bg-[#F7F5F8]'>
+            <StatusBar
+                barStyle="light-content"
+                backgroundColor={theme.primary}
+                translucent={false}
+            />
+            
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}

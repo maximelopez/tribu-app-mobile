@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, StatusBar } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useUserStore } from '../store/userStore';
 import { useFamilyStore } from '../store/familyStore';
@@ -77,6 +77,11 @@ export default function FamilyDetails() {
 
     return (
         <SafeAreaView className="flex-1 bg-white">
+            <StatusBar
+                barStyle="light-content"
+                backgroundColor={theme.primary}
+                translucent={false}
+            />
             <View className="flex-1 mx-6 mt-10">
                 <Text className="text-xl text-center font-outfit mb-2" style={{ color: theme.primary }}>
                     {familyDetails.name}

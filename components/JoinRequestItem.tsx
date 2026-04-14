@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useFamilyStore } from '../store/familyStore';
+import { useTheme } from '../context/ThemeContext';
 
 const API_URL = 'https://tribu-app.onrender.com/api/';
 
@@ -10,6 +11,7 @@ interface JoinRequestItemProps {
 
 export default function JoinRequestItem({ requestUser, familyId }: JoinRequestItemProps) {
     const setFamily = useFamilyStore(state => state.setFamily);
+    const { theme } = useTheme();
 
     const handleAccept = async () => {
         try {
@@ -57,15 +59,23 @@ export default function JoinRequestItem({ requestUser, familyId }: JoinRequestIt
     };
 
     return (
-        <View className="h-[126px] flex-column mt-2 justify-between bg-white p-2 rounded-lg">
-            <Text>Invitation reçue</Text>
-            <Text>{requestUser.name} souhaite rejoindre votre Tribu</Text>
+        <View className="h-[125px] flex-column mt-2 justify-between bg-white p-4 rounded-[16px]">
+            <Text className='font-outfit text-center uppercase' style={{ color: theme.primary }}>Nouvelle invitation</Text>
+            <Text className='font-outfit text-center'>{requestUser.name} souhaite rejoindre votre Tribu</Text>
             <View className="flex-row justify-evenly">
-                <TouchableOpacity onPress={handleAccept} className="w-[140px] h-[48px] rounded-2xl bg-[#448AFF] items-center justify-center">
-                    <Text className="text-white font-outfit font-bold">Accepter</Text>
+                <TouchableOpacity 
+                    onPress={handleReject}
+                    activeOpacity={0.8}
+                    className="w-[140px] h-[48px] rounded-2xl bg-[#EA4A1F33] items-center justify-center"
+                >
+                    <Text className="text-[#EA4A1F] font-outfit font-bold">Refuser</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={handleReject} className="w-[140px] h-[48px] rounded-2xl bg-[#F44E0C] items-center justify-center">
-                    <Text className="text-white font-outfit font-bold">Refuser</Text>
+                <TouchableOpacity 
+                    onPress={handleAccept}
+                    activeOpacity={0.8}
+                    className="w-[140px] h-[48px] rounded-2xl bg-[#00A16D33] items-center justify-center"
+                >
+                    <Text className="text-[#00A16D] font-outfit font-bold">Accepter</Text>
                 </TouchableOpacity>
             </View>
         </View>

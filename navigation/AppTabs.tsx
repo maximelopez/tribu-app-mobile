@@ -28,7 +28,8 @@ export default function AppTabs() {
           borderTopWidth: 0,
           elevation: 0,
           shadowOpacity: 0,
-          borderRadius: 15,
+          borderTopLeftRadius: 15,
+          borderTopRightRadius: 15,
         },
       }}
     >
