@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Platform } from 'react-native';
 import { useUserStore } from '../store/userStore';
 import { useNavigation } from '@react-navigation/native';
-import { useTheme } from '../context/ThemeContext';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import Topic from '../components/Topic';
@@ -13,7 +12,6 @@ export default function CreateFamily() {
     const user = useUserStore(state => state.user);
     const setUser = useUserStore(state => state.setUser);
     const navigation = useNavigation<any>();
-    const { theme } = useTheme();
 
     if (!user) return null;
 
@@ -95,55 +93,67 @@ export default function CreateFamily() {
     };
     
     return (
-        <View className='flex-1 bg-[#F7F5F8]'>
-            <View className='flex-1 mx-4 mt-5 items-center'>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        >
 
-                <View className='w-full gap-[10px] mb-[20px]'>
-                   <Text>Nom de la Tribu</Text> 
-                    <Input 
-                        value={name} 
-                        onChangeText={setName}
-                        placeholder="Ex : Champions"
-                    />
+            <View className='flex-1 bg-[#F7F5F8]'>
+                <View className='flex-1 mx-4 mt-5 items-center'>
 
-                    <Text>Ville</Text>
-                    <Input 
-                        value={city} 
-                        onChangeText={setCity}
-                        placeholder="Ex : Angers"
-                    />
+                    <View className='w-full gap-[10px] mb-[20px]'>
+                    <Text>Nom de la Tribu</Text> 
+                        <Input 
+                            value={name} 
+                            onChangeText={setName}
+                            placeholder="Ex : Champions"
+                        />
 
-                    <Text>Slogan de votre Tribu (optionnel)</Text>
-                    <Input 
-                        value={slogan} 
-                        onChangeText={setSlogan}
-                        placeholder="Ecrivez votre slogan ici"
-                        multiline
-                        numberOfLines={5}
-                    />
+                        <Text>Ville</Text>
+                        <Input 
+                            value={city} 
+                            onChangeText={setCity}
+                            placeholder="Ex : Angers"
+                        />
 
-                    <Text className="mb-2">Thématiques préférées</Text>
-                    <View className="flex-row flex-wrap gap-2 mb-6">
-                        {availableTopics.map(topic => (
-                            <Topic
-                                key={topic}
-                                label={topic}
-                                selected={topics.includes(topic)}
-                                onPress={() => toggleTopic(topic)}
-                            />
-                        ))}
+                        <Text>Slogan de votre Tribu (optionnel)</Text>
+                        <Input 
+                            value={slogan} 
+                            onChangeText={setSlogan}
+                            placeholder="Ecrivez votre slogan ici"
+                            multiline
+                            numberOfLines={5}
+                        />
+
+                        <Text className="mb-2">Thématiques préférées</Text>
+                        <View className="flex-row flex-wrap gap-2 mb-6">
+                            {availableTopics.map(topic => (
+                                <Topic
+                                    key={topic}
+                                    label={topic}
+                                    selected={topics.includes(topic)}
+                                    onPress={() => toggleTopic(topic)}
+                                />
+                            ))}
+                        </View>
+
                     </View>
 
+                    {errorMessage && <Text className="text-red-500 mb-3">{errorMessage}</Text>}
+                    
+                    <Button
+                        title="Créer ma tribu"
+                        onPress={handleCreateFamily}
+                        loading={loading}
+                    />
                 </View>
-
-                {errorMessage && <Text className="text-red-500 mb-3">{errorMessage}</Text>}
-                
-                <Button
-                    title="Créer ma tribu"
-                    onPress={handleCreateFamily}
-                    loading={loading}
-                />
             </View>
-        </View>
+
+
+        </KeyboardAvoidingView>        
+    </TouchableWithoutFeedback>
+
+        
     );
 };
