@@ -9,6 +9,8 @@ interface InputProps {
     autoCapitalize?: TextInputProps['autoCapitalize'];
     secureTextEntry?: boolean;
     color?: string;
+    multiline?: boolean;
+    numberOfLines?: number;
 }
 
 export default function Input({ 
@@ -18,7 +20,9 @@ export default function Input({
     keyboardType = 'default',
     autoCapitalize = 'sentences',
     secureTextEntry = false,
-    color
+    color,
+    multiline = false,
+    numberOfLines = 1
 }: InputProps) {
     const { theme } = useTheme();
     
@@ -33,7 +37,16 @@ export default function Input({
                 secureTextEntry={secureTextEntry}
                 autoCapitalize={keyboardType === 'email-address' ? 'none' : autoCapitalize}
                 selectionColor={color || theme.primary}
-                className="w-full border border-gray-200 rounded-2xl h-[48px] px-[24px]"
+                multiline={multiline}
+                numberOfLines={numberOfLines}
+                className="w-full border border-gray-200 rounded-2xl px-4 bg-white"
+                style={[
+                    !multiline && { height: 48 },
+                    multiline && {
+                        minHeight: 100,
+                        textAlignVertical: 'top'
+                    }
+                ]}
             />
         </View>
     )

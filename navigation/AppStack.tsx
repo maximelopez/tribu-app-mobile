@@ -27,13 +27,11 @@ export default function AppStack() {
         component={CreateFamily}
         options={{
           headerShown: true,
-          headerStyle: { backgroundColor: theme.primary },
           headerShadowVisible: false,
           headerTitleAlign: 'center',
           headerTitle: 'Créer une Tribu',
-          headerTitleStyle: { color: 'white', fontWeight: 'bold' },
-          headerTintColor: 'white',
           headerBackButtonDisplayMode: 'minimal',
+          headerStyle: { backgroundColor: '#F7F5F8' }
         }}
       />
 
@@ -42,13 +40,11 @@ export default function AppStack() {
         component={SearchFamily}
         options={{
           headerShown: true,
-          headerStyle: { backgroundColor: theme.primary },
           headerShadowVisible: false,
           headerTitleAlign: 'center',
           headerTitle: 'Rejoindre une Tribu',
-          headerTitleStyle: { color: 'white', fontWeight: 'bold' },
-          headerTintColor: 'white',
           headerBackButtonDisplayMode: 'minimal',
+          headerStyle: { backgroundColor: '#F7F5F8' }
         }}
       />
 
@@ -57,13 +53,11 @@ export default function AppStack() {
         component={FamilyDetails}
         options={{
           headerShown: true,
-          headerStyle: { backgroundColor: theme.primary },
           headerShadowVisible: false,
           headerTitleAlign: 'center',
           headerTitle: 'Détails de la Tribu',
-          headerTitleStyle: { color: 'white', fontWeight: 'bold' },
-          headerTintColor: 'white',
           headerBackButtonDisplayMode: 'minimal',
+          headerStyle: { backgroundColor: '#F7F5F8' }
         }}
       />
     </Stack.Navigator>

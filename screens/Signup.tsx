@@ -73,7 +73,7 @@ export default function Signup({ navigation }: any) {
           <Input 
             value={name} 
             onChangeText={setName}
-            placeholder="Anastasia"
+            placeholder="Prénom"
             color="#00a16d"
           />
 

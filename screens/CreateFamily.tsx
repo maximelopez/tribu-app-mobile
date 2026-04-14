@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { StatusBar, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { useUserStore } from '../store/userStore';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import Topic from '../components/Topic';
 
 const API_URL = 'https://tribu-app.onrender.com/api/';
 
@@ -19,8 +19,26 @@ export default function CreateFamily() {
 
     const [name, setName] = useState<string>('');
     const [city, setCity] = useState<string>('');
+    const [slogan, setSlogan] = useState<string>('');
+    const [topics, setTopics] = useState<string[]>([]);
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const availableTopics = [
+        'Cuisine & Nutrition',
+        'Sport & Activités',
+        'Lecture & Culture',
+        'Vie sociale',
+        'Développement personnel'
+    ];
+
+    const toggleTopic = (topic: string) => {
+        setTopics(prev => 
+            prev.includes(topic)
+                ? prev.filter(t => t !== topic)
+                : [...prev, topic]
+        );
+    };
 
     const handleCreateFamily = async () => {
         if (!name || !city) {
@@ -36,7 +54,7 @@ export default function CreateFamily() {
             const response = await fetch(API_URL + 'families', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ name, city, creatorId: user.id })
+                body: JSON.stringify({ name, city, slogan, topics, creatorId: user.id })
             });
 
             const data = await response.json();
@@ -77,14 +95,8 @@ export default function CreateFamily() {
     };
     
     return (
-        <SafeAreaView className='flex-1 bg-white'>
-            <StatusBar
-                barStyle="light-content"
-                backgroundColor={theme.primary}
-                translucent={false}
-            />
-
-            <View className='flex-1 mx-4 items-center'>
+        <View className='flex-1 bg-[#F7F5F8]'>
+            <View className='flex-1 mx-4 mt-5 items-center'>
 
                 <View className='w-full gap-[10px] mb-[20px]'>
                    <Text>Nom de la Tribu</Text> 
@@ -93,12 +105,35 @@ export default function CreateFamily() {
                         onChangeText={setName}
                         placeholder="Ex : Champions"
                     />
+
                     <Text>Ville</Text>
                     <Input 
                         value={city} 
                         onChangeText={setCity}
                         placeholder="Ex : Angers"
                     />
+
+                    <Text>Slogan de votre Tribu (optionnel)</Text>
+                    <Input 
+                        value={slogan} 
+                        onChangeText={setSlogan}
+                        placeholder="Ecrivez votre slogan ici"
+                        multiline
+                        numberOfLines={5}
+                    />
+
+                    <Text className="mb-2">Thématiques préférées</Text>
+                    <View className="flex-row flex-wrap gap-2 mb-6">
+                        {availableTopics.map(topic => (
+                            <Topic
+                                key={topic}
+                                label={topic}
+                                selected={topics.includes(topic)}
+                                onPress={() => toggleTopic(topic)}
+                            />
+                        ))}
+                    </View>
+
                 </View>
 
                 {errorMessage && <Text className="text-red-500 mb-3">{errorMessage}</Text>}
@@ -109,6 +144,6 @@ export default function CreateFamily() {
                     loading={loading}
                 />
             </View>
-        </SafeAreaView>
+        </View>
     );
 };

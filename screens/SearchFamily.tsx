@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { StatusBar, Text, View, TextInput, FlatList, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, View, TextInput, FlatList, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { useUserStore } from '../store/userStore';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
@@ -60,19 +59,14 @@ export default function SearchFamily() {
     );
 
     return (
-        <SafeAreaView className='flex-1 bg-[#F7F5F8]'>
-            <StatusBar
-                barStyle="light-content"
-                backgroundColor={theme.primary}
-                translucent={false}
-            />
+        <View className='flex-1 bg-[#F7F5F8]'>
             
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                 keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
             >
-                <View className='flex-1 mx-4 gap-[10px]'>
+                <View className='flex-1 mx-4 mt-4 gap-[10px]'>
                     <Text>Rechercher une Tribu :</Text>
                     <TextInput
                         value={search}
@@ -80,9 +74,7 @@ export default function SearchFamily() {
                         placeholder="Saisissez votre recherche"
                         className="border border-gray-300 rounded-xl px-4 font-outfit h-[48px]"
                     />
-
-                    <Text className='text-center mt-4'>Résultats :</Text>
-
+            
                     <FlatList
                         data={families}
                         keyExtractor={item => item.id}
@@ -92,6 +84,6 @@ export default function SearchFamily() {
                     />
                 </View>
             </KeyboardAvoidingView>
-        </SafeAreaView>
+        </View>
     );
 };

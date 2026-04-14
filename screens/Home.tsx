@@ -70,12 +70,6 @@ export default function Home() {
 
   return (
     <SafeAreaView className='flex-1 bg-[#F7F5F8] '>
-      
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor="white"
-        translucent={false}
-      />
 
       {/* ScrollView pour toute la page */}
       <ScrollView
@@ -84,7 +78,7 @@ export default function Home() {
       >
 
         <View className='flex-1'>
-          <View className='bg-white w-full px-4 py-5'>
+          <View className='w-full px-4 pt-6'>
             <Text className='text-gray-800 font-peachy text-3xl'>
               Bonjour, <Text style={{ color: theme.primary }}>{user?.name} 👋</Text>
             </Text>

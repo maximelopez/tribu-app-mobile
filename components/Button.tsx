@@ -50,7 +50,7 @@ export default function Button({
             ): (
                 <View className="flex-row justify-center items-center gap-4">
                     <Text 
-                        className="text-center font-outfit text-xl"
+                        className="text-center font-outfit-bold text-xl"
                         style={{ color: textColor || 'white' }}
                     >
                         {title}

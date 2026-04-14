@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, View, TouchableOpacity, StatusBar } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useUserStore } from '../store/userStore';
 import { useFamilyStore } from '../store/familyStore';
 import { useTheme } from '../context/ThemeContext';
+import Topic from '../components/Topic';
 
 const API_URL = 'https://tribu-app.onrender.com/api/';
 
@@ -13,7 +13,7 @@ interface Family {
     name: string;
     city: string;
     slogan: string | null;
-    themes: string[];
+    topics: string[];
     creatorId: string;
     joinRequests: string[];
 }
@@ -76,20 +76,28 @@ export default function FamilyDetails() {
     if (!familyDetails) return null;
 
     return (
-        <SafeAreaView className="flex-1 bg-white">
-            <StatusBar
-                barStyle="light-content"
-                backgroundColor={theme.primary}
-                translucent={false}
-            />
+        <View className="flex-1 bg-[#F7F5F8]">
             <View className="flex-1 mx-6 mt-10">
-                <Text className="text-xl text-center font-outfit mb-2" style={{ color: theme.primary }}>
+                <Text className="text-xl text-center font-outfit-bold mb-2" style={{ color: theme.primary }}>
                     {familyDetails.name}
                 </Text>
 
-                <Text className="text-lg text-center text-gray-600 font-outfit mb-8">
-                Ville : {familyDetails.city}
+                <Text className="text-xl text-center font-outfit mb-2" style={{ color: theme.primary }}>
+                    {familyDetails.slogan}
                 </Text>
+
+                <Text className="text-lg text-center text-gray-600 font-outfit mb-8">
+                    Ville : {familyDetails.city}
+                </Text>
+
+                <Text className="text-lg text-center text-gray-600 font-outfit mb-8">Thématiques :</Text>
+                <View className='flex-row flex-wrap gap-2 mb-6'>
+                    {familyDetails.topics.map((topic) => {
+                        return (
+                            <Topic key={topic} label={topic} />
+                        )
+                    })}
+                </View>
 
                 {errorMessage && (
                 <Text className="text-red-500 mb-4">{errorMessage}</Text>
@@ -106,6 +114,6 @@ export default function FamilyDetails() {
                 </Text>
                 </TouchableOpacity>
             </View>
-        </SafeAreaView>
+        </View>
     )
 }
