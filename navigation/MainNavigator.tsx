@@ -6,6 +6,7 @@ import Login from '../screens/Login';
 import Birthdate from '../screens/Birthdate';
 import ThemeSelection from '../screens/ThemeSelection';
 import WelcomeQuiz from '../screens/WelcomeQuiz';
+import ScorePreparing from '../screens/ScorePreparing';
 import AppStack from './AppStack';
 
 const Stack = createNativeStackNavigator();
@@ -48,6 +49,11 @@ export default function MainNavigator() {
                             headerTintColor: 'white',
                             headerBackButtonDisplayMode: 'minimal',
                         }}
+                    />
+                    <Stack.Screen 
+                        name="ScorePreparing"
+                        component={ScorePreparing}
+                        options={{ headerShown: false }}
                     />
                 </>
             ) : (

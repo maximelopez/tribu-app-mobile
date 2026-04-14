@@ -45,14 +45,14 @@ export default function WelcomeQuiz() {
     const { themeColor } = useTheme();
     const backgroundImage = backgroundMap[themeColor];
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [answers, setAnswers] = useState<number[]>([]);
     const [direction, setDirection] = useState<'next' | 'back'>('next');
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+        const unsubscribe = navigation.addListener('beforeRemove', (e: any) => {
             // Si on est à la première question → comportement normal
             if (currentIndex === 0) return;
 
@@ -93,7 +93,7 @@ export default function WelcomeQuiz() {
         const newAnswers = [...answers, value];
         setAnswers(newAnswers);
 
-        // pulse UX sur la barre
+        // UX animation
         progressScale.value = withSequence(
             withTiming(1.05, { duration: 120 }),
             withTiming(1, { duration: 120 })
@@ -102,27 +102,29 @@ export default function WelcomeQuiz() {
         const isLastQuestion = currentIndex === questions.length - 1;
 
         if (isLastQuestion) {
-            // Calcul du score
             const total = newAnswers.reduce((sum, val) => sum + val, 0);
             const scoreFinal = Math.round((total / (questions.length * 5)) * 100);
 
             if (!userId) return;
 
             try {
-                const response = await fetch(API_URL + 'users/' + userId + '/score', {
+                await fetch(API_URL + 'users/' + userId + '/score', {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ score: scoreFinal }),
                 });
 
-                const data = await response.json();
-
-                // mise à jour du store Zustand
-                if (user) setUser({ ...user, score: data.score });
-
             } catch (error) {
                 console.log("Erreur envoi score :", error);
             }
+
+            // 🔥 évite double navigation
+           if (navigation.isFocused()) {
+            navigation.navigate('ScorePreparing', {
+                score: scoreFinal
+            });
+        }
+
             return;
         }
 
