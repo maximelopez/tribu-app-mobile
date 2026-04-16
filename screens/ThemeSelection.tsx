@@ -45,13 +45,13 @@ export default function ThemeSelection() {
     };
 
     return (
-        <SafeAreaView className="flex-1">
+        <View className="flex-1">
             <ImageBackground
                 source={backgroundImage}
                 style={{ flex: 1 }}
                 imageStyle={{ resizeMode: 'cover' }}
             >
-                <View className='flex-1 px-4'>
+                <View className='flex-1 px-4 mt-24'>
                     <Image
                         source={require('../assets/images/logo-tribu.png')}
                         className="w-[179px] h-[179px] mx-auto mt-5"
@@ -85,6 +85,6 @@ export default function ThemeSelection() {
                     </TouchableOpacity>
                 </View>
             </ImageBackground>
-        </SafeAreaView>
+        </View>
     )
 }

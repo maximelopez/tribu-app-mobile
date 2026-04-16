@@ -1,6 +1,16 @@
 import { useState, useRef } from 'react';
-import { View, Text, ImageBackground, TouchableOpacity, TextInput, Image } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { 
+    View, 
+    Text, 
+    ImageBackground, 
+    TouchableOpacity, 
+    TextInput, 
+    Image, 
+    Keyboard,
+    TouchableWithoutFeedback, 
+    KeyboardAvoidingView, 
+    Platform 
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useUserStore } from '../store/userStore';
 
@@ -68,79 +78,90 @@ export default function Birthdate() {
     };
 
     return (
-        <SafeAreaView className="flex-1">
+        <View className="flex-1">
             <ImageBackground
                 source={ require('../assets/images/bg-vert.png')}
                 style={{ flex: 1 }}
                 imageStyle={{ resizeMode: 'cover' }}
             >
-                <View className='flex-1 px-4'>
-                    <Image
-                        source={require('../assets/images/logo-tribu.png')}
-                        className="w-[179px] h-[179px] mx-auto mt-5"
-                    />
 
-                    <Text className="text-3xl text-center text-white font-outfit-bold mb-24">Avant de commencer...</Text>
-                    <Text className="text-xl text-white font-outfit mb-2">Quelle est ta date de naissance :</Text>
-
-                    <View className="flex-row justify-center gap-2 mb-10">
-                        <TextInput
-                            value={day}
-                            onChangeText={(text) => {
-                                setDay(text);
-                                if (text.length === 2) {
-                                    monthRef.current?.focus();
-                                }
-                            }}
-                            placeholder="JJ"
-                            keyboardType="numeric"
-                            maxLength={2}
-                            returnKeyType="next"
-                            onSubmitEditing={() => monthRef.current?.focus()}
-                            className="bg-white w-[115px] h-[40px] text-center rounded-2xl"
-                        />
-                        <TextInput
-                            ref={monthRef}
-                            value={month}
-                            onChangeText={(text) => {
-                                setMonth(text);
-                                if (text.length === 2) {
-                                    yearRef.current?.focus();
-                                }
-                            }}
-                            placeholder="MM"
-                            keyboardType="numeric"
-                            maxLength={2}
-                            returnKeyType="next"
-                            onSubmitEditing={() => yearRef.current?.focus()}
-                            className="bg-white w-[110px] h-[40px] text-center rounded-2xl"
-                        />
-                        <TextInput
-                            ref={yearRef}
-                            value={year}
-                            onChangeText={setYear}
-                            placeholder="AAAA"
-                            keyboardType="numeric"
-                            maxLength={4}
-                            returnKeyType="done"
-                            onSubmitEditing={handleNext}
-                            className="bg-white w-[115px] h-[40px] text-center rounded-2xl"
-                        />
-                    </View>
-
-                    {error ? (
-                        <Text className="text-white text-center mb-4">{error}</Text>
-                    ) : null}
-
-                    <TouchableOpacity
-                        onPress={handleNext}
-                        className="mt-20 items-center"
-                        activeOpacity={0.8}
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <KeyboardAvoidingView
+                        style={{ flex: 1 }}
+                        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                     >
-                        <Text className="text-white font-outfit-bold text-2xl underline">Suivant</Text>
-                    </TouchableOpacity>
-                </View>
+
+                        <View className='flex-1 px-4 mt-24'>
+                            <Image
+                                source={require('../assets/images/logo-tribu.png')}
+                                className="w-[179px] h-[179px] mx-auto mt-5"
+                            />
+
+                            <Text className="text-3xl text-center text-white font-outfit-bold mb-24">Avant de commencer...</Text>
+                            <Text className="text-xl text-white font-outfit mb-2">Quelle est ta date de naissance :</Text>
+
+                            <View className="flex-row justify-center gap-2 mb-10">
+                                <TextInput
+                                    value={day}
+                                    onChangeText={(text) => {
+                                        setDay(text);
+                                        if (text.length === 2) {
+                                            monthRef.current?.focus();
+                                        }
+                                    }}
+                                    placeholder="JJ"
+                                    keyboardType="numeric"
+                                    maxLength={2}
+                                    //returnKeyType="next"
+                                    onSubmitEditing={() => monthRef.current?.focus()}
+                                    className="bg-white w-[115px] h-[40px] text-center rounded-2xl"
+                                />
+                                <TextInput
+                                    ref={monthRef}
+                                    value={month}
+                                    onChangeText={(text) => {
+                                        setMonth(text);
+                                        if (text.length === 2) {
+                                            yearRef.current?.focus();
+                                        }
+                                    }}
+                                    placeholder="MM"
+                                    keyboardType="numeric"
+                                    maxLength={2}
+                                    //returnKeyType="next"
+                                    onSubmitEditing={() => yearRef.current?.focus()}
+                                    className="bg-white w-[110px] h-[40px] text-center rounded-2xl"
+                                />
+                                <TextInput
+                                    ref={yearRef}
+                                    value={year}
+                                    onChangeText={setYear}
+                                    placeholder="AAAA"
+                                    keyboardType="numeric"
+                                    maxLength={4}
+                                    //returnKeyType="done"
+                                    onSubmitEditing={handleNext}
+                                    className="bg-white w-[115px] h-[40px] text-center rounded-2xl"
+                                />
+                            </View>
+
+                            {error ? (
+                                <Text className="text-white text-center mb-4">{error}</Text>
+                            ) : null}
+
+                            <TouchableOpacity
+                                onPress={handleNext}
+                                className="mt-20 items-center"
+                                activeOpacity={0.8}
+                            >
+                                <Text className="text-white font-outfit-bold text-2xl underline">Suivant</Text>
+                            </TouchableOpacity>
+                        </View>
+                        
+                    </KeyboardAvoidingView>
+                </TouchableWithoutFeedback>
+                
             </ImageBackground>
-        </SafeAreaView>
+        </View>
     )
 }
