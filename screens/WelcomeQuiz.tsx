@@ -1,14 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, ImageBackground } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import Question from '../components/Question';
 import { useUserStore } from '../store/userStore';
 import Animated, {
     SlideInRight,
-    SlideInLeft,
     SlideOutLeft,
-    SlideOutRight,
     useSharedValue,
     useAnimatedStyle,
     withTiming,
@@ -46,25 +43,6 @@ export default function WelcomeQuiz() {
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [answers, setAnswers] = useState<number[]>([]);
-    const [direction, setDirection] = useState<'next' | 'back'>('next');
-
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('beforeRemove', (e: any) => {
-            // Si on est à la première question → comportement normal
-            if (currentIndex === 0) return;
-
-            // Sinon on bloque le retour écran
-            e.preventDefault();
-
-            setDirection('back');
-
-            // On revient à la question précédente
-            setAnswers(prev => prev.slice(0, -1));
-            setCurrentIndex(prev => prev - 1);
-        });
-
-        return unsubscribe;
-    }, [navigation, currentIndex]);
     
     const progressWidth = useSharedValue(0);
     const progressScale = useSharedValue(1);
@@ -85,8 +63,6 @@ export default function WelcomeQuiz() {
     });
 
     const handleAnswer = async (value: number) => {
-        setDirection('next');
-
         const newAnswers = [...answers, value];
         setAnswers(newAnswers);
 
@@ -115,31 +91,27 @@ export default function WelcomeQuiz() {
                 console.log("Erreur envoi score :", error);
             }
 
-            // 🔥 évite double navigation
-           if (navigation.isFocused()) {
-            navigation.navigate('ScorePreparing', {
-                score: scoreFinal
-            });
-        }
+            if (navigation.isFocused()) {
+                navigation.navigate('ScorePreparing', { score: scoreFinal });
+            }
 
             return;
         }
 
-        // délai pour laisser l'animation jouer
         setTimeout(() => setCurrentIndex(prev => prev + 1), 180);
     };
 
     const currentQuestion = questions[currentIndex];
 
     return (
-        <SafeAreaView className="flex-1">
+        <View className="flex-1">
             <ImageBackground
                 source={backgroundImage}
                 style={{ flex: 1 }}
                 imageStyle={{ resizeMode: 'cover' }}
             >
             
-                <View>
+                <View className="mt-24">
                     <Text className='text-center text-white text-3xl font-outfit-bold mt-20'>
                         Pour mieux vous
                     </Text>
@@ -165,9 +137,9 @@ export default function WelcomeQuiz() {
 
                     <Animated.View
                         key={currentIndex}
-                        entering={direction === 'next'? SlideInRight.springify() : SlideInLeft.springify()}
-                        exiting={direction === 'next'? SlideOutLeft.duration(200) : SlideOutRight.duration(200)}
-                        >
+                        entering={SlideInRight.springify()}
+                        exiting={SlideOutLeft.duration(200)}
+                    >
                         <Question
                             category={currentQuestion.category}
                             label={currentQuestion.label}
@@ -178,6 +150,6 @@ export default function WelcomeQuiz() {
                     </Animated.View>
                 </View>
             </ImageBackground>
-        </SafeAreaView>
+        </View>
     );
 }

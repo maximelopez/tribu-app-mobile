@@ -30,6 +30,7 @@ export default function MainNavigator() {
                         options={{
                             headerShown: true,
                             headerTitle: '',
+                            headerBackTitle: 'Date de naissance',
                             headerStyle: { backgroundColor: 'transparent' },
                             headerTransparent: true,
                             headerShadowVisible: false,
@@ -43,6 +44,7 @@ export default function MainNavigator() {
                         options={{
                             headerShown: true,
                             headerTitle: '',
+                            headerBackTitle: 'Thème',
                             headerStyle: { backgroundColor: 'transparent' },
                             headerTransparent: true,
                             headerShadowVisible: false,
