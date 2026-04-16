@@ -5,7 +5,7 @@ export interface Family {
     name: string;
     city: string;
     slogan: string | null;
-    themes: string[];
+    topics: string[];
     creatorId: string;
     joinRequests: { id: string; name: string }[];
     members?: { id: string; name: string; score: number; avatarUrl?: string }[];

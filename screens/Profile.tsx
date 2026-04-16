@@ -88,9 +88,6 @@ export default function Profile() {
           <Text className="text-gray-600 text-lg mb-4">{user?.email}</Text>
           <ThemeSwitcher />
 
-          {/* <Text className="text-[32px] text-gray-900 font-peachy text-center mb-4 mt-10"> Mes statistiques</Text> */}
-
-
           <View className="w-full px-4 mt-4 mb-8 items-center">
             <Text className="text-[32px] font-peachy mb-8 mt-4">Mes thématiques</Text>
 

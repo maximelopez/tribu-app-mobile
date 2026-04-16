@@ -12,7 +12,6 @@ export default function AppStack() {
 
   return (
     <Stack.Navigator>
-      {/* Tabs : header vert sans titre */}
       <Stack.Screen
         name="Tabs"
         component={AppTabs}
@@ -21,7 +20,6 @@ export default function AppStack() {
         }}
       />
 
-      {/* Écrans enfants : header vert avec titre blanc */}
       <Stack.Screen
         name="CreateFamily"
         component={CreateFamily}
