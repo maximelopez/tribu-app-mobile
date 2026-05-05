@@ -1,16 +1,15 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from '../context/ThemeContext';
 import Home from '../screens/Home';
-import Dashboard from '../screens/Dashboard';
-import Challenges from '../screens/Challenges';
+import Activities from '../screens/Activities';
+import Map from '../screens/Map';
 import Chat from '../screens/Chat';
 import Profile from '../screens/Profile';
-import { View } from 'react-native';
 
 import HomeIcon from '../assets/icons/home.svg';
+import MapIcon from '../assets/icons/map.svg';
+import ActivityIcon from '../assets/icons/activity.svg';
 import ChatIcon from '../assets/icons/chat.svg';
-import BadgesIcon from '../assets/icons/badges.svg';
-import DashboardIcon from '../assets/icons/dashboard.svg';
 import ProfileIcon from '../assets/icons/profile.svg';
 
 const Tab = createBottomTabNavigator();
@@ -28,8 +27,6 @@ export default function AppTabs() {
           borderTopWidth: 0,
           elevation: 0,
           shadowOpacity: 0,
-          borderTopLeftRadius: 15,
-          borderTopRightRadius: 15,
         },
       }}
     >
@@ -45,36 +42,21 @@ export default function AppTabs() {
       />
 
       <Tab.Screen
-        name="Badges"
-        component={Challenges}
+        name="Carte"
+        component={Map}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <BadgesIcon width={20} height={20} fill={color} />
+            <MapIcon width={20} height={20} fill={color} />
           ),
         }}
       />
 
       <Tab.Screen
-        name="Dashboard"
-        component={Dashboard}
+        name="Activités"
+        component={Activities}
         options={{
-          tabBarLabel: '',
-          tabBarIcon: ({ focused }) => (
-            <View
-              style={{
-                width: 56,
-                height: 56,
-                borderRadius: 28,
-                backgroundColor: theme.primary,
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginBottom: 18 ,
-                borderColor: 'white',
-                borderWidth: 4,
-              }}
-            >
-              <DashboardIcon width={20} height={20} fill='white' />
-            </View>
+          tabBarIcon: ({ color, size }) => (
+            <ActivityIcon width={24} height={24} fill={color} />
           ),
         }}
       />

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, View, ScrollView, ActivityIndicator } from 'react-native';
 import { useUserStore } from '../store/userStore';
@@ -69,7 +68,7 @@ export default function Home() {
   }, [user, setFamily]);
 
   return (
-    <SafeAreaView className='flex-1 bg-[#F7F5F8] '>
+    <SafeAreaView className='flex-1 bg-white'>
 
       {/* ScrollView pour toute la page */}
       <ScrollView

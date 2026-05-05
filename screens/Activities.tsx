@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function Challenges() {
+export default function Activities() {
   return (
     <View style={styles.container}>
-      <Text>Badges</Text>
+      <Text>Activités</Text>
     </View>
   );
 }
