@@ -14,11 +14,13 @@ import useFamilyChat from '../hooks/useFamilyChat';
 import { useTheme } from '../context/ThemeContext';
 import MessageBubble from '../components/MessageBubble';
 import SendIcon from '../assets/icons/sendBtn.svg';
+import { useFamilyStore } from '../store/familyStore';
 
 export default function Chat() {
   const { theme } = useTheme();
   const { messages, sendMessage } = useFamilyChat();
   const user = useUserStore(state => state.user);
+  const family = useFamilyStore(state => state.family);
 
   const [text, setText] = useState('');
   const flatListRef = useRef<FlatList>(null);
@@ -63,6 +65,10 @@ export default function Chat() {
 
   return (
     <SafeAreaView className='flex-1 bg-white' edges={['top']}>
+      <View className='px-4 py-4'>
+        <Text style={{ color: theme.primary }}>Famille {family?.name}</Text>
+        <Text>4 membres actifs</Text>
+      </View>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
