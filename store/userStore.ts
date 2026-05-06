@@ -6,7 +6,6 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  score: number | null;
   familyId: string | null;
   avatar: number | null;
   theme?: 'vert' | 'jaune' | 'orange';
@@ -14,7 +13,9 @@ export interface User {
 
 interface UserStore {
   user: User | null;
+  onboardingCompleted: boolean;
   setUser: (user: User | ((prev: User | null) => User | null)) => void;
+  setOnboardingCompleted: (value: boolean) => void;
   logout: () => void;
 }
 
@@ -22,6 +23,7 @@ export const useUserStore = create<UserStore>()(
   persist(
     (set) => ({
       user: null,
+      onboardingCompleted: false,
       setUser: (userOrUpdater) =>
         set((state) => ({
           user:
@@ -29,7 +31,8 @@ export const useUserStore = create<UserStore>()(
               ? (userOrUpdater as (prev: User | null) => User | null)(state.user)
               : userOrUpdater,
         })),
-      logout: () => set({ user: null }),
+      setOnboardingCompleted: (value) => set({ onboardingCompleted: value }),
+      logout: () => set({ user: null, onboardingCompleted: false }),
     }),
     {
       name: 'tribu:auth:user',

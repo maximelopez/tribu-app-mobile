@@ -26,7 +26,7 @@ export default function Home() {
   // Active le WebSocket pour le temps réel
   useFamilyRealtime();
 
-  if (!user || !user.score) return null;
+  if (!user) return null;
 
   const handleJoinFamily = () => navigation.navigate('SearchFamily');
   const handleCreateFamily = () => navigation.navigate('CreateFamily');
@@ -86,14 +86,6 @@ export default function Home() {
           
 
           <View className='px-4'>
-            <Text className='text-gray-900 font-outfit mb-5 mt-2 text-xl'>Ton score bien-être</Text>
-            <DonutScore
-              size={180}
-              thickness={30}
-              progress={user.score / 100}
-              score={user.score}
-            />
-
             <View className='items-center mt-8'>
               
 

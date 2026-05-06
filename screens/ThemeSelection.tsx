@@ -1,5 +1,4 @@
 import { View, Text, TouchableOpacity, ImageBackground, Image } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, ThemeColor } from '../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import { useUserStore } from '../store/userStore';
@@ -77,7 +76,7 @@ export default function ThemeSelection() {
                     </View>
 
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('WelcomeQuiz')}
+                        onPress={() => navigation.navigate('AvatarSelection')}
                         className="mt-24 items-center"
                         activeOpacity={0.8}
                     >

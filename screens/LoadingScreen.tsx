@@ -1,6 +1,5 @@
 import { View, Text, ActivityIndicator, ImageBackground } from 'react-native';
 import { useEffect } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
 import { useUserStore } from '../store/userStore';
 import { useTheme } from '../context/ThemeContext';
 
@@ -10,34 +9,18 @@ const backgroundMap: Record<string, any> = {
   orange: require('../assets/images/bg-orange.png'),
 };
 
-export default function ScorePreparing() {
-    const route = useRoute<any>();
-    const navigation = useNavigation<any>();
-
-    const setUser = useUserStore(state => state.setUser);
-    const user = useUserStore(state => state.user);
-
-    const score = route.params?.score ?? 0;
-
+export default function LoadingScreen() {
+    const setOnboardingCompleted = useUserStore(state => state.setOnboardingCompleted);
     const { themeColor } = useTheme();
     const backgroundImage = backgroundMap[themeColor];
 
     useEffect(() => {
         const timer = setTimeout(() => {
-
-            if (user) setUser({ ...user, score: score });
-
-            const parent = navigation.getParent();
-
-            parent?.reset({
-                index: 0,
-                routes: [{ name: 'App' }],
-            });
-
+            setOnboardingCompleted(true);
         }, 2000);
 
         return () => clearTimeout(timer);
-    }, [navigation, user, score, setUser]);
+    }, []);
 
     return (
         <View className="flex-1">
@@ -49,10 +32,10 @@ export default function ScorePreparing() {
 
                 <View className='flex-1 justify-center items-center'>
                     <Text className="text-white text-3xl font-outfit-bold">
-                        Parfait ! On prépare ton
+                        Parfait !
                     </Text>
-                    <Text className="text-white text-3xl font-outfit-bold">
-                        score bien-être...
+                    <Text className="text-white text-2xl font-outfit-bold">
+                         On prépare ton application...
                     </Text>
 
                     <ActivityIndicator 
