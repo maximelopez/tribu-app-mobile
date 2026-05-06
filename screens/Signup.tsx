@@ -49,7 +49,6 @@ export default function Signup({ navigation }: any) {
         id: data.user.id,
         name: data.user.name,
         email: data.user.email,
-        score: data.user.score,
         familyId: data.user.familyId,
         avatar: data.user.avatarUrl,
         theme: data.user.theme,

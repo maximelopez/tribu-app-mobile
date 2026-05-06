@@ -39,7 +39,7 @@ export default function FamilyDetails() {
                 const data = await response.json();
 
                 if (response.ok) {
-                setFamilyDetails(data.family);
+                    setFamilyDetails(data.family);
                 }
             } catch (error) {
                 console.error('Erreur fetch famille :', error);

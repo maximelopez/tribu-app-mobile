@@ -1,6 +1,4 @@
 import { View, Text, ActivityIndicator, ImageBackground } from 'react-native';
-import { useEffect } from 'react';
-import { useUserStore } from '../store/userStore';
 import { useTheme } from '../context/ThemeContext';
 
 const backgroundMap: Record<string, any> = {
@@ -10,17 +8,8 @@ const backgroundMap: Record<string, any> = {
 };
 
 export default function LoadingScreen() {
-    const setOnboardingCompleted = useUserStore(state => state.setOnboardingCompleted);
     const { themeColor } = useTheme();
     const backgroundImage = backgroundMap[themeColor];
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setOnboardingCompleted(true);
-        }, 2000);
-
-        return () => clearTimeout(timer);
-    }, []);
 
     return (
         <View className="flex-1">
@@ -29,25 +18,21 @@ export default function LoadingScreen() {
                 style={{ flex: 1 }}
                 imageStyle={{ resizeMode: 'cover' }}
             >
-
                 <View className='flex-1 justify-center items-center'>
                     <Text className="text-white text-3xl font-outfit-bold">
                         Parfait !
                     </Text>
                     <Text className="text-white text-2xl font-outfit-bold">
-                         On prépare ton application...
+                        On prépare ton application...
                     </Text>
 
                     <ActivityIndicator 
                         size="large" 
                         color="white" 
                         className='mt-12' 
-                        style={{
-                            transform: [{ scale: 1.5 }]
-                        }} 
+                        style={{ transform: [{ scale: 1.5 }] }} 
                     />
                 </View>
-                
             </ImageBackground>
         </View>
     );

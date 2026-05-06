@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, View, ScrollView, ActivityIndicator } from 'react-native';
+import { Text, View, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useUserStore } from '../store/userStore';
 import { useFamilyStore } from '../store/familyStore';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import useFamilyRealtime from '../hooks/useFamilyRealtime';
-import DonutScore from '../components/DonutScore';
 import JoinRequestItem from '../components/JoinRequestItem';
 import FamilyMember from '../components/FamilyMember';
 import Button from '../components/Button';
@@ -132,19 +131,37 @@ export default function Home() {
                 <>
                   <Text className='text-gray-900 font-outfit mb-4 text-lg'>Tu n'as pas encore de Tribu</Text>
                   <View className='w-full gap-4'>
-                    <Button 
+                    {/* <Button 
                       title="Rejoindre une Tribu" 
                       onPress={handleJoinFamily}
                       icon={<UsersIcon fill="white" />}
-                    />
-                    <Button 
+                    /> */}
+                    <TouchableOpacity activeOpacity={0.8} onPress={handleJoinFamily}>
+                      <View style={{ backgroundColor : theme.primary, borderRadius: 20, height: 100}}>
+                        <View className='items-center justify-center'>
+                          <Text className='text-white'>Rejoindre une Tribu</Text>
+                          <Text className='text-white'>Trouve ta Tribu dans la liste de recherche</Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+
+                    {/* <Button 
                       title="Créer une Tribu" 
                       onPress={handleCreateFamily}
                       icon={<AddIcon fill={theme.primary} />}
                       color={theme.secondary}
                       textColor={theme.primary}
                       borderColor={theme.primary}
-                    />
+                    /> */}
+
+                    <TouchableOpacity activeOpacity={0.8} onPress={handleCreateFamily}>
+                      <View style={{ borderWidth: 1, borderColor: '#CBD5E0', borderRadius: 20, height: 100}}>
+                        <View className='items-center justify-center'>
+                          <Text>Créer une Tribu</Text>
+                          <Text>Lance ton groupe et invite tes proches</Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
                   </View>
                 </>
               )}

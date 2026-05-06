@@ -9,13 +9,12 @@ export interface User {
   familyId: string | null;
   avatar: number | null;
   theme?: 'vert' | 'jaune' | 'orange';
+  birthdate?: string | null;
 }
 
 interface UserStore {
   user: User | null;
-  onboardingCompleted: boolean;
   setUser: (user: User | ((prev: User | null) => User | null)) => void;
-  setOnboardingCompleted: (value: boolean) => void;
   logout: () => void;
 }
 
@@ -23,7 +22,6 @@ export const useUserStore = create<UserStore>()(
   persist(
     (set) => ({
       user: null,
-      onboardingCompleted: false,
       setUser: (userOrUpdater) =>
         set((state) => ({
           user:
@@ -31,8 +29,7 @@ export const useUserStore = create<UserStore>()(
               ? (userOrUpdater as (prev: User | null) => User | null)(state.user)
               : userOrUpdater,
         })),
-      setOnboardingCompleted: (value) => set({ onboardingCompleted: value }),
-      logout: () => set({ user: null, onboardingCompleted: false }),
+      logout: () => set({ user: null }),
     }),
     {
       name: 'tribu:auth:user',

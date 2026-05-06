@@ -68,6 +68,8 @@ export default function Birthdate() {
 
             const updatedUser = await response.json();
 
+            useUserStore.getState().setUser(prev => prev ? { ...prev, birthdate: updatedUser.birthdate } : prev);
+
             // Navigation vers la page suivante
             navigation.navigate('ThemeSelection');
 
