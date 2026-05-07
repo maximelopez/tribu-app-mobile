@@ -8,9 +8,12 @@ import { useTheme } from '../context/ThemeContext';
 import useFamilyRealtime from '../hooks/useFamilyRealtime';
 import JoinRequestItem from '../components/JoinRequestItem';
 import FamilyMember from '../components/FamilyMember';
-import Button from '../components/Button';
-import UsersIcon from '../assets/icons/users.svg';
-import AddIcon from '../assets/icons/add.svg';
+import ArrowGreen from '../assets/icons/arrow-green.svg';
+import ArrowOrange from '../assets/icons/arrow-orange.svg';
+import ArrowYellow from '../assets/icons/arrow-yellow.svg';
+import FamilyGreen from '../assets/icons/family-green.svg';
+import FamilyOrange from '../assets/icons/family-orange.svg';
+import FamilyYellow from '../assets/icons/family-yellow.svg';
 
 const API_URL = 'https://tribu-app.onrender.com/api/';
 
@@ -20,7 +23,10 @@ export default function Home() {
   const setFamily = useFamilyStore(state => state.setFamily);
   const navigation = useNavigation<any>();
   const [isLoadingFamily, setIsLoadingFamily] = useState(false);
-  const { theme } = useTheme();
+  const { theme, themeColor } = useTheme();
+
+  const ArrowIcon = themeColor === 'orange' ? ArrowOrange : themeColor === 'jaune' ? ArrowYellow : ArrowGreen;
+  const FamilyIcon = themeColor === 'orange' ? FamilyOrange : themeColor === 'jaune' ? FamilyYellow : FamilyGreen;
 
   // Active le WebSocket pour le temps réel
   useFamilyRealtime();
@@ -137,11 +143,16 @@ export default function Home() {
                       icon={<UsersIcon fill="white" />}
                     /> */}
                     <TouchableOpacity activeOpacity={0.8} onPress={handleJoinFamily}>
-                      <View style={{ backgroundColor : theme.primary, borderRadius: 20, height: 100}}>
-                        <View className='items-center justify-center'>
-                          <Text className='text-white'>Rejoindre une Tribu</Text>
+                      <View
+                        className='flex-row items-center'
+                        style={{ backgroundColor : theme.primary, borderRadius: 20, height: 100, paddingInline: 20 }}
+                      >
+                        <FamilyIcon />
+                        <View className='flex-1 mx-4'>
+                          <Text className='text-white font-bold'>Rejoindre une Tribu</Text>
                           <Text className='text-white'>Trouve ta Tribu dans la liste de recherche</Text>
                         </View>
+                        <ArrowIcon />
                       </View>
                     </TouchableOpacity>
 
@@ -155,11 +166,15 @@ export default function Home() {
                     /> */}
 
                     <TouchableOpacity activeOpacity={0.8} onPress={handleCreateFamily}>
-                      <View style={{ borderWidth: 1, borderColor: '#CBD5E0', borderRadius: 20, height: 100}}>
-                        <View className='items-center justify-center'>
-                          <Text>Créer une Tribu</Text>
+                      <View
+                        className='flex-row items-center'
+                        style={{ borderWidth: 1, borderColor: '#CBD5E0', borderRadius: 20, height: 100, paddingInline: 20}}
+                      >
+                        <View className='flex-1'>
+                          <Text className='font-bold'>Créer une Tribu</Text>
                           <Text>Lance ton groupe et invite tes proches</Text>
                         </View>
+                       
                       </View>
                     </TouchableOpacity>
                   </View>
