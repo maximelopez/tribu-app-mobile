@@ -3,13 +3,10 @@ import AppTabs from './AppTabs';
 import CreateFamily from '../screens/CreateFamily';
 import SearchFamily from '../screens/SearchFamily';
 import FamilyDetails from '../screens/FamilyDetails';
-import { useTheme } from '../context/ThemeContext';
 
 const Stack = createNativeStackNavigator();
 
 export default function AppStack() {
-  const { theme } = useTheme();
-
   return (
     <Stack.Navigator>
       <Stack.Screen

@@ -14,7 +14,9 @@ export interface User {
 
 interface UserStore {
   user: User | null;
+  onboardingCompleted: boolean;
   setUser: (user: User | ((prev: User | null) => User | null)) => void;
+  setOnboardingCompleted: (val: boolean) => void;
   logout: () => void;
 }
 
@@ -22,6 +24,7 @@ export const useUserStore = create<UserStore>()(
   persist(
     (set) => ({
       user: null,
+      onboardingCompleted: false,
       setUser: (userOrUpdater) =>
         set((state) => ({
           user:
@@ -29,7 +32,8 @@ export const useUserStore = create<UserStore>()(
               ? (userOrUpdater as (prev: User | null) => User | null)(state.user)
               : userOrUpdater,
         })),
-      logout: () => set({ user: null }),
+      setOnboardingCompleted: (val) => set({ onboardingCompleted: val }),
+      logout: () => set({ user: null, onboardingCompleted: false }),
     }),
     {
       name: 'tribu:auth:user',

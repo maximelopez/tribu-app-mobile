@@ -1,5 +1,7 @@
 import { View, Text, ActivityIndicator, ImageBackground } from 'react-native';
+import { useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext';
+import { useUserStore } from '../store/userStore';
 
 const backgroundMap: Record<string, any> = {
   vert: require('../assets/images/bg-vert.png'),
@@ -10,6 +12,15 @@ const backgroundMap: Record<string, any> = {
 export default function LoadingScreen() {
     const { themeColor } = useTheme();
     const backgroundImage = backgroundMap[themeColor];
+    const setOnboardingCompleted = useUserStore(state => state.setOnboardingCompleted);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setOnboardingCompleted(true);
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
 
     return (
         <View className="flex-1">
@@ -23,7 +34,7 @@ export default function LoadingScreen() {
                         Parfait !
                     </Text>
                     <Text className="text-white text-2xl font-outfit-bold">
-                        On prépare ton application...
+                        On prépare ton profil...
                     </Text>
 
                     <ActivityIndicator 

@@ -8,9 +8,11 @@ import { useTheme } from '../context/ThemeContext';
 import useFamilyRealtime from '../hooks/useFamilyRealtime';
 import JoinRequestItem from '../components/JoinRequestItem';
 import FamilyMember from '../components/FamilyMember';
+import Arrow from '../assets/icons/arrow.svg';
 import ArrowGreen from '../assets/icons/arrow-green.svg';
 import ArrowOrange from '../assets/icons/arrow-orange.svg';
 import ArrowYellow from '../assets/icons/arrow-yellow.svg';
+import Family from '../assets/icons/family.svg';
 import FamilyGreen from '../assets/icons/family-green.svg';
 import FamilyOrange from '../assets/icons/family-orange.svg';
 import FamilyYellow from '../assets/icons/family-yellow.svg';
@@ -142,7 +144,7 @@ export default function Home() {
                       onPress={handleJoinFamily}
                       icon={<UsersIcon fill="white" />}
                     /> */}
-                    <TouchableOpacity activeOpacity={0.8} onPress={handleJoinFamily}>
+                    <TouchableOpacity activeOpacity={0.9} onPress={handleJoinFamily}>
                       <View
                         className='flex-row items-center'
                         style={{ backgroundColor : theme.primary, borderRadius: 20, height: 100, paddingInline: 20 }}
@@ -165,16 +167,21 @@ export default function Home() {
                       borderColor={theme.primary}
                     /> */}
 
-                    <TouchableOpacity activeOpacity={0.8} onPress={handleCreateFamily}>
+                    <TouchableOpacity 
+                      activeOpacity={0.9} 
+                      onPress={handleCreateFamily} 
+                      style={{ borderRadius: 20, borderWidth: 1, borderColor: '#CBD5E0', overflow: 'hidden' }}
+                    >
                       <View
                         className='flex-row items-center'
-                        style={{ borderWidth: 1, borderColor: '#CBD5E0', borderRadius: 20, height: 100, paddingInline: 20}}
+                        style={{ height: 100, paddingInline: 20 }}
                       >
-                        <View className='flex-1'>
+                        <Family />
+                        <View className='flex-1 mx-4'>
                           <Text className='font-bold'>Créer une Tribu</Text>
                           <Text>Lance ton groupe et invite tes proches</Text>
                         </View>
-                       
+                        <Arrow />
                       </View>
                     </TouchableOpacity>
                   </View>

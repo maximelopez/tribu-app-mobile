@@ -50,9 +50,11 @@ export default function Signup({ navigation }: any) {
         name: data.user.name,
         email: data.user.email,
         familyId: data.user.familyId,
-        avatar: data.user.avatarUrl,
+        avatar: data.user.avatar,
         theme: data.user.theme,
       });
+
+      useUserStore.getState().setOnboardingCompleted(false);
 
     } catch (error: any) {
       console.error('Erreur signup :', error.message);

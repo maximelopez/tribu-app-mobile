@@ -13,9 +13,7 @@ const Stack = createNativeStackNavigator();
 
 export default function MainNavigator() {
     const user = useUserStore(state => state.user);
-
-    // L'onboarding est complet si toutes les infos sont renseignées
-    const onboardingCompleted = !!(user?.birthdate && user?.theme && user?.avatar);
+    const onboardingCompleted = useUserStore(state => state.onboardingCompleted);
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
