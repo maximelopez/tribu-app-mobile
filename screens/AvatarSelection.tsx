@@ -70,13 +70,13 @@ export default function AvatarSelection() {
                         Choisissez votre avatar :
                     </Text>
 
-                    <View className="flex-row gap-[20px] justify-center flex-wrap">
+                    <View className="flex-row gap-[10px] justify-center flex-wrap">
                         {avatars.map((avatar) => (
                             <TouchableOpacity
                                 key={avatar}
                                 onPress={() => changeAvatar(avatar)}
-                                className={`rounded-full overflow-hidden ${
-                                    selectedAvatar === avatar ? 'border-white border-4' : ''
+                                className={`rounded-full overflow-hidden border-4 ${
+                                    selectedAvatar === avatar ? 'border-white' : 'border-transparent'
                                 }`}
                                 activeOpacity={0.8}
                             >
