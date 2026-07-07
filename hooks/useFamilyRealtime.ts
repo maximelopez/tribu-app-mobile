@@ -26,7 +26,7 @@ export default function useFamilyRealtime() {
         // fetch les infos de l'utilisateur qui a demandé
         const res = await fetch(`${API_URL}users/${data.userId}`);
         const userData = await res.json();
-        const userName = userData.profile.name || 'Utilisateur inconnu';
+        const userName = userData.user?.name || 'Utilisateur inconnu';
 
         setFamily((prev) => {
           if (!prev) return prev;

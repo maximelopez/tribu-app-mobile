@@ -1,4 +1,5 @@
 import { Text, TouchableOpacity } from 'react-native';
+import { useTheme } from '../context/ThemeContext';
 
 type Props = {
   label: string;
@@ -7,7 +8,9 @@ type Props = {
 };
 
 export default function Topic({ label, selected, onPress }: Props) {
+    const { theme } = useTheme();
     const isReadOnly = !onPress;
+    const isActive = isReadOnly || selected;
 
     return (
         <TouchableOpacity
@@ -19,9 +22,9 @@ export default function Topic({ label, selected, onPress }: Props) {
                 height: 30,
                 paddingHorizontal: 10,
                 borderRadius: 15,
-                backgroundColor: isReadOnly? '#00A16D33' : selected ? '#00A16D33' : '#E3E3E3',
+                backgroundColor: isActive ? `${theme.primary}33` : '#E3E3E3',
                 borderWidth: 0.5,
-                borderColor: isReadOnly? '#00A16D33' : selected ? '#00A16D' : '#969696',
+                borderColor: isActive ? theme.primary : '#969696',
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginBottom: 4,
@@ -29,7 +32,7 @@ export default function Topic({ label, selected, onPress }: Props) {
             >
             <Text
                 style={{
-                color: isReadOnly? '#00A16D' : selected ? '#00A16D' : '#969696',
+                color: isActive ? theme.primary : '#969696',
                 textAlign: 'center',
                 }}
             >
