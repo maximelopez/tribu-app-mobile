@@ -37,7 +37,7 @@ export default function AppStack() {
           headerShown: true,
           headerShadowVisible: false,
           headerTitleAlign: 'center',
-          headerTitle: 'Rejoindre une Tribu',
+          headerTitle: 'Rechercher une Tribu',
           headerBackButtonDisplayMode: 'minimal',
           headerStyle: { backgroundColor: '#F7F5F8' }
         }}

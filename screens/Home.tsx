@@ -75,6 +75,10 @@ export default function Home() {
     fetchFamily();
   }, [user, setFamily]);
 
+  const handleDiscoverActivities = () => {
+    navigation.navigate('Activités');
+  };
+
   return (
     <SafeAreaView className='flex-1 bg-white'>
 
@@ -91,7 +95,32 @@ export default function Home() {
             </Text>
           </View>
           
-          
+          <View className="px-4 mt-4">
+            <View
+              className="rounded-3xl px-5 py-6"
+              style={{ backgroundColor: theme.primary }}
+            >
+              <Text className="text-white/80 font-outfit-bold text-xs tracking-widest">
+                TRIBU
+              </Text>
+              <Text className="text-white font-peachy text-2xl mt-2 leading-tight">
+                Crée des moments qui comptent vraiment
+              </Text>
+              <Text className="text-white/90 font-outfit mt-2">
+                Rejoins ou crée une Tribu et vivez des activités ensemble.
+              </Text>
+
+              <TouchableOpacity
+                activeOpacity={0.9}
+                onPress={handleDiscoverActivities}
+                className="bg-white rounded-full mt-5 py-4 items-center"
+              >
+                <Text className="font-outfit-bold text-base" style={{ color: theme.primary }}>
+                  →  Découvrir les activités
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
 
           <View className='px-4'>
             <View className='items-center mt-8'>
