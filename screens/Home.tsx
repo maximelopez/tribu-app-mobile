@@ -16,6 +16,7 @@ import Family from '../assets/icons/family.svg';
 import FamilyGreen from '../assets/icons/family-green.svg';
 import FamilyOrange from '../assets/icons/family-orange.svg';
 import FamilyYellow from '../assets/icons/family-yellow.svg';
+import FamilyLeaderboard from '../components/FamilyLeaderboard';
 
 const API_URL = 'https://tribu-app.onrender.com/api/';
 
@@ -116,34 +117,20 @@ export default function Home() {
                     </View>
                   )}
 
-                  <Text className='text-gray-800 font-peachy text-3xl text-center'>Tableau de bord</Text>
-                  <Text className='font-outfit text-xl text-center' style={{ color: theme.primary }}>
-                      Tribu {family.name}
-                  </Text>     
-                  
-                  {/* Membres de la famille */}
-                  <View className="mt-2">
-                    <Text className="font-outfit text-gray-600 mt-2">Membres de cette Tribu :</Text>
-                    
-                    {family.members && family.members.length > 0 ? (
-                      family.members.map(member => (
-                        <FamilyMember key={member.id} member={member} />
-                      ))
-                    ) : (
-                      <Text className="ml-2 text-gray-500 mt-2">Aucun membre pour le moment</Text>
-                    )}
-                  </View>
+                  <Text className='text-gray-800 font-peachy text-2xl mx-2'>Ma tribu</Text>
+
+                  <FamilyLeaderboard
+                    familyName={family.name}
+                    members={family.members ?? []}
+                    currentUserId={user.id}
+                  />
 
                 </View>
               ) : (
                 <>
                   <Text className='text-gray-900 font-outfit mb-4 text-lg'>Tu n'as pas encore de Tribu</Text>
                   <View className='w-full gap-4'>
-                    {/* <Button 
-                      title="Rejoindre une Tribu" 
-                      onPress={handleJoinFamily}
-                      icon={<UsersIcon fill="white" />}
-                    /> */}
+                    
                     <TouchableOpacity activeOpacity={0.9} onPress={handleJoinFamily}>
                       <View
                         className='flex-row items-center'
@@ -157,15 +144,6 @@ export default function Home() {
                         <ArrowIcon />
                       </View>
                     </TouchableOpacity>
-
-                    {/* <Button 
-                      title="Créer une Tribu" 
-                      onPress={handleCreateFamily}
-                      icon={<AddIcon fill={theme.primary} />}
-                      color={theme.secondary}
-                      textColor={theme.primary}
-                      borderColor={theme.primary}
-                    /> */}
 
                     <TouchableOpacity 
                       activeOpacity={0.9} 

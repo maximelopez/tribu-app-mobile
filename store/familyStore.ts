@@ -8,7 +8,7 @@ export interface Family {
     topics: string[];
     creatorId: string;
     joinRequests: { id: string; name: string }[];
-    members?: { id: string; name: string; score: number; avatarUrl?: string }[];
+    members?: { id: string; name: string; score: number | null; avatar: number }[];
 }
 
 interface FamilyStore {
