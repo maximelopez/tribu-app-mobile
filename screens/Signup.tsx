@@ -1,4 +1,4 @@
- import { useState } from 'react';
+import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { useUserStore } from '../store/userStore';
@@ -19,6 +19,11 @@ export default function Signup({ navigation }: any) {
   const handleSignup = async () => {
     if (!name || !email || !password) {
       setErrorMessage('Veuillez remplir tous les champs.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setErrorMessage('Le mot de passe doit contenir au moins 6 caractères.');
       return;
     }
 

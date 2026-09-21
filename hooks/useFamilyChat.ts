@@ -22,23 +22,22 @@ export default function useFamilyChat() {
   useEffect(() => {
     if (!familyId) return;
 
+    const handleHistory = (history: Message[]) => setMessages(history);
+    const handleNewMessage = (message: Message) =>
+      setMessages(prev => [...prev, message]);
+
     // Rejoindre la room
     socket.emit('joinFamilyRoom', familyId);
 
     // Charger historique
     socket.emit('getHistory', familyId);
 
-    socket.on('chatHistory', (history: Message[]) => {
-      setMessages(history);
-    });
-
-    socket.on('newMessage', (message: Message) => {
-      setMessages(prev => [...prev, message]);
-    });
+    socket.on('chatHistory', handleHistory);
+    socket.on('newMessage', handleNewMessage);
 
     return () => {
-      socket.off('chatHistory');
-      socket.off('newMessage');
+      socket.off('chatHistory', handleHistory);
+      socket.off('newMessage', handleNewMessage);
     };
   }, [familyId]);
 

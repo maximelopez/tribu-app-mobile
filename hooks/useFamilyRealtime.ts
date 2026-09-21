@@ -1,11 +1,9 @@
-//import { io } from 'socket.io-client';
 import { useEffect } from 'react';
 import { socket } from '../socket';
 import { useUserStore } from '../store/userStore';
 import { useFamilyStore, Family } from '../store/familyStore';
 
 const API_URL = 'https://tribu-app.onrender.com/api/';
-//const socket = io('https://tribu-app.onrender.com');
 
 export default function useFamilyRealtime() {
   const userId = useUserStore(state => state.user?.id);
@@ -76,11 +74,24 @@ export default function useFamilyRealtime() {
       alert('Votre demande pour rejoindre cette famille a été refusée.');
     };
 
+    // Un nouveau membre a rejoint : on recharge la liste des membres
+    const handleMemberJoined = async () => {
+      if (!familyId) return;
+      try {
+        const res = await fetch(`${API_URL}users?familyId=${familyId}`);
+        const data = await res.json();
+        setFamily((prev) => (prev ? { ...prev, members: data.users } : prev));
+      } catch (error) {
+        console.error('Erreur fetch membres :', error);
+      }
+    };
+
     // Écoute des events
     socket.on('newJoinRequest', handleNewJoinRequest);
     socket.on('familyUpdated', handleFamilyUpdated);
     socket.on('familyAccepted', handleFamilyAccepted);
     socket.on('familyRejected', handleFamilyRejected);
+    socket.on('memberJoined', handleMemberJoined);
 
     // Nettoyage
     return () => {
@@ -88,6 +99,7 @@ export default function useFamilyRealtime() {
       socket.off('familyUpdated', handleFamilyUpdated);
       socket.off('familyAccepted', handleFamilyAccepted);
       socket.off('familyRejected', handleFamilyRejected);
+      socket.off('memberJoined', handleMemberJoined);
     };
   }, [userId, familyId]);
 }

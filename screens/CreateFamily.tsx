@@ -8,12 +8,18 @@ import Topic from '../components/Topic';
 
 const API_URL = 'https://tribu-app.onrender.com/api/';
 
+const AVAILABLE_TOPICS = [
+    'Cuisine & Nutrition',
+    'Sport & Activités',
+    'Lecture & Culture',
+    'Vie sociale',
+    'Développement personnel'
+];
+
 export default function CreateFamily() {
     const user = useUserStore(state => state.user);
     const setUser = useUserStore(state => state.setUser);
     const navigation = useNavigation<any>();
-
-    if (!user) return null;
 
     const [name, setName] = useState<string>('');
     const [city, setCity] = useState<string>('');
@@ -21,14 +27,6 @@ export default function CreateFamily() {
     const [topics, setTopics] = useState<string[]>([]);
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
-
-    const availableTopics = [
-        'Cuisine & Nutrition',
-        'Sport & Activités',
-        'Lecture & Culture',
-        'Vie sociale',
-        'Développement personnel'
-    ];
 
     const toggleTopic = (topic: string) => {
         setTopics(prev => 
@@ -39,7 +37,9 @@ export default function CreateFamily() {
     };
 
     const handleCreateFamily = async () => {
-        if (!name || !city) {
+        if (!user) return;
+
+        if (!name.trim() || !city.trim()) {
             setErrorMessage('Veuillez remplir tous les champs.');
             return;
         }
@@ -52,7 +52,13 @@ export default function CreateFamily() {
             const response = await fetch(API_URL + 'families', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ name, city, slogan, topics, creatorId: user.id })
+                body: JSON.stringify({
+                    name: name.trim(),
+                    city: city.trim(),
+                    slogan: slogan.trim() || null,
+                    topics,
+                    creatorId: user.id,
+                })
             });
 
             const data = await response.json();
@@ -79,7 +85,7 @@ export default function CreateFamily() {
             }
 
             // 3 - Mettre à jour le store utilisateur
-            setUser({ ...user, familyId: familyId});
+            setUser(prev => (prev ? { ...prev, familyId } : prev));
 
             // 4 - Naviguer vers Home
             navigation.navigate('Tabs');
@@ -91,6 +97,8 @@ export default function CreateFamily() {
             setLoading(false);
         }
     };
+
+    if (!user) return null;
     
     return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -103,7 +111,7 @@ export default function CreateFamily() {
                 <View className='flex-1 mx-4 mt-5 items-center'>
 
                     <View className='w-full gap-[10px] mb-[20px]'>
-                    <Text>Nom de la Tribu</Text> 
+                        <Text>Nom de la Tribu</Text> 
                         <Input 
                             value={name} 
                             onChangeText={setName}
@@ -128,7 +136,7 @@ export default function CreateFamily() {
 
                         <Text className="mb-2">Thématiques préférées</Text>
                         <View className="flex-row flex-wrap gap-2 mb-6">
-                            {availableTopics.map(topic => (
+                            {AVAILABLE_TOPICS.map(topic => (
                                 <Topic
                                     key={topic}
                                     label={topic}
@@ -150,10 +158,7 @@ export default function CreateFamily() {
                 </View>
             </View>
 
-
         </KeyboardAvoidingView>        
     </TouchableWithoutFeedback>
-
-        
     );
 };

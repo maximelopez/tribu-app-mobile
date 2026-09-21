@@ -14,10 +14,18 @@ type Avatar = {
   src: any;
 };
 
+const avatars: Avatar[] = [
+  { id: 1, src: require('../assets/images/avatar1.png') },
+  { id: 2, src: require('../assets/images/avatar2.png') },
+  { id: 3, src: require('../assets/images/avatar3.png') },
+  { id: 4, src: require('../assets/images/avatar4.png') },
+];
+
 export default function Profile() {
   const user = useUserStore(state => state.user);
-  const setUser = useUserStore(state => state.setUser)
+  const setUser = useUserStore(state => state.setUser);
   const logout = useUserStore(state => state.logout);
+  const family = useFamilyStore(state => state.family);
   const clearFamily = useFamilyStore(state => state.clearFamily);
   const { theme } = useTheme();
 
@@ -29,54 +37,49 @@ export default function Profile() {
     clearFamily();
   };
 
-  const avatars = [
-    { id: 1, src: require('../assets/images/avatar1.png') },
-    { id: 2, src: require('../assets/images/avatar2.png') },
-    { id: 3, src: require('../assets/images/avatar3.png') },
-    { id: 4, src: require('../assets/images/avatar4.png') },
-  ];
-
   const currentAvatar =
     user?.avatar
       ? avatars.find(a => a.id === user.avatar) || avatars[0]
       : avatars[0];
 
+  const topics = family?.topics ?? [];
+
   const handleSelectAvatar = async (avatar: Avatar) => {
-      if (loading) return;
+    if (loading) return;
 
-      setLoading(true);
+    setLoading(true);
 
-      try {
-        const response = await fetch(`${API_URL}users/${user?.id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ avatar: avatar.id }),
-        });
+    try {
+      const response = await fetch(`${API_URL}users/${user?.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ avatar: avatar.id }),
+      });
 
-        const data = await response.json();
+      const data = await response.json();
 
-        if (response.ok) {
-          setUser(data);
-          setShowModal(false);
-        }
-
-      } catch (error) {
-        console.error('Erreur avatar:', error);
-      } finally {
-        setLoading(false);
+      if (response.ok) {
+        setUser(data);
+        setShowModal(false);
       }
-    };
+
+    } catch (error) {
+      console.error('Erreur avatar:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-[#F7F5F8]" edges={['top']}>
-      <ScrollView 
-          className="flex-1"
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 20 }}
+      <ScrollView
+        className="flex-1"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 20 }}
       >
         <Text className="text-[32px] font-peachy mt-10 text-center">Profil</Text>
 
-        <View className="flex-2 items-center px-4">
+        <View className="items-center px-4">
           <Pressable onPress={() => setShowModal(true)}>
             <Image
               source={currentAvatar.src}
@@ -89,50 +92,42 @@ export default function Profile() {
           <ThemeSwitcher />
 
           <View className="w-full px-4 mt-4 mb-8 items-center">
-            <Text className="text-[32px] font-peachy mb-8 mt-4">Mes thématiques</Text>
+            <Text className="text-[32px] font-peachy mb-8 mt-4 text-center">Thématiques de ma Tribu</Text>
 
-            <View className="flex-row gap-4 mb-4">
-              <View className="flex-1 h-[30px] rounded-[15px] px-3 justify-center items-center" style={{ backgroundColor: theme.secondary }}>
-                <Text className="font-outfit" style={{ color: theme.primary}}>
-                  Cuisine & Nutrition
-                </Text>
+            {topics.length > 0 ? (
+              <View className="flex-row flex-wrap justify-center gap-3">
+                {topics.map(topic => (
+                  <View
+                    key={topic}
+                    className="h-[30px] rounded-[15px] px-4 justify-center items-center"
+                    style={{ backgroundColor: theme.secondary }}
+                  >
+                    <Text className="font-outfit" style={{ color: theme.primary }}>
+                      {topic}
+                    </Text>
+                  </View>
+                ))}
               </View>
-
-              <View className="flex-1 h-[30px] rounded-[15px] px-3 justify-center items-center" style={{ backgroundColor: theme.secondary }}>
-                <Text className="font-outfit" style={{ color: theme.primary}}>
-                  Sport & Activités
-                </Text>
-              </View>
-            </View>
-
-            <View className="flex-row gap-4 mb-4">
-              <View className="flex-1 h-[30px] rounded-[15px] px-3 justify-center items-center" style={{ backgroundColor: theme.secondary }}>
-                <Text className="font-outfit" style={{ color: theme.primary}}>
-                  Lecture & Culture
-                </Text>
-              </View>
-
-              <View className="flex-1 h-[30px] rounded-[15px] px-3 justify-center items-center" style={{ backgroundColor: theme.secondary }}>
-                <Text className="font-outfit" style={{ color: theme.primary}}>
-                  Vie sociale
-                </Text>
-              </View>
-            </View>
-
-            <View className="flex-1 h-[30px] rounded-[15px] px-3 justify-center items-center" style={{ backgroundColor: theme.secondary }}>
-              <Text className="font-outfit" style={{ color: theme.primary}}>
-                Développement personnel
+            ) : (
+              <Text className="text-gray-400 font-outfit text-center">
+                {family
+                  ? "Ta Tribu n'a pas encore choisi de thématiques."
+                  : 'Rejoins une Tribu pour voir ses thématiques.'}
               </Text>
-            </View>
-
+            )}
           </View>
-          
+
           <Button title="Se déconnecter" onPress={logoutUser} />
 
         </View>
       </ScrollView>
 
-      <Modal visible={showModal} transparent animationType="fade">
+      <Modal
+        visible={showModal}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowModal(false)}
+      >
         <View className="flex-1 bg-black/50 justify-center items-center">
 
           <View className="bg-white p-6 rounded-2xl w-[260px]">
@@ -168,8 +163,7 @@ export default function Profile() {
 
         </View>
       </Modal>
-      
+
     </SafeAreaView>
-    
-  )
+  );
 }

@@ -7,7 +7,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import useFamilyRealtime from '../hooks/useFamilyRealtime';
 import JoinRequestItem from '../components/JoinRequestItem';
-import FamilyMember from '../components/FamilyMember';
 import Arrow from '../assets/icons/arrow.svg';
 import ArrowGreen from '../assets/icons/arrow-green.svg';
 import ArrowOrange from '../assets/icons/arrow-orange.svg';
@@ -91,7 +90,7 @@ export default function Home() {
         <View className='flex-1'>
           <View className='w-full px-4 pt-6'>
             <Text className='text-gray-800 font-peachy text-3xl'>
-              Bonjour, <Text style={{ color: theme.primary }}>{user?.name} 👋</Text>
+              Bonjour <Text style={{ color: theme.primary }}>{user?.name}</Text>
             </Text>
           </View>
           
