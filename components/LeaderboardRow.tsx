@@ -10,8 +10,7 @@ const avatarMap: Record<number, any> = {
 };
 
 interface RankedMember extends Member {
-  points: number;
-  activitiesThisMonth: number;
+  activitiesTotal: number;
   isCurrentUser: boolean;
 }
 
@@ -28,7 +27,10 @@ export default function LeaderboardRow({ rank, member, isLast }: Props) {
     <View className={`flex-row items-center py-3 ${!isLast ? 'border-b border-gray-100' : ''}`}>
       <Text className="w-6 text-gray-400 font-outfit-bold text-base">{rank}</Text>
 
-      <Image source={avatarMap[member.avatar]} className="w-12 h-12 rounded-full ml-1" />
+      <Image
+        source={avatarMap[member.avatar] ?? avatarMap[1]}
+        className="w-12 h-12 rounded-full ml-1"
+      />
 
       <View className="flex-1 ml-3">
         <View className="flex-row items-center">
@@ -45,11 +47,13 @@ export default function LeaderboardRow({ rank, member, isLast }: Props) {
           )}
         </View>
         <Text className="text-gray-400 text-xs font-outfit mt-0.5">
-          {member.activitiesThisMonth} activité{member.activitiesThisMonth > 1 ? 's' : ''} ce mois
+          {member.activitiesTotal} activité{member.activitiesTotal > 1 ? 's' : ''} au total
         </Text>
       </View>
 
-      <Text className="text-gray-500 font-outfit">{member.points} pts</Text>
+      <Text style={{ color: theme.primary }} className="font-outfit-bold text-base">
+        {member.points} pts
+      </Text>
     </View>
   );
 }

@@ -147,11 +147,12 @@ export default function Home() {
                   )}
 
                   <Text className='text-gray-800 font-peachy text-2xl mx-2'>Ma tribu</Text>
-
+                  
                   <FamilyLeaderboard
                     familyName={family.name}
                     members={family.members ?? []}
                     currentUserId={user.id}
+                    levelInfo={family.levelInfo}
                   />
 
                 </View>

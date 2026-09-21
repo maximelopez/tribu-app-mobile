@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import type { LevelInfo, Member } from '../components/FamilyLeaderboard';
 
 export interface Family {
     id: string;
@@ -6,9 +7,11 @@ export interface Family {
     city: string;
     slogan: string | null;
     topics: string[];
+    points: number;
+    levelInfo: LevelInfo;
     creatorId: string;
     joinRequests: { id: string; name: string }[];
-    members?: { id: string; name: string; score: number | null; avatar: number }[];
+    members?: Member[];
 }
 
 interface FamilyStore {

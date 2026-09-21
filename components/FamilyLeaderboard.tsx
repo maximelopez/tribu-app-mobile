@@ -6,43 +6,46 @@ export interface Member {
   id: string;
   name: string;
   avatar: number;
+  points: number;
+}
+
+export interface LevelInfo {
+  level: number;
+  isMax: boolean;
+  remaining: number;
+  progress: number; // de 0 à 1
 }
 
 interface FamilyLeaderboardProps {
   familyName: string;
   members: Member[];
   currentUserId: string;
+  levelInfo: LevelInfo;
 }
 
-// Stats fictives temporaires en attendant que le backend
-const STATIC_STATS = [
-  { points: 93, activitiesThisMonth: 12 },
-  { points: 55, activitiesThisMonth: 9 },
-  { points: 85, activitiesThisMonth: 7 },
-  { points: 25, activitiesThisMonth: 3 },
-];
-
-const LEVEL = 3;
-const NEXT_LEVEL_THRESHOLD = 242;
+// --- Données fictives temporaires : nombre d'activités au total ---
+// (à remplacer quand le backend fournira cette information)
+const STATIC_ACTIVITIES = [24, 17, 14, 6];
 // --- Fin des données fictives ---
 
-export default function FamilyLeaderboard({ familyName, members, currentUserId }: FamilyLeaderboardProps) {
+export default function FamilyLeaderboard({
+  familyName,
+  members,
+  currentUserId,
+  levelInfo,
+}: FamilyLeaderboardProps) {
   const { theme } = useTheme();
 
-  // Associe chaque vrai membre à des stats fictives (cycle si + de 4 membres)
-  const membersWithStats = members.map((member, index) => ({
-    ...member,
-    ...STATIC_STATS[index % STATIC_STATS.length],
-    isCurrentUser: member.id === currentUserId,
-  }));
+  // Associe chaque membre à un nombre d'activités fictif, puis classe par points réels
+  const rankedMembers = members
+    .map((member, index) => ({
+      ...member,
+      activitiesTotal: STATIC_ACTIVITIES[index % STATIC_ACTIVITIES.length],
+      isCurrentUser: member.id === currentUserId,
+    }))
+    .sort((a, b) => b.points - a.points);
 
-  const totalPoints = membersWithStats.reduce((sum, m) => sum + m.points, 0);
-  const progressPercent = Math.min((totalPoints / NEXT_LEVEL_THRESHOLD) * 100, 100);
-
-  // Classe par nombre d'activités ce mois-ci (ordre du rang affiché)
-  const rankedMembers = [...membersWithStats].sort(
-    (a, b) => b.activitiesThisMonth - a.activitiesThisMonth
-  );
+  const progressPercent = Math.round(levelInfo.progress * 100);
 
   return (
     <View
@@ -57,18 +60,15 @@ export default function FamilyLeaderboard({ familyName, members, currentUserId }
     >
       {/* Header coloré */}
       <View style={{ backgroundColor: theme.primary }} className="px-5 pt-5 pb-6">
-        <View className="flex-row items-center justify-between">
-          <Text className="text-white font-outfit-bold text-2xl">{familyName}</Text>
-          <View className="bg-white/25 rounded-full px-3 py-1">
-            <Text className="text-white font-outfit-bold">{totalPoints} pts</Text>
-          </View>
-        </View>
+        <Text className="text-white font-outfit-bold text-2xl">{familyName}</Text>
         <Text className="text-white/90 font-outfit mt-1">{members.length} membres</Text>
 
         <View className="flex-row items-center justify-between mt-5 mb-1">
-          <Text className="text-white font-outfit text-sm">Niveau {LEVEL}</Text>
+          <Text className="text-white font-outfit text-sm">Niveau {levelInfo.level}</Text>
           <Text className="text-white font-outfit text-sm">
-            {NEXT_LEVEL_THRESHOLD} pts → Niveau {LEVEL + 1}
+            {levelInfo.isMax
+              ? 'Niveau maximum'
+              : `${levelInfo.remaining} pts → Niveau ${levelInfo.level + 1}`}
           </Text>
         </View>
         <View className="h-2 bg-white/30 rounded-full overflow-hidden">

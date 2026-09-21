@@ -26,7 +26,7 @@ export default function useFamilyRealtime() {
         // fetch les infos de l'utilisateur qui a demandé
         const res = await fetch(`${API_URL}users/${data.userId}`);
         const userData = await res.json();
-        const userName = userData.user?.name || 'Utilisateur inconnu';
+        const userName = userData.name || 'Utilisateur inconnu';
 
         setFamily((prev) => {
           if (!prev) return prev;
@@ -53,8 +53,9 @@ export default function useFamilyRealtime() {
       }
     };
 
-    const handleFamilyUpdated = (updatedFamily: Family) => {
-      setFamily(updatedFamily);
+    // Fusionne les infos reçues avec la famille déjà en mémoire
+    const handleFamilyUpdated = (data: Partial<Family>) => {
+      setFamily((prev) => (prev ? { ...prev, ...data } : prev));
     };
 
     const handleFamilyAccepted = async (data: { familyId: string }) => {
