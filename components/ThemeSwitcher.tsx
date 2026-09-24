@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, Text } from 'react-native';
-import { useTheme, ThemeColor } from '../context/ThemeContext';
+import { useTheme, ThemeColor, themeMap } from '../context/ThemeContext';
 import { useUserStore } from '../store/userStore';
 
 const API_URL = 'https://tribu-app.onrender.com/api/';
@@ -33,9 +33,9 @@ export default function ThemeSwitcher() {
   };
 
   const colors: { name: string; value: ThemeColor }[] = [
-    { name: 'Vert', value: 'vert' },
-    { name: 'Jaune', value: 'jaune' },
+    { name: 'Vert', value: 'green' },
     { name: 'Orange', value: 'orange' },
+    { name: 'Rouge', value: 'red' },
   ];
 
   return (
@@ -44,14 +44,7 @@ export default function ThemeSwitcher() {
 
       <View style={{ flexDirection: 'row', gap: 20 }}>
         {colors.map((color) => {
-          const bgColor =
-            color.value === 'vert'
-              ? '#00a16d'
-              : color.value === 'jaune'
-              ? '#ff9d00'
-              : color.value === 'orange'
-              ? '#ea4a1f'
-              : '#00a16d';
+          const bgColor = themeMap[color.value].primary;
 
           return (
             <TouchableOpacity

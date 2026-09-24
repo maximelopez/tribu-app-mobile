@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { useUserStore } from '../store/userStore';
+import { normalizeThemeColor } from '../context/ThemeContext';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
@@ -50,7 +51,7 @@ export default function Login({ navigation }: any) {
         email: data.user.email,
         familyId: data.user.familyId,
         avatar: data.user.avatar,
-        theme: data.user.theme,
+        theme: normalizeThemeColor(data.user.theme),
       });
 
       const isComplete = !!(data.user.theme && data.user.avatar);

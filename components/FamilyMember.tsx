@@ -14,9 +14,9 @@ interface FamilyMemberProps {
 }
 
 const backgroundImages = {
-  vert: require('../assets/images/bg-card-vert.png'),
-  jaune: require('../assets/images/bg-card-jaune.png'),
+  green: require('../assets/images/bg-card-green.png'),
   orange: require('../assets/images/bg-card-orange.png'),
+  red: require('../assets/images/bg-card-red.png'),
 };
 
 const avatars = [

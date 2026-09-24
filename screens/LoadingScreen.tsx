@@ -4,9 +4,9 @@ import { useTheme } from '../context/ThemeContext';
 import { useUserStore } from '../store/userStore';
 
 const backgroundMap: Record<string, any> = {
-  vert: require('../assets/images/bg-vert.png'),
-  jaune: require('../assets/images/bg-jaune.png'),
+  green: require('../assets/images/bg-green.png'),
   orange: require('../assets/images/bg-orange.png'),
+  red: require('../assets/images/bg-red.png'),
 };
 
 export default function LoadingScreen() {

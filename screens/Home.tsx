@@ -4,6 +4,7 @@ import { Text, View, Image, ScrollView, ActivityIndicator, TouchableOpacity } fr
 import { useUserStore } from '../store/userStore';
 import { useFamilyStore } from '../store/familyStore';
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '../context/ThemeContext';
 import useFamilyRealtime from '../hooks/useFamilyRealtime';
 import JoinRequestItem from '../components/JoinRequestItem';
@@ -152,12 +153,19 @@ export default function Home() {
 
                   {/* Boutons Rejoindre / Créer */}
                   <View className='w-full gap-3'>
-                    <TouchableOpacity activeOpacity={0.9} onPress={handleJoinFamily}>
-                      <View
-                        className='flex-row items-center gap-4'
+                    <TouchableOpacity activeOpacity={0.9} onPress={handleJoinFamily}
+                      // fond + radius nécessaires pour que l'ombre s'affiche sur Android
+                      style={{ ...CARD_SHADOW, borderRadius: 16, backgroundColor: theme.primary }}
+                    >
+                      {/* Dégradé Figma : Color -> Color-Gradient, de gauche à droite */}
+                      <LinearGradient
+                        colors={[theme.primary, theme.gradient]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
                         style={{
-                          ...CARD_SHADOW,
-                          backgroundColor: theme.primary,
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          gap: 16,
                           borderRadius: 16,
                           height: 101,
                           paddingHorizontal: 21,
@@ -176,7 +184,7 @@ export default function Home() {
                           </Text>
                         </View>
                         <ChevronRightWhite width={24} height={24} />
-                      </View>
+                      </LinearGradient>
                     </TouchableOpacity>
 
                     <TouchableOpacity activeOpacity={0.9} onPress={handleCreateFamily}>

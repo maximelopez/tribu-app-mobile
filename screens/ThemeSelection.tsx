@@ -1,14 +1,14 @@
 import { View, Text, TouchableOpacity, ImageBackground, Image } from 'react-native';
-import { useTheme, ThemeColor } from '../context/ThemeContext';
+import { useTheme, ThemeColor, THEME_COLORS, themeMap } from '../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import { useUserStore } from '../store/userStore';
 
 const API_URL = 'https://tribu-app.onrender.com/api/';
 
 const backgroundMap: Record<string, any> = {
-  vert: require('../assets/images/bg-vert.png'),
-  jaune: require('../assets/images/bg-jaune.png'),
+  green: require('../assets/images/bg-green.png'),
   orange: require('../assets/images/bg-orange.png'),
+  red: require('../assets/images/bg-red.png'),
 };
 
 export default function ThemeSelection() {
@@ -18,7 +18,7 @@ export default function ThemeSelection() {
     const user = useUserStore(state => state.user);
     const navigation = useNavigation<any>();
 
-    const colors: ThemeColor[] = ['vert', 'jaune', 'orange'];
+    const colors = THEME_COLORS;
 
     const changeTheme = async (color: ThemeColor) => {
         // 1 - mise à jour immédiate de l'UI
@@ -61,9 +61,7 @@ export default function ThemeSelection() {
 
                     <View className="flex-row gap-[30px] justify-center">
                         {colors.map((color) => {
-                        const colorHex = color === 'vert' ? '#00a16d' :
-                                        color === 'jaune' ? '#ff9d00' :
-                                        '#ea4a1f';
+                        const colorHex = themeMap[color].primary;
                         return (
                             <TouchableOpacity
                                 key={color}

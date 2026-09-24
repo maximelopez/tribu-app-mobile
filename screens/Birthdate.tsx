@@ -82,7 +82,7 @@ export default function Birthdate() {
     return (
         <View className="flex-1">
             <ImageBackground
-                source={ require('../assets/images/bg-vert.png')}
+                source={ require('../assets/images/bg-green.png')}
                 style={{ flex: 1 }}
                 imageStyle={{ resizeMode: 'cover' }}
             >

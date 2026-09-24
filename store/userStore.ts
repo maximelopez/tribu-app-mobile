@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import type { ThemeColor } from '../context/ThemeContext';
 
 export interface User {
   id: string;
@@ -9,7 +10,7 @@ export interface User {
   points?: number;
   familyId: string | null;
   avatar: number | null;
-  theme?: 'vert' | 'jaune' | 'orange';
+  theme?: ThemeColor;
   birthdate?: string | null;
 }
 
