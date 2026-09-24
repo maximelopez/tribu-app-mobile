@@ -70,8 +70,15 @@ export default function useFamilyRealtime() {
       }
     };
 
-    const handleFamilyRejected = () => {
-      alert('Votre demande pour rejoindre cette famille a été refusée.');
+    // La personne a été acceptée ailleurs : on retire sa demande de notre liste
+    const handleJoinRequestRemoved = (data: { familyId: string; userId: string }) => {
+      setFamily((prev) => {
+        if (!prev || prev.id !== data.familyId) return prev;
+        return {
+          ...prev,
+          joinRequests: prev.joinRequests.filter((req) => req.id !== data.userId),
+        };
+      });
     };
 
     // Un nouveau membre a rejoint : on recharge la liste des membres
@@ -90,7 +97,7 @@ export default function useFamilyRealtime() {
     socket.on('newJoinRequest', handleNewJoinRequest);
     socket.on('familyUpdated', handleFamilyUpdated);
     socket.on('familyAccepted', handleFamilyAccepted);
-    socket.on('familyRejected', handleFamilyRejected);
+    socket.on('joinRequestRemoved', handleJoinRequestRemoved);
     socket.on('memberJoined', handleMemberJoined);
 
     // Nettoyage
@@ -98,7 +105,7 @@ export default function useFamilyRealtime() {
       socket.off('newJoinRequest', handleNewJoinRequest);
       socket.off('familyUpdated', handleFamilyUpdated);
       socket.off('familyAccepted', handleFamilyAccepted);
-      socket.off('familyRejected', handleFamilyRejected);
+      socket.off('joinRequestRemoved', handleJoinRequestRemoved);
       socket.off('memberJoined', handleMemberJoined);
     };
   }, [userId, familyId]);

@@ -1,8 +1,21 @@
+import { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useFamilyStore } from '../store/familyStore';
 import { useTheme } from '../context/ThemeContext';
 
 const API_URL = 'https://tribu-app.onrender.com/api/';
+
+// Couleurs Figma (palette fixe, indépendante du thème)
+const TEXT_STRONG = '#161616'; // Gris très foncé
+const REFUSE_RED = '#EA4A1F';
+
+const CARD_SHADOW = {
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 4 },
+  shadowOpacity: 0.08,
+  shadowRadius: 6,
+  elevation: 3,
+};
 
 interface JoinRequestItemProps {
   requestUser: { id: string; name: string };
@@ -10,74 +23,80 @@ interface JoinRequestItemProps {
 }
 
 export default function JoinRequestItem({ requestUser, familyId }: JoinRequestItemProps) {
-    const setFamily = useFamilyStore(state => state.setFamily);
-    const { theme } = useTheme();
+  const setFamily = useFamilyStore(state => state.setFamily);
+  const { theme } = useTheme();
+  // Évite les doubles appuis pendant la requête
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleAccept = async () => {
-        try {
-            const response = await fetch(`https://tribu-app.onrender.com/api/families/${familyId}/join-requests/${requestUser.id}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ accept: true }),
-            });
+  const respond = async (accept: boolean) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
-            if (response.ok) {
-                // Met à jour le store pour retirer la demande
-                setFamily(prev => prev ? {
-                    ...prev,
-                    joinRequests: prev.joinRequests.filter(user => user.id !== requestUser.id),
-                } : prev);
+    try {
+      const response = await fetch(`${API_URL}families/${familyId}/join-requests/${requestUser.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accept }),
+      });
 
-                // Re-fetch les membres
-                const resMembers = await fetch(`${API_URL}users?familyId=${familyId}`);
-                const dataMembers = await resMembers.json();
+      // Succès, ou demande devenue invalide (ex : personne déjà acceptée ailleurs) :
+      // dans les deux cas, la carte n'a plus lieu d'être
+      if (response.ok || response.status === 400) {
+        setFamily(prev => prev ? {
+          ...prev,
+          joinRequests: prev.joinRequests.filter(user => user.id !== requestUser.id),
+        } : prev);
+      }
+      // La liste des membres est rechargée par l'événement socket `memberJoined`
+      // (voir hooks/useFamilyRealtime.ts)
+    } catch (error) {
+      console.error('Erreur réponse demande :', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-                // Mettre à jour le store avec la nouvelle liste
-                setFamily(prev => prev ? { ...prev, members: dataMembers.users } : prev);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    };
+  return (
+    <View
+      className="bg-white rounded-2xl items-center justify-center"
+      style={{ ...CARD_SHADOW, gap: 12, paddingVertical: 24, paddingHorizontal: 10 }}
+    >
+      <View className="items-center" style={{ gap: 4 }}>
+        <Text className="font-outfit-bold text-base text-center" style={{ color: TEXT_STRONG }}>
+          Nouvelle invitation
+        </Text>
+        <Text className="font-outfit text-base text-center" style={{ color: TEXT_STRONG }}>
+          {requestUser.name} souhaite rejoindre votre Tribu
+        </Text>
+      </View>
 
-    const handleReject = async () => {
-        try {
-        const response = await fetch(`https://tribu-app.onrender.com/api/families/${familyId}/join-requests/${requestUser.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ accept: false }),
-        });
-        if (response.ok) {
-            setFamily(prev => prev ? {
-                ...prev,
-                joinRequests: prev.joinRequests.filter(user => user.id !== requestUser.id),
-            } : prev);
-        }
-        } catch (err) {
-            console.error(err);
-        }
-    };
+      <View className="flex-row w-full" style={{ gap: 19 }}>
+        <TouchableOpacity
+          onPress={() => respond(false)}
+          disabled={isSubmitting}
+          activeOpacity={0.8}
+          className="flex-1 rounded-2xl items-center justify-center"
+          style={{ height: 48, borderWidth: 2, borderColor: REFUSE_RED, opacity: isSubmitting ? 0.5 : 1 }}
+        >
+          <Text className="font-outfit text-base" style={{ color: REFUSE_RED }}>Refuser</Text>
+        </TouchableOpacity>
 
-    return (
-        <View className="h-[125px] flex-column mt-2 justify-between bg-white p-4 rounded-[16px]">
-            <Text className='font-outfit text-center uppercase' style={{ color: theme.primary }}>Nouvelle invitation</Text>
-            <Text className='font-outfit text-center'>{requestUser.name} souhaite rejoindre votre Tribu</Text>
-            <View className="flex-row justify-evenly">
-                <TouchableOpacity 
-                    onPress={handleReject}
-                    activeOpacity={0.8}
-                    className="w-[140px] h-[48px] rounded-2xl bg-[#EA4A1F33] items-center justify-center"
-                >
-                    <Text className="text-[#EA4A1F] font-outfit font-bold">Refuser</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                    onPress={handleAccept}
-                    activeOpacity={0.8}
-                    className="w-[140px] h-[48px] rounded-2xl bg-[#00A16D33] items-center justify-center"
-                >
-                    <Text className="text-[#00A16D] font-outfit font-bold">Accepter</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-    );
+        <TouchableOpacity
+          onPress={() => respond(true)}
+          disabled={isSubmitting}
+          activeOpacity={0.8}
+          className="flex-1 rounded-2xl items-center justify-center"
+          style={{
+            height: 48,
+            backgroundColor: theme.primary,
+            borderWidth: 1,
+            borderColor: theme.primary,
+            opacity: isSubmitting ? 0.5 : 1,
+          }}
+        >
+          <Text className="font-outfit text-base text-white">Accepter</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 }

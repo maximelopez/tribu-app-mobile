@@ -49,7 +49,7 @@ export default function FamilyLeaderboard({
 
   return (
     <View
-      className="rounded-3xl overflow-hidden bg-white"
+      className="rounded-2xl bg-white"
       style={{
         shadowColor: '#000',
         shadowOpacity: 0.08,
@@ -58,34 +58,49 @@ export default function FamilyLeaderboard({
         elevation: 3,
       }}
     >
-      {/* Header coloré */}
-      <View style={{ backgroundColor: theme.primary }} className="px-5 pt-5 pb-6">
-        <Text className="text-white font-outfit-bold text-2xl">{familyName}</Text>
-        <Text className="text-white/90 font-outfit mt-1">{members.length} membres</Text>
+      {/* overflow-hidden sur une vue interne pour garder l'ombre sur iOS */}
+      <View className="rounded-2xl overflow-hidden">
+        {/* Header coloré : nom, membres, niveau */}
+        <View style={{ backgroundColor: theme.primary }}>
+          <View style={{ paddingHorizontal: 18, paddingTop: 16, paddingBottom: 14, gap: 1 }}>
+            <Text className="text-white font-outfit-bold text-base">{familyName}</Text>
+            <Text className="text-white font-outfit text-sm">
+              {members.length} membre{members.length > 1 ? 's' : ''}
+            </Text>
+          </View>
 
-        <View className="flex-row items-center justify-between mt-5 mb-1">
-          <Text className="text-white font-outfit text-sm">Niveau {levelInfo.level}</Text>
-          <Text className="text-white font-outfit text-sm">
-            {levelInfo.isMax
-              ? 'Niveau maximum'
-              : `${levelInfo.remaining} pts → Niveau ${levelInfo.level + 1}`}
-          </Text>
+          <View style={{ paddingHorizontal: 18, paddingTop: 12, paddingBottom: 14, gap: 6 }}>
+            <View className="flex-row items-center justify-between">
+              <Text className="text-white font-outfit-bold text-base">Niveau {levelInfo.level}</Text>
+              <Text className="text-white font-outfit text-base">
+                {levelInfo.isMax
+                  ? 'Niveau maximum'
+                  : `${levelInfo.remaining} pts → Niveau ${levelInfo.level + 1}`}
+              </Text>
+            </View>
+            <View
+              className="rounded-full overflow-hidden"
+              style={{ height: 6, backgroundColor: 'rgba(255,255,255,0.08)' }}
+            >
+              <View
+                className="rounded-full bg-white"
+                style={{ height: 6, width: `${progressPercent}%` }}
+              />
+            </View>
+          </View>
         </View>
-        <View className="h-2 bg-white/30 rounded-full overflow-hidden">
-          <View className="h-2 bg-white rounded-full" style={{ width: `${progressPercent}%` }} />
-        </View>
-      </View>
 
-      {/* Liste des membres */}
-      <View className="px-5 py-2">
-        {rankedMembers.map((member, index) => (
-          <LeaderboardRow
-            key={member.id}
-            rank={index + 1}
-            member={member}
-            isLast={index === rankedMembers.length - 1}
-          />
-        ))}
+        {/* Classement des membres */}
+        <View style={{ paddingVertical: 4 }}>
+          {rankedMembers.map((member, index) => (
+            <LeaderboardRow
+              key={member.id}
+              rank={index + 1}
+              member={member}
+              isLast={index === rankedMembers.length - 1}
+            />
+          ))}
+        </View>
       </View>
     </View>
   );

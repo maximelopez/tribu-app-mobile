@@ -75,6 +75,7 @@ export default function Home() {
 
   const handleJoinFamily = () => navigation.navigate('SearchFamily');
   const handleCreateFamily = () => navigation.navigate('CreateFamily');
+  const handleFindActivity = () => navigation.navigate('Activités');
 
   return (
     <SafeAreaView className='flex-1' style={{ backgroundColor: '#F3F3F8' }}>
@@ -97,10 +98,10 @@ export default function Home() {
                   <ActivityIndicator size='large' color={theme.primary} />
                 </View>
               ) : family ? (
-                <View className='w-full'>
-                  {/* Demandes en attente */}
+                <View className='w-full gap-3'>
+                  {/* Demandes en attente (écran homepage-demande, à reprendre ensuite) */}
                   {user.id === family.creatorId && family.joinRequests.length > 0 && (
-                    <View className='mb-4'>
+                    <View className='gap-3'>
                       {family.joinRequests.map(requestUser => (
                         <JoinRequestItem
                           key={requestUser.id}
@@ -111,14 +112,43 @@ export default function Home() {
                     </View>
                   )}
 
-                  <Text className='text-gray-800 font-peachy text-2xl mx-2'>Ma tribu</Text>
-
+                  {/* Carte tribu : nom, niveau, classement */}
                   <FamilyLeaderboard
                     familyName={family.name}
                     members={family.members ?? []}
                     currentUserId={user.id}
                     levelInfo={family.levelInfo}
                   />
+
+                  {/* Rien de prévu cette semaine */}
+                  <View
+                    className='flex-row items-center bg-white rounded-2xl p-5'
+                    style={{ ...CARD_SHADOW, gap: 10 }}
+                  >
+                    <View
+                      className='items-center justify-center rounded-full'
+                      style={{ width: 65, height: 65, backgroundColor: theme.transparent }}
+                    >
+                      <Image
+                        source={require('../assets/images/mascotte-activity.png')}
+                        style={{ width: 40, height: 40 }}
+                        resizeMode='contain'
+                      />
+                    </View>
+                    <View className='flex-1 items-start' style={{ gap: 10 }}>
+                      <Text className='font-outfit-bold text-base' style={{ color: '#161616' }}>
+                        Rien de prévu cette semaine
+                      </Text>
+                      <TouchableOpacity
+                        activeOpacity={0.9}
+                        onPress={handleFindActivity}
+                        className='rounded-2xl items-center justify-center px-3'
+                        style={{ height: 30, backgroundColor: theme.primary }}
+                      >
+                        <Text className='font-outfit-bold text-base text-white'>Trouver une activité</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
                 </View>
               ) : (
                 <>
