@@ -8,6 +8,7 @@ interface Message {
   sender: {
     _id: string;
     name: string;
+    avatar?: number | null;
   };
   content: string;
   createdAt: string;

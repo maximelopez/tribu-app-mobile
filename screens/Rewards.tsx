@@ -11,7 +11,7 @@ export default function Rewards () {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F3F3F8',
     alignItems: 'center',
     justifyContent: 'center',
   },

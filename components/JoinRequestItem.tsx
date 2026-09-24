@@ -63,7 +63,7 @@ export default function JoinRequestItem({ requestUser, familyId }: JoinRequestIt
     >
       <View className="items-center" style={{ gap: 4 }}>
         <Text className="font-outfit-bold text-base text-center" style={{ color: TEXT_STRONG }}>
-          Nouvelle invitation
+          Nouvelle demande
         </Text>
         <Text className="font-outfit text-base text-center" style={{ color: TEXT_STRONG }}>
           {requestUser.name} souhaite rejoindre votre Tribu

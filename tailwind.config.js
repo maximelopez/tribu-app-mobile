@@ -9,6 +9,7 @@ module.exports = {
         'peachy': ['peachy-keen'],
         'outfit': ['outfit'],
         'outfit-bold': ['outfit-bold'],
+        'montserrat-semibold': ['montserrat-semibold'],
       },
     },
   },

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   View,
@@ -15,6 +15,11 @@ import { useTheme } from '../context/ThemeContext';
 import MessageBubble from '../components/MessageBubble';
 import SendIcon from '../assets/icons/sendBtn.svg';
 import { useFamilyStore } from '../store/familyStore';
+
+// Couleurs Figma (écran chat)
+const CHAT_BG = '#F7F5F8';     // Neutral-elements
+const TEXT_GREY = '#969696';   // Gris foncé
+const INPUT_TEXT = '#0D1217';
 
 export default function Chat() {
   const { theme } = useTheme();
@@ -40,16 +45,30 @@ export default function Chat() {
     setText('');
   };
 
-  const renderItem = ({ item }: any) => {
+  // La liste est inversée : on affiche du plus récent (en bas) au plus ancien
+  const reversedMessages = [...messages].reverse();
+
+  const renderItem = ({ item, index }: any) => {
     const isMe = item.sender?._id === user?.id;
+    // Dans la liste inversée : index + 1 = message précédent, index - 1 = message suivant
+    const previous = reversedMessages[index + 1];
+    const next = reversedMessages[index - 1];
+    const isFirstOfGroup = previous?.sender?._id !== item.sender?._id;
+    const isLastOfGroup = next?.sender?._id !== item.sender?._id;
 
     return (
-      <MessageBubble 
-        content={item.content}
-        senderName={item.sender?.name}
-        createdAt={item.createdAt}
-        isMe={isMe}
-      />
+      // Espace plus grand entre deux auteurs différents
+      <View style={{ marginTop: isFirstOfGroup ? 16 : 4 }}>
+        <MessageBubble
+          content={item.content}
+          createdAt={item.createdAt}
+          isMe={isMe}
+          senderName={item.sender?.name}
+          senderAvatar={item.sender?.avatar}
+          showName={isFirstOfGroup}
+          showAvatar={isLastOfGroup}
+        />
+      </View>
     );
   };
 
@@ -63,58 +82,80 @@ export default function Chat() {
     );
   }
 
+  const membersCount = family?.members?.length ?? 0;
+
   return (
     <SafeAreaView className='flex-1 bg-white' edges={['top']}>
-      <View className='px-4 py-4'>
-        <Text style={{ color: theme.primary }}>Famille {family?.name}</Text>
-        <Text>4 membres actifs</Text>
+      {/* En-tête */}
+      <View className='bg-white' style={{ paddingHorizontal: 17, paddingTop: 16, paddingBottom: 8, gap: 4 }}>
+        <Text className='font-outfit-bold text-base' style={{ color: theme.primary }}>
+          Famille {family?.name}
+        </Text>
+        <Text className='font-outfit text-base' style={{ color: TEXT_GREY }}>
+          {membersCount} membre{membersCount > 1 ? 's' : ''}
+        </Text>
       </View>
+
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
+        style={{ flex: 1, backgroundColor: CHAT_BG }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={35}
       >
         <FlatList
           inverted
-          className='bg-[#F7F5F8] px-4'
           ref={flatListRef}
-          data={[...messages].reverse()}
+          data={reversedMessages}
           keyExtractor={(item) => item._id}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingTop: 10, paddingBottom: 10 }}
+          style={{ backgroundColor: CHAT_BG }}
+          contentContainerStyle={{ paddingHorizontal: 18, paddingTop: 12, paddingBottom: 16 }}
         />
 
-        {/* Input */}
-        <View className='px-4 flex-row items-center mt-2'>
+        {/* Zone de saisie */}
+        <View
+          className='flex-row items-center'
+          style={{ backgroundColor: CHAT_BG, paddingHorizontal: 16, paddingVertical: 7, gap: 12 }}
+        >
           <TextInput
             value={text}
             onChangeText={setText}
             placeholder="Écris un message..."
+            placeholderTextColor={TEXT_GREY}
             selectionColor={theme.primary}
+            multiline
+            className='font-outfit text-base'
             style={{
               flex: 1,
-              backgroundColor: '#F0F0F3',
+              backgroundColor: '#FFFFFF',
               borderRadius: 8,
               paddingHorizontal: 16,
-              marginRight: 12,
-              height: 56,
+              paddingTop: 16,
+              paddingBottom: 16,
+              minHeight: 56,
+              maxHeight: 120,
+              color: INPUT_TEXT,
             }}
           />
 
-          <TouchableOpacity 
-            onPress={handleSend} 
+          <TouchableOpacity
+            onPress={handleSend}
             activeOpacity={0.8}
             style={{
               backgroundColor: theme.primary,
               justifyContent: 'center',
               alignItems: 'center',
-              borderRadius: 25,
-              width: 50,
-              height: 50,
+              borderRadius: 21,
+              width: 42,
+              height: 42,
+              shadowColor: '#0D0A2C',
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 0.06,
+              shadowRadius: 6,
+              elevation: 2,
             }}
           >
-            <SendIcon width={28} height={28} fill={theme.primary} />
+            <SendIcon width={26} height={26} />
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>

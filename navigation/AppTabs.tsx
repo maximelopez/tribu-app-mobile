@@ -1,13 +1,12 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { PlatformPressable } from '@react-navigation/elements';
 import {
   House as HomeIcon,
-  PartyPopper as ActivityIcon,
   Trophy as RewardsIcon,
-  MessageCircle as ChatIcon,
+  TicketCheck as ActivityIcon,
+  MessagesCircle as ChatIcon,
   User as ProfileIcon,
 } from 'lucide-react-native';
-import { useTheme } from '../context/ThemeContext';
+import TabBar, { TAB_ICON_SIZE } from '../components/TabBar';
 import Home from '../screens/Home';
 import Activities from '../screens/Activities';
 import Rewards from '../screens/Rewards';
@@ -16,28 +15,17 @@ import Profile from '../screens/Profile';
 
 const Tab = createBottomTabNavigator();
 
-export default function AppTabs() {
-  const { theme } = useTheme();
+// Icônes Lucide de la maquette, trait de 2
+const ICON_SIZE = TAB_ICON_SIZE;
+const STROKE = 2;
 
+export default function AppTabs() {
   return (
     <Tab.Navigator
+      tabBar={(props) => <TabBar {...props} />}
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: theme.primary,
-        tabBarInactiveTintColor: '#161616',
-        tabBarStyle: {
-          borderTopWidth: 0,
-          elevation: 0,
-          shadowOpacity: 0,
-        },
-        tabBarButton: (props) => (
-          <PlatformPressable
-            {...props}
-            android_ripple={{ color: 'transparent' }}
-            pressColor="transparent"
-            pressOpacity={1}
-          />
-        ),
+        sceneStyle: { backgroundColor: '#F3F3F8' },
       }}
     >
       <Tab.Screen
@@ -45,19 +33,7 @@ export default function AppTabs() {
         component={Home}
         options={{
           tabBarLabel: 'Accueil',
-          tabBarIcon: ({ color, focused }) => (
-            <HomeIcon size={22} color={color} strokeWidth={focused ? 2.5 : 2} />
-          ),
-        }}
-      />
-
-      <Tab.Screen
-        name="Activités"
-        component={Activities}
-        options={{
-          tabBarIcon: ({ color, focused }) => (
-            <ActivityIcon size={22} color={color} strokeWidth={focused ? 2.5 : 2} />
-          ),
+          tabBarIcon: ({ color }) => <HomeIcon size={ICON_SIZE} color={color} strokeWidth={STROKE} />,
         }}
       />
 
@@ -65,9 +41,15 @@ export default function AppTabs() {
         name="Récompenses"
         component={Rewards}
         options={{
-          tabBarIcon: ({ color, focused }) => (
-            <RewardsIcon size={22} color={color} strokeWidth={focused ? 2.5 : 2} />
-          ),
+          tabBarIcon: ({ color }) => <RewardsIcon size={ICON_SIZE} color={color} strokeWidth={STROKE} />,
+        }}
+      />
+
+      <Tab.Screen
+        name="Activités"
+        component={Activities}
+        options={{
+          tabBarIcon: ({ color }) => <ActivityIcon size={ICON_SIZE} color={color} strokeWidth={STROKE} />,
         }}
       />
 
@@ -75,9 +57,7 @@ export default function AppTabs() {
         name="Chat"
         component={Chat}
         options={{
-          tabBarIcon: ({ color, focused }) => (
-            <ChatIcon size={22} color={color} strokeWidth={focused ? 2.5 : 2} />
-          ),
+          tabBarIcon: ({ color }) => <ChatIcon size={ICON_SIZE} color={color} strokeWidth={STROKE} />,
         }}
       />
 
@@ -85,9 +65,7 @@ export default function AppTabs() {
         name="Profil"
         component={Profile}
         options={{
-          tabBarIcon: ({ color, focused }) => (
-            <ProfileIcon size={22} color={color} strokeWidth={focused ? 2.5 : 2} />
-          ),
+          tabBarIcon: ({ color }) => <ProfileIcon size={ICON_SIZE} color={color} strokeWidth={STROKE} />,
         }}
       />
     </Tab.Navigator>
